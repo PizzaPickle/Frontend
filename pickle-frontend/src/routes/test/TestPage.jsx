@@ -31,7 +31,9 @@ let data = [
 
 export default function TestPage() {
     return (
+      <>
     <Header></Header>
     <Circular width="400px" height="400px" data={data}/>
+      </>
     )
   }
