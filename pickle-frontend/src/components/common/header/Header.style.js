@@ -4,18 +4,17 @@ export const StyledHeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  height: 50px;
   margin: 10px 0px;
   background-color: ${({ theme }) => theme.colors.background};
-`;
-export const StyledHeaderLogoDiv = styled.div`
-  margin-left: 30px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
 `;
 
-export const StyledHeaderParentDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0px 50px;
-  width: 100%;
-`;
+export const StyledHeaderContent = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 50px;
+    gap: 20px;
+`

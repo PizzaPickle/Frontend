@@ -1,12 +1,17 @@
 import React from "react";
-import { StyledHeaderDiv, StyledHeaderParentDiv, StyledHeaderLogoDiv } from "./Header.style";
+import { StyledHeaderContent, StyledHeaderDiv } from "./Header.style";
 
 export default function Header() {
     return (
     <StyledHeaderDiv>
-      <StyledHeaderParentDiv>
-        aa
-      </StyledHeaderParentDiv>
+        <StyledHeaderContent>
+            <div className="alarm_icon">                
+            <img src="/assets/alarm.svg"></img>
+            </div>
+            <div className="sun_icon">                
+            <img src="/assets/sun.svg"></img>
+            </div>
+        </StyledHeaderContent>
     </StyledHeaderDiv>
     )
 };
