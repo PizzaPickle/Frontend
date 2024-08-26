@@ -2,11 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 
 import MainPage from "./routes/main/MainPage";
 import LoginPage from "./routes/login/LoginPage";
+import TestPage from "./routes/test/TestPage";
 
 export const routers = [
     {
         path: "/",
-        element: <MainPage />,
+        element: <TestPage />,
         // index: true
     },
     {
