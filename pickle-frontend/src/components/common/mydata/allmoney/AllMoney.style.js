@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     background-color:#F1F5FF;
-    max-width:500px;
-    height:224px;
+    max-width: ${(props) => props.maxWidth || '500px'};
+    height:  ${(props) => props.height || '224px'};
     padding:24px;
     border-radius: 16px;
 

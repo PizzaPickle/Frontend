@@ -21,7 +21,7 @@ import {
     BodyContainer
 } from "./AllMoney.style";
 
-export default function AllMoney() {
+export default function AllMoney(props) {
     const settings = {
         className: 'slider variable-width',
         slidesToShow: 2,
@@ -33,7 +33,7 @@ export default function AllMoney() {
     };
 
     return (
-        <Container>
+        <Container height={props.height} max-width={props.maxWidth}>
             <BankInfo>
                 <BankTitle>은행</BankTitle>
                 <BalanceContainer>
