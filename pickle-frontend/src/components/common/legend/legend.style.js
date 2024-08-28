@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "../../../theme";
 
 export const LegendDiv = styled.div`
   padding: 1rem;
@@ -16,6 +17,7 @@ export const LegendDiv = styled.div`
 export const LegendText = styled.p`
   margin: 0;
   background: none;
+  color: ${theme.colors.deep_gray};
 `;
 
 export const ColorCircle = styled.div`
