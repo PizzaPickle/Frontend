@@ -1,46 +1,15 @@
 import React from "react";
-import Header from "../../components/common/header/Header";
-import Circular from "../../components/common/circular-graph/Circular";
-import LegendWithGraph from "../../components/common/legend-width-graph/LegendWithGraph";
-
-let data = [
-  {
-    id: "국내주식",
-    label: 1,
-    value: 0.40,
-    color: "#FF6767",
-  },
-  {
-    id: "해외주식",
-    label: 2,
-    value: 0.100,
-    color: "#FFC27B",
-  },
-  {
-    id: "채권",
-    label: 3,
-    value: 0.234,
-    color: "#FF8B67",
-  },
-  {
-    id: "ETF",
-    label: 4,
-    value: 0.404,
-    color: "#FFADB6",
-  },
-  {
-    id: "원자재",
-    label: 5,
-    value: 0.24,
-    color: "#ffd9ad",
-  },
-];
+import WalletCard from "../../components/common/wallet-card/WalletCard";
 
 export default function TestPage() {
+  const num1 = 7532220;
+  const num2 = 254032350;
+  const num3 = 12321200;
+
   return (
     <>
-      <Header></Header>
-      <LegendWithGraph width={600} height={300} data={data}/>
+    <WalletCard text1="내 포트폴리오 자산" text2="총 자산" text3="투자 여유 금액"
+    data1={num1} data2={num2} data3={num3}></WalletCard>
     </>
   );
 }
