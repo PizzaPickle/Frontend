@@ -15,7 +15,7 @@ export default function WalletCard(props) {
       
     return (
         <>
-        <StyeldWalletContainer>
+        <StyeldWalletContainer width={props.width} height={props.height}>
             <StyledIconAndText>
                 <img src="/assets/mywallet.png"></img>
                 <StyledWalletText>내 자산</StyledWalletText>
