@@ -1,0 +1,8 @@
+.slick-slide.slick-active.slick-current > div > div {
+    background-color:#F1F5FF; /* 원하는 배경색으로 변경 */
+    /* 추가 스타일을 여기에 작성 */
+}
+
+.slick-slide.slick-active > div > div {
+    background-color:#F1F5FF; /* 원하는 배경색으로 변경 */
+}
