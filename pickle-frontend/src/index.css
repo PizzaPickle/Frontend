@@ -4,6 +4,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #F5F8FF;
+    
     font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  body {
+    background-color: #F5F8FF;
   }
