@@ -19,6 +19,10 @@ export const Table = styled.table`
   border-spacing: 30px 1rem;
 `;
 
+export const Td = styled.td`
+  max-width: 40px;
+`;
+
 export const Horizon = styled.hr`
   position: absolute;
   left: 0;
