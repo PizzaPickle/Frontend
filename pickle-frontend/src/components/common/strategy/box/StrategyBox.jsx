@@ -13,11 +13,10 @@ export default function StrategyBox({ data, width, height }) {
   const [currentProducts, setCurProducts] = useState([]);
 
   function selectCategory(category) {
-    console.log(category.productList);
     setCurProducts(category.productList);
   }
   return (
-    <>
+    <div>
       <LegendWithGraphDiv width={`${width}px`} height={`${height}px`}>
         <CircularDiv>
           <Circular width="110%" height="100%" data={data} />
@@ -29,13 +28,18 @@ export default function StrategyBox({ data, width, height }) {
                 key={category.label}
                 onClick={() => selectCategory(category)}
               >
-                <Legend category={category} />
+                <Legend
+                  activate={
+                    currentProducts === category.productList ? true : false
+                  }
+                  category={category}
+                />
               </div>
             ))}
           </LegendListDiv>
         </LegendDiv>
       </LegendWithGraphDiv>
       <StockTable productList={currentProducts} width={`${width}px`} />
-    </>
+    </div>
   );
 }

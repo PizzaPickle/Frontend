@@ -15,12 +15,21 @@ export const Table = styled.table`
   width: 100%;
   position: relative;
   text-align: center;
-  border-collapse: separate;
-  border-spacing: 30px 1rem;
+  border-collapse: collapse;
+`;
+
+export const Thead = styled.thead`
+  border-bottom: 2px solid ${theme.colors.line_gray};
+`;
+
+export const Th = styled.th`
+  padding: 1rem 0;
 `;
 
 export const Td = styled.td`
   max-width: 40px;
+  min-width: 25px;
+  padding: 1rem 0 0.5rem 0;
 `;
 
 export const Horizon = styled.hr`

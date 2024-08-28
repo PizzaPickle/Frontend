@@ -1,5 +1,13 @@
 import ProgressBar from "./ProgressBar";
-import { StockTableText, StockTableContainer, Table, Horizon, Td } from "./stockTable.style";
+import {
+  StockTableText,
+  StockTableContainer,
+  Table,
+  Horizon,
+  Td,
+  Thead,
+  Th,
+} from "./stockTable.style";
 
 export default function StockTable({ productList, width }) {
   const keysOrder = ["name", "code", "themeName", "ratio"];
@@ -7,23 +15,23 @@ export default function StockTable({ productList, width }) {
   return (
     <StockTableContainer width={width}>
       <Table>
-        <thead>
+        <Thead>
           <tr>
-            <th>
+            <Th>
               <StockTableText>종목명</StockTableText>
-            </th>
-            <th>
+            </Th>
+            <Th>
               <StockTableText>종목코드</StockTableText>
-            </th>
-            <th>
+            </Th>
+            <Th>
               <StockTableText>테마</StockTableText>
-            </th>
-            <th>
+            </Th>
+            <Th>
               <StockTableText>매매 비율</StockTableText>
-            </th>
+            </Th>
           </tr>
-        </thead>
-        <Horizon />
+        </Thead>
+        {/* <Horizon /> */}
         <tbody>
           {productList.map((product) => (
             <tr key={product.code}>
