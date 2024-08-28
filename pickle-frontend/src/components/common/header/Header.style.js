@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const StyledHeaderDiv = styled.div`
+    position: fixed;
+    width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
