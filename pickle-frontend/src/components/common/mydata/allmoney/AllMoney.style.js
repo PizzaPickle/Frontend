@@ -7,6 +7,7 @@ export const Container = styled.div`
     height:224px;
     padding:24px;
     border-radius: 16px;
+
     
 `;
 
@@ -55,58 +56,49 @@ export const Label = styled.span`
 export const Amount = styled.span`
    background-color:#F1F5FF;
 `;
+export const BodyContainer=styled.div`
+  background-color: #F1F5FF;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
+
+
+`;
 export const SliderContainer = styled.div`
-
-
+  background-color: #F1F5FF;
+  
   .slick-prev:hover:before,
-  .slick-prev:focus:before,
-  .slick-next:hover:before,
-  .slick-next:focus:before {
-    opacity: 1;
+  .slick-next:hover:before {
+    color: #0032B7;
+  }
+  .slick-prev:hover:after,
+  .slick-next:hover:after {
+    opacity: 0.8;
   }
 
   .slick-prev:before,
   .slick-next:before {
     font-size: 26px;
     color: #0046FF;
-    opacity: 0.8;
+    opacity: 1;
   }
 
   .slick-prev {
-    left: -18px;
+    left: -25px;
     z-index: 10;
   }
 
   .slick-next {
-    right: -15px;
+    right: -20px;
+    
   }
-
-  
-
-  .slick-dots {
-    bottom: -35px;
+  .slick-list{
+    width: 380px;
     background-color: #F1F5FF;
-  }
-
-  .slick-dots li {
-    margin: -10px 2px;
-    background-color: #F1F5FF;
-  }
-
-  .slick-dots li button:before {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #0046FF;
-    text-align: center;
-    content: '';
-  }
-
-  .slick-dots li.slick-active button:before {
-    opacity: 0.75;
-    color: black;
-  }
+  }  
 `;
 
 export const Slide = styled.div`
@@ -114,13 +106,11 @@ export const Slide = styled.div`
    padding: 16px;
    border-radius: 14px;
    height: auto;
-   width: 100px;
+   width: 160px;
    display: flex; 
    flex-direction: column;
-   gap: 20px; 
-   margin: 0px 10px;
-   
-   
+   gap: 0px; 
+   margin: auto; 
 `;
 export const SlideHeader = styled.div`
    background-color:#FFFFFF;

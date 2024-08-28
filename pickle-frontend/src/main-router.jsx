@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainPage from "./routes/main/MainPage";
 import LoginPage from "./routes/login/LoginPage";
 import TestPage from "./routes/test/TestPage";
+import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 
 export const routers = [
     {
@@ -13,7 +14,7 @@ export const routers = [
     {
         path: "/login",
         element: <LoginPage />
-    }
+    },
     // {
     //     path: "/머있지?",
     //     element: 
@@ -25,6 +26,10 @@ export const routers = [
     //         }
     //     ]
     // }
+    {
+        path:"/allmoney",
+        element:<AllMoney/>
+    }
 ];
 
 const router = createBrowserRouter(routers);
