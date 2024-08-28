@@ -8,10 +8,8 @@ export default function WalletCard(props) {
         return amount.toLocaleString() + '원';
       };
 
-    const amount1 = formatCurrency(props.data1);
-    const amount2 = formatCurrency(props.data2);
-    const amount3 = formatCurrency(props.data3);
-    
+    const texts = props.texts
+    const formattedAmounts = props.amounts.map(amount => formatCurrency(amount));
       
     return (
         <>
@@ -21,14 +19,14 @@ export default function WalletCard(props) {
                 <StyledWalletText>내 자산</StyledWalletText>
             </StyledIconAndText>
             <StyledWalletTextGroup>
-                <span style={{fontWeight: "300"}}>{props.text1}</span>
-                <span style={{fontSize:"1.5rem"}}>{amount1}</span>
+                <span style={{fontWeight: "300"}}>{texts[0]}</span>
+                <span style={{fontSize:"1.5rem"}}>{formattedAmounts[0]}</span>
             </StyledWalletTextGroup>
             <StyledWalletGroup>
-                <section><span style={{fontWeight: "300"}}>{props.text2}</span><br />
-                {amount2}</section>
-                <section><span style={{fontWeight: "300"}}>{props.text3}</span><br />
-                {amount3}</section>
+                <section><span style={{fontWeight: "300"}}>{texts[1]}</span><br />
+                {formattedAmounts[1]}</section>
+                <section><span style={{fontWeight: "300"}}>{texts[2]}</span><br />
+                {formattedAmounts[2]}</section>
             </StyledWalletGroup>
 
         </StyeldWalletContainer>
