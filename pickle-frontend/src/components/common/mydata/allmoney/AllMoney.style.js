@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     background-color:#F1F5FF;
-    max-width: ${(props) => props.maxWidth || '500px'};
-    height:  ${(props) => props.height || '224px'};
+    max-width:${(props) => props.maxWidth || '500px'};
+    height:${(props) => props.height || '224px'};
     padding:24px;
     border-radius: 16px;
 
@@ -14,18 +14,19 @@ export const Container = styled.div`
 export const BankInfo = styled.p`
     background-color:#F1F5FF;
     display:flex;
-    gap:24px;
-    align-items: center;
+    gap:20px;
+    padding: 10px;
+    align-items: self-end;
     color: #020050;
     font-size: 14px;
     margin-bottom: 21px;
-
     
 `;
 
 export const BankTitle = styled.span`
     background-color:#F1F5FF;
-    font-size: 21px;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #020050;
     
 
@@ -43,7 +44,7 @@ export const BalanceContainer = styled.div`
 
 export const BalanceRow = styled.div`
    background-color:#F1F5FF;
-   gap:20px;
+   gap:10px;
    display: flex;
 
 
@@ -109,8 +110,8 @@ export const Slide = styled.div`
    width: 160px;
    display: flex; 
    flex-direction: column;
-   gap: 0px; 
    margin: auto; 
+   
 `;
 export const SlideHeader = styled.div`
    background-color:#FFFFFF;
