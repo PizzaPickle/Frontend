@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./background.css"
 import {
     Container,
     BankInfo,
@@ -17,8 +18,7 @@ import {
     SlideHeaderName,
     SlideHeaderKind,
     CurrentBalance,
- 
-    
+    BodyContainer
 } from "./AllMoney.style";
 
 export default function AllMoney() {
@@ -28,7 +28,8 @@ export default function AllMoney() {
         slidesToScroll: 1,
         speed: 500,
         infinite: true,
-        dots: true,
+        useCSS: true
+        
     };
 
     return (
@@ -46,34 +47,45 @@ export default function AllMoney() {
                     </BalanceRow>
                 </BalanceContainer>
             </BankInfo>
+            <BodyContainer>		
             <SliderContainer>
                 <Slider {...settings}>
+                    <div style={{backgroundColor: "#F1F5FF"}}>
                     <Slide>
+                       
                         <SlideHeader>
                             <SlideHeaderName>은행기관</SlideHeaderName>
                             <SlideHeaderKind>보통예금</SlideHeaderKind>
                         </SlideHeader>
                         <ProductName>예금상품명</ProductName>
                         <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                    </Slide>
+                        
+                    </Slide></div>
+                    <div style={{backgroundColor: "#F1F5FF"}}>
                     <Slide>
+                       
                         <SlideHeader>
                             <SlideHeaderName>은행기관</SlideHeaderName>
                             <SlideHeaderKind>보통예금</SlideHeaderKind>
                         </SlideHeader>
                         <ProductName>예금상품명</ProductName>
                         <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                    </Slide>
+                        
+                    </Slide></div>
+                    <div style={{backgroundColor: "#F1F5FF"}}>
                     <Slide>
+                       
                         <SlideHeader>
                             <SlideHeaderName>은행기관</SlideHeaderName>
                             <SlideHeaderKind>보통예금</SlideHeaderKind>
                         </SlideHeader>
                         <ProductName>예금상품명</ProductName>
                         <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                    </Slide>
+                        
+                    </Slide></div>
                 </Slider>
             </SliderContainer>
+            </BodyContainer>		
         </Container>
     );
 }
