@@ -24,7 +24,7 @@ import {
 export default function AllMoney(props) {
     const settings = {
         className: 'slider variable-width',
-        slidesToShow: 2,
+        slidesToShow: props.showNum,
         slidesToScroll: 1,
         speed: 500,
         infinite: true,
@@ -33,7 +33,7 @@ export default function AllMoney(props) {
     };
 
     return (
-        <Container height={props.height} max-width={props.maxWidth}>
+        <Container height={props.height} maxWidth={props.maxWidth}>
             <BankInfo>
                 <BankTitle>은행</BankTitle>
                 <BalanceContainer>
