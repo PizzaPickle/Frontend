@@ -145,5 +145,23 @@ export const StyledPbCard = styled.div`
 export const StyledContentFlex = styled.div`
     display: flex;
     gap: 20px;
+`
+export const StyledAllMoneyContainer = styled.div`
+    position: relative;
 
+`
+
+export const AllMoneyTitle = styled.div`
+    display: flex;
+    gap: 12px;
+    position: absolute;
+    padding: 30px;
+    font-size: large;
+    color: ${({ theme }) => theme.colors.navy};
+    font-weight: 700;
+
+    /* TODO 데이터에 따라 수정 필요 */
+    p {
+        color: ${({ theme }) => theme.colors.stockRed};;
+    }
 `

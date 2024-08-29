@@ -5,7 +5,8 @@ export const theme = {
       cobartblue: "#0046FF",
       navy:"#02004C",
       line_gray: "#D8DDEE",
-      sidebar: "#6F6C99"
+      sidebar: "#6F6C99",
+      stockRed: "#FF5C00"
     },
     boxShadow: {
         default: "6px 6px 54px rgba(0, 0, 0, 0.03)"

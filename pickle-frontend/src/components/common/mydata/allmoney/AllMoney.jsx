@@ -35,6 +35,7 @@ export default function AllMoney(props) {
     return (
         <Container height={props.height} maxWidth={props.maxWidth} padding={props.padding}>
         {/* <BankInfo>
+            <BankTitle>{props.bankTitle}</BankTitle>
             <BalanceContainer>
                 {props.balanceInfo.map((balance, index) => (
                     <BalanceRow key={index}>
@@ -45,17 +46,17 @@ export default function AllMoney(props) {
             </BalanceContainer>
         </BankInfo> */}
         <BodyContainer>		
-            <SliderContainer>
+            <SliderContainer listWidth={props.listWidth}>
                 <Slider {...settings}>
                     {props.slides.map((slide, index) => (
                         <div key={index}>
-                            <Slide>
+                            <Slide cardWidth={props.cardWidth}>
                                 <SlideHeader>
                                     <SlideHeaderName>{slide.bankName}</SlideHeaderName>
                                     <SlideHeaderKind>{slide.accountType}</SlideHeaderKind>
                                 </SlideHeader>
                                 <ProductName display={props.secondTextNo}>{slide.productName}</ProductName>
-                                <CurrentBalance>{slide.currentBalance}</CurrentBalance>
+                                <CurrentBalance lastTextSize={props.lastTextSize} lastTextColor={props.lastTextColor}>{slide.currentBalance}</CurrentBalance>
                             </Slide>
                         </div>
                     ))}

@@ -3,7 +3,7 @@ import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import AllMoney from "../../components/common/mydata/allmoney/AllMoney";
 import WalletCard from "../../components/common/wallet-card/WalletCard";
-import { StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
+import { AllMoneyTitle, StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard, StyledAllMoneyContainer } from "./HomePage.style";
 
 export default function HomePage(){    
     
@@ -30,18 +30,18 @@ export default function HomePage(){
     const slidesData = [
         {
             bankName: "국내주식",
-            productName: "예금상품명1",
-            currentBalance: "현재잔액 100,000원"
+            // productName: "예금상품명1",
+            currentBalance: "+3.1%"
         },
         {
             bankName: "ETF",
-            productName: "예금상품명2",
-            currentBalance: "현재잔액 200,000원"
+            // productName: "예금상품명2",
+            currentBalance: "+3.1%"
         },
         {
             bankName: "채권",
-            productName: "예금상품명3",
-            currentBalance: "현재잔액 300,000원"
+            // productName: "예금상품명3",
+            currentBalance: "+3.1%"
         }
     ];
 
@@ -93,15 +93,23 @@ export default function HomePage(){
                     
                     <StyledContentFlex>
                         <WalletCard texts={walletTexts} amounts={walletAmounts} />
-                        <AllMoney 
-                            maxWidth={"800px"}
-                            height={"230px"}
-                            padding={"50px"}
-                            showNum={2}
-                            bankTitle="내 포트폴리오 수익률"
-                            balanceInfo={balanceInfoData}
-                            slides={slidesData}
-                        />
+                        <StyledAllMoneyContainer>
+                            <AllMoneyTitle>내 포트폴리오 수익률
+                                <p>+5.1%</p>
+                            </AllMoneyTitle>
+                            <AllMoney 
+                                maxWidth={"1000px"}
+                                height={"230px"}
+                                padding={"50px"}
+                                showNum={3}
+                                balanceInfo={balanceInfoData}
+                                slides={slidesData}
+                                listWidth={"630px"}
+                                cardWidth={"200px"}
+                                lastTextSize={"large"}
+                                lastTextColor={"#FF5C00"} /* TODO 데이터에 따라 수정 필요 */
+                            />
+                        </StyledAllMoneyContainer>
                     </StyledContentFlex>
                     </StyledHomeSection>
 

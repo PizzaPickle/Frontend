@@ -100,7 +100,7 @@ export const SliderContainer = styled.div`
     
   }
   .slick-list{
-    width: 380px;
+    width: ${(props) => props.listWidth|| '480px'}; 
     background-color: #F1F5FF;
   }  
 `;
@@ -110,7 +110,7 @@ export const Slide = styled.div`
    padding: 16px;
    border-radius: 14px;
    height: auto;
-   width: 160px;
+   width: ${(props) => props.cardWidth|| '160px'}; 
    display: flex; 
    flex-direction: column;
    margin: auto; 
@@ -151,7 +151,7 @@ export const ProductName = styled.div`
 
 export const CurrentBalance = styled.div`
     background-color:#FFFFFF;
-    font-size: 14px;
-    color: #202224; 
+    font-size:  ${(props) => props.lastTextSize || '14px'};
+    color: ${(props) => props.lastTextColor || '#202224'}; 
 `;
 
