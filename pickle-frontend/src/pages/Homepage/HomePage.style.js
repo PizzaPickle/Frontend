@@ -1,21 +1,38 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+// 애니메이션 정의
+const scaleUp = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+`;
 
-
+const scaleDown = keyframes`
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 export const StyledHomeContainer = styled.div`
     display: flex;
     height: 100vh;
     flex-direction: column;
+    overflow-y: hidden;
 `
 
 export const StyledHomeMainContent = styled.div`
     display: flex;
-    flex: 1;
 `
 
 export const StyledHomeContent = styled.div`
-    flex: 1;
+    width: 100vw;
+    height: 100vh;
     padding: 20px;
-    overflow-y: auto; /* 스크롤 */
+    overflow-y: auto;
 `
 
 export const StyledHeadText = styled.div`
@@ -24,10 +41,17 @@ export const StyledHeadText = styled.div`
     color: ${({ theme }) => theme.colors.navy};
 `
 
-export const StyledHomeSection1= styled.div`
+export const StyledHomeSection= styled.div`
     display: flex;
+    flex-direction: column;
     gap: 20px;
     padding: 10px;
+    margin-bottom: 25px;
+
+    article {
+        display: flex;
+        gap: 20px;
+    }
 `
 
 export const StyledContentBlock= styled.div`
@@ -56,8 +80,8 @@ export const StyledS1Text= styled.div`
     span > hr {
         border: none;
         height: 6px;
-        background-color: #FFE35E; /* 선의 색상 */
-        margin-top: -5px; /* 텍스트와 선 사이의 간격 */
+        background-color: #FFE35E; 
+        margin-top: -5px; 
         border-radius: 20px;
     }
 
@@ -75,5 +99,46 @@ export const StyledS1Text= styled.div`
     section > p:nth-child(-n+2) {
         padding-right: 12px;
         border-right: 1px solid ${({ theme }) => theme.colors.line_gray};
+    }
+`
+
+export const StyledHead2Text= styled.div`
+    font-size: x-large;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.navy};
+`
+
+export const StyledPbCard = styled.div`
+    width: 180px;
+    height: 180px;
+    background-color: ${({ theme }) => theme.colors.cobartblue};
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: ${scaleDown} 0.3s ease-in-out forwards;
+    }
+
+    &:hover {
+        img {
+            animation: ${scaleUp} 0.3s ease-in-out forwards;
+        }
+        opacity: .95;
+    }
+
+    p {
+        position: absolute;
+        z-index: 100;
+        color: white;
+        font-size: larger;
+        font-weight: 600;
+        padding: 25px;
+        white-space: normal;
     }
 `

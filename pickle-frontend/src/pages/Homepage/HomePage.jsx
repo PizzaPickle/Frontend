@@ -3,7 +3,7 @@ import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import AllMoney from "../../components/common/mydata/allmoney/AllMoney";
 import WalletCard from "../../components/common/wallet-card/WalletCard";
-import { StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection1, StyledContentBlock } from "./HomePage.style";
+import { StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
 
 export default function HomePage(){    
     
@@ -34,13 +34,12 @@ export default function HomePage(){
                     <Sidebar />
                 <StyledHomeContent>
 
+                    {/* section 1 */}
+                    <StyledHomeSection> 
                     <StyledHeadText>
                         {loginUserName.slice(1)}님, 환영합니다.
                     </StyledHeadText>
-                    
-
-                    {/* section 1 */}
-                    <StyledHomeSection1>
+                        <article>
                         <StyledContentBlock>
                             <StyledS1Text>
                                 <img src="/assets/home-bell.svg"></img>
@@ -61,10 +60,31 @@ export default function HomePage(){
                                     <img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img>
                             </StyledS1Text>
                         </StyledContentBlock>
-                    </StyledHomeSection1>
+                        </article>
+                    </StyledHomeSection>
 
-
+                    {/* section 2 */}
+                    <StyledHomeSection>
+                    <StyledHead2Text>
+                     나의 투자 현황을 살펴보세요.
+                    </StyledHead2Text>
                     <WalletCard texts={walletTexts} amounts={walletAmounts} />
+                    </StyledHomeSection>
+
+                    
+                    {/* section 3 */}
+                    <StyledHomeSection> 
+                    <StyledHead2Text>
+                    믿을 수 있는 PB를 만나보세요.
+                    </StyledHead2Text>
+                    <StyledPbCard>
+                        <p>
+                        ETF잘알<br/>
+                        PB
+                        </p>
+                        <img src="/assets/home-pb1.svg"></img>
+                    </StyledPbCard>
+                    </StyledHomeSection>
                 </StyledHomeContent>
             </StyledHomeMainContent>
         </StyledHomeContainer>

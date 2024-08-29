@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const StyledSideDiv = styled.div`
     position: static;
     height: 100%;
+    width: 210px;
     z-index: 100;
     align-content: center;
     box-shadow: 1px 0 0 0 ${({ theme }) => theme.colors.line_gray};
