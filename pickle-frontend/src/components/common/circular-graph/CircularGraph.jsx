@@ -15,6 +15,7 @@ export const CircularGraph = ({ data }) => (
       from: "color",
       modifiers: [["darker", 0.2]],
     }}
+    activeOuterRadiusOffset={4}
     enableArcLinkLabels={false}
     enableArcLabels={false}
   />
