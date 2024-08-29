@@ -8,7 +8,7 @@ export default function WalletCard(props) {
         return amount.toLocaleString() + '원';
       };
 
-    const texts = props.texts
+    const texts = props.texts;
     const formattedAmounts = props.amounts.map(amount => formatCurrency(amount));
       
     return (

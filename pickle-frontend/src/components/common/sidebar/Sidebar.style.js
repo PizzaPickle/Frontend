@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 
 export const StyledSideDiv = styled.div`
-    position: fixed;
+    position: static;
     height: 100%;
-    z-index: -1;
+    z-index: 100;
     align-content: center;
     box-shadow: 1px 0 0 0 ${({ theme }) => theme.colors.line_gray};
-    margin: 10px;
+    margin-left: 10px;
     padding-left: 10px;
     padding-right: 30px;
 
