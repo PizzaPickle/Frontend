@@ -6,7 +6,8 @@ export const theme = {
       navy:"#02004C",
       line_gray: "#D8DDEE",
       sidebar: "#6F6C99",
-      stockRed: "#FF5C00"
+      stockRed: "#FF5C00",
+      deep_gray: "#636566"
     },
     boxShadow: {
         default: "6px 6px 54px rgba(0, 0, 0, 0.03)"

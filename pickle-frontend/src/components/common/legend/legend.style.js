@@ -1,21 +1,35 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { theme } from "../../../theme";
 
 export const LegendDiv = styled.div`
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 10px;
   cursor: pointer;
   &:hover {
-    background: white;
+    background: ${theme.colors.line_gray};
     transition: 0.5s;
-    border-radius: 10px;
   }
+  ${({ activate }) => {
+    if (activate) {
+      return css`
+        background: white;
+        border: 2px solid ${theme.colors.cobartblue};
+        &:hover {
+          background: white;
+          transition: 0.1s;
+        }
+      `;
+    }
+  }};
 `;
 
 export const LegendText = styled.p`
   margin: 0;
   background: none;
+  color: ${theme.colors.deep_gray};
 `;
 
 export const ColorCircle = styled.div`
