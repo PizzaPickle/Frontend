@@ -31,6 +31,8 @@ export const StyledHomeSection1= styled.div`
 `
 
 export const StyledContentBlock= styled.div`
+    display: flex;
+    gap: 20px;
     padding: 18px;
     color: ${({ theme }) => theme.colors.navy};
     border-radius: 16px;
@@ -45,7 +47,6 @@ export const StyledS1Text= styled.div`
 
     span {
         font-weight: 700;
-        width: 125px;
     }
 
     span > p {

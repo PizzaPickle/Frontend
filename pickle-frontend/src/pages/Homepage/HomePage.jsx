@@ -10,6 +10,7 @@ export default function HomePage(){
     //TODO
     const loginUserName = "홍길동";
     const consultPB = "윤재욱";
+    const consultReqNum = 3;
 
     const now = new Date();
     const consultDate = new Date(); //!! 상담일자로 변경해야 함
@@ -51,6 +52,13 @@ export default function HomePage(){
                                     <p>{consultPB}PB</p>
                                 </section>
                                 <img src="/assets/home-next.svg"></img>
+                            </StyledS1Text>
+                        </StyledContentBlock>
+                        <StyledContentBlock>
+                            <StyledS1Text>
+                                    <p>내가 보낸 요청</p>
+                                    <span><p>{consultReqNum}건</p></span>                               
+                                    <img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img>
                             </StyledS1Text>
                         </StyledContentBlock>
                     </StyledHomeSection1>
