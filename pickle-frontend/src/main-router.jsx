@@ -4,11 +4,12 @@ import MainPage from "./routes/main/MainPage";
 import LoginPage from "./routes/login/LoginPage";
 import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
+import HomePage from "./pages/Homepage/HomePage";
 
 export const routers = [
     {
         path: "/",
-        element: <TestPage />,
+        element: <HomePage />
         // index: true
     },
     {

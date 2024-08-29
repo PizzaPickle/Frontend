@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 
 export const StyledHeaderDiv = styled.div`
-    position: fixed;
+    position: static;
     width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
-  margin: 10px 0px;
+  margin-top: 10px;
   background-color: ${({ theme }) => theme.colors.background};
   border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
 `;

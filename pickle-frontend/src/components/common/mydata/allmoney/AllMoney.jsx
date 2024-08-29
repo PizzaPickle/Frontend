@@ -5,12 +5,12 @@ import "slick-carousel/slick/slick-theme.css";
 import "./background.css"
 import {
     Container,
-    BankInfo,
-    BankTitle,
-    BalanceContainer,
-    BalanceRow,
-    Label,
-    Amount,
+    // BankInfo,
+    // BankTitle,
+    // BalanceContainer,
+    // BalanceRow,
+    // Label,
+    // Amount,
     Slide,
     SliderContainer,
     ProductName,
@@ -21,10 +21,10 @@ import {
     BodyContainer
 } from "./AllMoney.style";
 
-export default function AllMoney() {
+export default function AllMoney(props) {
     const settings = {
         className: 'slider variable-width',
-        slidesToShow: 2,
+        slidesToShow: props.showNum,
         slidesToScroll: 1,
         speed: 500,
         infinite: true,
@@ -33,59 +33,36 @@ export default function AllMoney() {
     };
 
     return (
-        <Container>
-            <BankInfo>
-                <BankTitle>은행</BankTitle>
-                <BalanceContainer>
-                    <BalanceRow>
-                        <Label>총 잔액</Label>
-                        <Amount>356,439,000원</Amount>
+        <Container height={props.height} maxWidth={props.maxWidth} padding={props.padding}>
+        {/* <BankInfo>
+            <BankTitle>{props.bankTitle}</BankTitle>
+            <BalanceContainer>
+                {props.balanceInfo.map((balance, index) => (
+                    <BalanceRow key={index}>
+                        <Label>{balance.label}</Label>
+                        <Amount>{balance.amount}</Amount>
                     </BalanceRow>
-                    <BalanceRow>
-                        <Label>총 출금가능금액</Label>
-                        <Amount>356,439,000원</Amount>
-                    </BalanceRow>
-                </BalanceContainer>
-            </BankInfo>
-            <BodyContainer>		
-            <SliderContainer>
+                ))}
+            </BalanceContainer>
+        </BankInfo> */}
+        <BodyContainer>		
+            <SliderContainer listWidth={props.listWidth}>
                 <Slider {...settings}>
-                    <div style={{backgroundColor: "#F1F5FF"}}>
-                    <Slide>
-                       
-                        <SlideHeader>
-                            <SlideHeaderName>은행기관</SlideHeaderName>
-                            <SlideHeaderKind>보통예금</SlideHeaderKind>
-                        </SlideHeader>
-                        <ProductName>예금상품명</ProductName>
-                        <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                        
-                    </Slide></div>
-                    <div style={{backgroundColor: "#F1F5FF"}}>
-                    <Slide>
-                       
-                        <SlideHeader>
-                            <SlideHeaderName>은행기관</SlideHeaderName>
-                            <SlideHeaderKind>보통예금</SlideHeaderKind>
-                        </SlideHeader>
-                        <ProductName>예금상품명</ProductName>
-                        <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                        
-                    </Slide></div>
-                    <div style={{backgroundColor: "#F1F5FF"}}>
-                    <Slide>
-                       
-                        <SlideHeader>
-                            <SlideHeaderName>은행기관</SlideHeaderName>
-                            <SlideHeaderKind>보통예금</SlideHeaderKind>
-                        </SlideHeader>
-                        <ProductName>예금상품명</ProductName>
-                        <CurrentBalance>현재잔액 (원)</CurrentBalance>
-                        
-                    </Slide></div>
+                    {props.slides.map((slide, index) => (
+                        <div key={index}>
+                            <Slide cardWidth={props.cardWidth}>
+                                <SlideHeader>
+                                    <SlideHeaderName>{slide.bankName}</SlideHeaderName>
+                                    <SlideHeaderKind>{slide.accountType}</SlideHeaderKind>
+                                </SlideHeader>
+                                <ProductName display={props.secondTextNo}>{slide.productName}</ProductName>
+                                <CurrentBalance lastTextSize={props.lastTextSize} lastTextColor={props.lastTextColor}>{slide.currentBalance}</CurrentBalance>
+                            </Slide>
+                        </div>
+                    ))}
                 </Slider>
             </SliderContainer>
-            </BodyContainer>		
-        </Container>
+        </BodyContainer>		
+    </Container>
     );
 }

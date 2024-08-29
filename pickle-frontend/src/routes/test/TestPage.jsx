@@ -1,3 +1,7 @@
+
+import React from "react";
+import ProfitCard from "../../components/customer-home/profit-card/ProfitCard";
+
 // import React from "react";
 import Header from "../../components/common/header/Header";
 // import Circular from "../../components/common/circular-graph/Circular";
@@ -127,17 +131,8 @@ let productList = [
 export default function TestPage() {
   return (
     <>
-      <Header></Header>
-      <Sidebar />
-      {/* <GraphWithLegend width={550} height={300} data={data} />
-      <div
-        style={{
-          width: "600px",
-        }}
-      >
-        <StockTable width="80%" productList={productList} />
-      </div> */}
-      <StrategyBox data={data} width={700} height={300} />
+
+
     </>
   );
 }

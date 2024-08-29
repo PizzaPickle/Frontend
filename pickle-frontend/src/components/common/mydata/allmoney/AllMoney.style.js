@@ -3,29 +3,33 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     background-color:#F1F5FF;
-    max-width:500px;
-    height:224px;
-    padding:24px;
+    max-width:${(props) => props.maxWidth || '500px'};
+    height:${(props) => props.height || '224px'};
+    padding-left: ${(props) => props.padding || '24px'}; 
+    padding-right: ${(props) => props.padding || '24px'}; 
     border-radius: 16px;
-
     
+    display: flex;
+    align-items: end;
+    padding-bottom: 40px;
 `;
 
-export const BankInfo = styled.p`
-    background-color:#F1F5FF;
-    display:flex;
-    gap:24px;
-    align-items: center;
-    color: #020050;
-    font-size: 14px;
-    margin-bottom: 21px;
-
+// export const BankInfo = styled.p`
+//     background-color:#F1F5FF;
+//     display:flex;
+//     gap:20px;
+//     padding: 10px;
+//     align-items: self-end;
+//     color: #020050;
+//     font-size: 14px;
+//     margin-bottom: 21px;
     
-`;
+// `;
 
 export const BankTitle = styled.span`
     background-color:#F1F5FF;
-    font-size: 21px;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #020050;
     
 
@@ -43,7 +47,7 @@ export const BalanceContainer = styled.div`
 
 export const BalanceRow = styled.div`
    background-color:#F1F5FF;
-   gap:20px;
+   gap:10px;
    display: flex;
 
 
@@ -96,7 +100,7 @@ export const SliderContainer = styled.div`
     
   }
   .slick-list{
-    width: 380px;
+    width: ${(props) => props.listWidth|| '480px'}; 
     background-color: #F1F5FF;
   }  
 `;
@@ -106,11 +110,11 @@ export const Slide = styled.div`
    padding: 16px;
    border-radius: 14px;
    height: auto;
-   width: 160px;
+   width: ${(props) => props.cardWidth|| '160px'}; 
    display: flex; 
    flex-direction: column;
-   gap: 0px; 
    margin: auto; 
+   
 `;
 export const SlideHeader = styled.div`
    background-color:#FFFFFF;
@@ -147,7 +151,7 @@ export const ProductName = styled.div`
 
 export const CurrentBalance = styled.div`
     background-color:#FFFFFF;
-    font-size: 14px;
-    color: #202224; 
+    font-size:  ${(props) => props.lastTextSize || '14px'};
+    color: ${(props) => props.lastTextColor || '#202224'}; 
 `;
 
