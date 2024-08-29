@@ -5,23 +5,26 @@ export const Container = styled.div`
     background-color:#F1F5FF;
     max-width:${(props) => props.maxWidth || '500px'};
     height:${(props) => props.height || '224px'};
-    padding:24px;
+    padding-left: ${(props) => props.padding || '24px'}; 
+    padding-right: ${(props) => props.padding || '24px'}; 
     border-radius: 16px;
-
     
+    display: flex;
+    align-items: end;
+    padding-bottom: 40px;
 `;
 
-export const BankInfo = styled.p`
-    background-color:#F1F5FF;
-    display:flex;
-    gap:20px;
-    padding: 10px;
-    align-items: self-end;
-    color: #020050;
-    font-size: 14px;
-    margin-bottom: 21px;
+// export const BankInfo = styled.p`
+//     background-color:#F1F5FF;
+//     display:flex;
+//     gap:20px;
+//     padding: 10px;
+//     align-items: self-end;
+//     color: #020050;
+//     font-size: 14px;
+//     margin-bottom: 21px;
     
-`;
+// `;
 
 export const BankTitle = styled.span`
     background-color:#F1F5FF;

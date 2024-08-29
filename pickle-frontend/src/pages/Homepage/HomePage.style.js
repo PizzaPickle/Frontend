@@ -142,12 +142,8 @@ export const StyledPbCard = styled.div`
     }
 `
 
-export const StyledPbCardContainer = styled.div`
+export const StyledContentFlex = styled.div`
     display: flex;
     gap: 20px;
 
-`
-
-export const StyledPbCard2 = styled(StyledPbCard)`
-    background-color: '#FFDF6F';
 `

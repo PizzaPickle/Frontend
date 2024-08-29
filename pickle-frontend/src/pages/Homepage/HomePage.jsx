@@ -3,7 +3,7 @@ import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import AllMoney from "../../components/common/mydata/allmoney/AllMoney";
 import WalletCard from "../../components/common/wallet-card/WalletCard";
-import { StyledPbCard2, StyledPbCardContainer, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
+import { StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
 
 export default function HomePage(){    
     
@@ -26,6 +26,28 @@ export default function HomePage(){
     //내 자산 지갑
     const walletTexts = ["내 포트폴리오 자산", "총 자산", "투자 여유 금액"]
     const walletAmounts = [7532220, 254032350, 12321200]
+
+    const slidesData = [
+        {
+            bankName: "국내주식",
+            productName: "예금상품명1",
+            currentBalance: "현재잔액 100,000원"
+        },
+        {
+            bankName: "ETF",
+            productName: "예금상품명2",
+            currentBalance: "현재잔액 200,000원"
+        },
+        {
+            bankName: "채권",
+            productName: "예금상품명3",
+            currentBalance: "현재잔액 300,000원"
+        }
+    ];
+
+    const balanceInfoData = [
+        
+    ];
 
     return (
         <StyledHomeContainer>
@@ -68,7 +90,19 @@ export default function HomePage(){
                     <StyledHead2Text>
                      나의 투자 현황을 살펴보세요.
                     </StyledHead2Text>
-                    <WalletCard texts={walletTexts} amounts={walletAmounts} />
+                    
+                    <StyledContentFlex>
+                        <WalletCard texts={walletTexts} amounts={walletAmounts} />
+                        <AllMoney 
+                            maxWidth={"800px"}
+                            height={"230px"}
+                            padding={"50px"}
+                            showNum={2}
+                            bankTitle="내 포트폴리오 수익률"
+                            balanceInfo={balanceInfoData}
+                            slides={slidesData}
+                        />
+                    </StyledContentFlex>
                     </StyledHomeSection>
 
                     
@@ -77,7 +111,7 @@ export default function HomePage(){
                         <StyledHead2Text>
                         믿을 수 있는 PB를 만나보세요.
                         </StyledHead2Text>
-                        <StyledPbCardContainer>                        
+                        <StyledContentFlex>                        
                             <StyledPbCard>
                                 <p>
                                 ETF잘알<br/>
@@ -99,7 +133,7 @@ export default function HomePage(){
                                 </p>
                                 <img src="/assets/home-pb3.svg"></img>
                             </StyledPbCard>
-                        </StyledPbCardContainer>
+                        </StyledContentFlex>
                     </StyledHomeSection>
                 </StyledHomeContent>
             </StyledHomeMainContent>

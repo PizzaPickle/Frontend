@@ -5,12 +5,12 @@ import "slick-carousel/slick/slick-theme.css";
 import "./background.css"
 import {
     Container,
-    BankInfo,
-    BankTitle,
-    BalanceContainer,
-    BalanceRow,
-    Label,
-    Amount,
+    // BankInfo,
+    // BankTitle,
+    // BalanceContainer,
+    // BalanceRow,
+    // Label,
+    // Amount,
     Slide,
     SliderContainer,
     ProductName,
@@ -33,9 +33,8 @@ export default function AllMoney(props) {
     };
 
     return (
-        <Container height={props.height} maxWidth={props.maxWidth}>
-        <BankInfo>
-            <BankTitle>{props.bankTitle}</BankTitle>
+        <Container height={props.height} maxWidth={props.maxWidth} padding={props.padding}>
+        {/* <BankInfo>
             <BalanceContainer>
                 {props.balanceInfo.map((balance, index) => (
                     <BalanceRow key={index}>
@@ -44,7 +43,7 @@ export default function AllMoney(props) {
                     </BalanceRow>
                 ))}
             </BalanceContainer>
-        </BankInfo>
+        </BankInfo> */}
         <BodyContainer>		
             <SliderContainer>
                 <Slider {...settings}>
@@ -55,7 +54,7 @@ export default function AllMoney(props) {
                                     <SlideHeaderName>{slide.bankName}</SlideHeaderName>
                                     <SlideHeaderKind>{slide.accountType}</SlideHeaderKind>
                                 </SlideHeader>
-                                <ProductName>{slide.productName}</ProductName>
+                                <ProductName display={props.secondTextNo}>{slide.productName}</ProductName>
                                 <CurrentBalance>{slide.currentBalance}</CurrentBalance>
                             </Slide>
                         </div>
