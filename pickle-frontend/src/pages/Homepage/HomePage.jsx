@@ -3,7 +3,7 @@ import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import AllMoney from "../../components/common/mydata/allmoney/AllMoney";
 import WalletCard from "../../components/common/wallet-card/WalletCard";
-import { StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
+import { StyledPbCard2, StyledPbCardContainer, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard } from "./HomePage.style";
 
 export default function HomePage(){    
     
@@ -74,16 +74,32 @@ export default function HomePage(){
                     
                     {/* section 3 */}
                     <StyledHomeSection> 
-                    <StyledHead2Text>
-                    믿을 수 있는 PB를 만나보세요.
-                    </StyledHead2Text>
-                    <StyledPbCard>
-                        <p>
-                        ETF잘알<br/>
-                        PB
-                        </p>
-                        <img src="/assets/home-pb1.svg"></img>
-                    </StyledPbCard>
+                        <StyledHead2Text>
+                        믿을 수 있는 PB를 만나보세요.
+                        </StyledHead2Text>
+                        <StyledPbCardContainer>                        
+                            <StyledPbCard>
+                                <p>
+                                ETF잘알<br/>
+                                PB
+                                </p>
+                                <img src="/assets/home-pb1.svg"></img>
+                            </StyledPbCard>
+                            <StyledPbCard style={{backgroundColor: "#FFDF6F"}}>
+                                <p>
+                                국장 전문<br/>
+                                PB
+                                </p>
+                                <img src="/assets/home-pb2.svg"></img>
+                            </StyledPbCard>
+                            <StyledPbCard style={{backgroundColor: "#F8ADFF"}}>
+                                <p>
+                                미장 전문<br/>
+                                PB
+                                </p>
+                                <img src="/assets/home-pb3.svg"></img>
+                            </StyledPbCard>
+                        </StyledPbCardContainer>
                     </StyledHomeSection>
                 </StyledHomeContent>
             </StyledHomeMainContent>

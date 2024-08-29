@@ -129,7 +129,6 @@ export const StyledPbCard = styled.div`
         img {
             animation: ${scaleUp} 0.3s ease-in-out forwards;
         }
-        opacity: .95;
     }
 
     p {
@@ -141,4 +140,14 @@ export const StyledPbCard = styled.div`
         padding: 25px;
         white-space: normal;
     }
+`
+
+export const StyledPbCardContainer = styled.div`
+    display: flex;
+    gap: 20px;
+
+`
+
+export const StyledPbCard2 = styled(StyledPbCard)`
+    background-color: '#FFDF6F';
 `
