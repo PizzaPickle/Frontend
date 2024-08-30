@@ -1,6 +1,5 @@
 
 import React from "react";
-import ProfitCard from "../../components/customer-home/profit-card/ProfitCard";
 
 // import React from "react";
 import Header from "../../components/common/header/Header";

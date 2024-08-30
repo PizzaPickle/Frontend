@@ -21,6 +21,7 @@ export const StyledSideContent = styled.div`
     flex-direction: column;
     gap: 40px;
     color: ${({ theme }) => theme.colors.sidebar};
+    
 `;
 
 export const StyledSideText = styled(StyledSideContent)`
