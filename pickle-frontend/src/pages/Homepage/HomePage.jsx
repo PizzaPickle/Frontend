@@ -4,13 +4,18 @@ import Sidebar from "../../components/common/sidebar/Sidebar";
 import AllMoney from "../../components/common/mydata/allmoney/AllMoney";
 import WalletCard from "../../components/common/wallet-card/WalletCard";
 import { AllMoneyTitle, StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard, StyledAllMoneyContainer } from "./HomePage.style";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, logoutUser } from "../../store/reducers/user";
 
 export default function HomePage(){    
     
     //TODO
-    const loginUserName = "홍길동";
     const consultPB = "윤재욱";
     const consultReqNum = 3;
+
+    //Login User 정보
+    const userId = useSelector((state) => state.user.id);
+    const userName = useSelector((state) => state.user.name);
 
     const now = new Date();
     const consultDate = new Date(); //!! 상담일자로 변경해야 함
@@ -59,7 +64,7 @@ export default function HomePage(){
                     {/* section 1 */}
                     <StyledHomeSection> 
                     <StyledHeadText>
-                        {loginUserName.slice(1)}님, 환영합니다.
+                        {userName.slice(1)}님, 환영합니다.
                     </StyledHeadText>
                         <article>
                         <StyledContentBlock>
