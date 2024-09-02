@@ -1,10 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import MainPage from "./routes/main/MainPage";
-import LoginPage from "./routes/login/LoginPage";
 import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 import HomePage from "./pages/Homepage/HomePage";
+import BacktestPage from "./pages/PB-BacktestPage/BacktestPage";
 
 export const routers = [
     {
@@ -13,8 +12,8 @@ export const routers = [
         // index: true
     },
     {
-        path: "/login",
-        element: <LoginPage />
+        path: "/consult/backtest",
+        element: <BacktestPage />
     },
     // {
     //     path: "/머있지?",
