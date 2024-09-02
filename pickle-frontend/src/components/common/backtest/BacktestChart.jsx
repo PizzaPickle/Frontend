@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
-import { StyledGraphDiv } from './Backtest.style';
+import { StyledColorLegend, StyledGraphDiv } from './Backtest.style';
 
 const BacktestChart = (props) => {
 
@@ -19,6 +19,7 @@ const BacktestChart = (props) => {
   const [backtestResult, setBacktestResult] = useState(null);
   const [error, setError] = useState(null);
   const [legend, setLegend] = useState('');
+  const colors = ["#FF6767", "#FF906E", "rgba(195, 195, 200, 1)"]
 
   const handleBacktest = async () => {
     const url = "/backtest";
@@ -101,13 +102,13 @@ const BacktestChart = (props) => {
       });
     
       //Line Series 세팅
-      const lineSeriesOne = chart.addLineSeries({ color: '#FF6767' });
-      const lineSeriesTwo = chart.addLineSeries({ color: '#FF906E' });
+      const lineSeriesOne = chart.addLineSeries({ color: colors[0] });
+      const lineSeriesTwo = chart.addLineSeries({ color: colors[1] });
       //Area Series 세팅
       const areaSeries = chart.addAreaSeries({
         topColor: 'rgba(195, 195, 200, 0.56)',
         bottomColor: 'rgba(195, 195, 200, 0.05)',
-        lineColor: 'rgba(195, 195, 200, 1)',
+        lineColor: colors[2],
       });
 
       const transformedData = transformData(backtestResult.portfolio);
@@ -194,6 +195,11 @@ const BacktestChart = (props) => {
         style={{ width: '100%', height: '300px' }} // div 스타일 설정
         >
         </div>
+        {/* {colors.map((i,elem)=> (
+        <StyledColorLegend color={elem}>
+          <section></section>
+        </StyledColorLegend>
+        ))} */}
         <section>
         <p>샤프 비율</p> {backtestResult.sharpe_ratio}
          <p> 수익률 표준편차</p> {backtestResult.standard_deviation}
@@ -201,6 +207,7 @@ const BacktestChart = (props) => {
          <p> 총 잔고</p> {backtestResult.total_balance.toFixed(3)}
          <p> 최대 낙폭</p> {backtestResult.mdd.toFixed(3)}
         </section>
+        
         </StyledGraphDiv>
     )
     }

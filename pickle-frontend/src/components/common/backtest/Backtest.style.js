@@ -27,3 +27,10 @@ export const StyledGraphDiv = styled.div`
     }
 
 `;
+
+export const StyledColorLegend = styled.div`
+    section {
+        background-color: ${(props) => props.color || '800px'};
+
+    }
+`
