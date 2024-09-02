@@ -9,7 +9,7 @@ import HomePage from "./pages/Homepage/HomePage";
 export const routers = [
     {
         path: "/",
-        element: <HomePage />
+        element: <TestPage />
         // index: true
     },
     {

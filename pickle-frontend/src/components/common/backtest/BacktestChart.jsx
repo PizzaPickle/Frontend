@@ -5,8 +5,6 @@ import { StyledGraphDiv } from './Backtest.style';
 const BacktestChart = (props) => {
 
     //불러온 백테스팅 JSON 데이터를 정제 
-    // TODO
-    // 데이터에 자산집단 카테고리ID(국내, 해외..)가 있었음 좋겠어욥
       const transformData = (data) => {
         return Object.entries(data).map(([stockName, series]) => ({
             stockName: stockName,
@@ -101,8 +99,7 @@ const BacktestChart = (props) => {
           },
         },
       });
-
-
+    
       //Line Series 세팅
       const lineSeriesOne = chart.addLineSeries({ color: '#FF6767' });
       const lineSeriesTwo = chart.addLineSeries({ color: '#FF906E' });
@@ -120,52 +117,62 @@ const BacktestChart = (props) => {
       areaSeries.setData(transformedData[2].series);
       
 
-        // // 반응형 범례 생성
-        // const legendDiv = document.createElement('div');
-        // legendDiv.style.position = 'absolute';
-        // legendDiv.style.left = '12px';
-        // legendDiv.style.top = '12px';
-        // legendDiv.style.zIndex = 1;
-        // legendDiv.style.fontSize = '14px';
-        // legendDiv.style.fontFamily = 'sans-serif';
-        // legendDiv.style.lineHeight = '18px';
-        // legendDiv.style.fontWeight = '300';
-        // legendDiv.style.color = 'black';
-        // chartContainerRef.current.appendChild(legendDiv);
+        // 반응형 범례 생성
+        const legendDiv = document.createElement('div');
+        legendDiv.style.position = 'absolute';
+        legendDiv.style.left = '12px';
+        legendDiv.style.top = '12px';
+        legendDiv.style.zIndex = 1;
+        legendDiv.style.fontSize = '14px';
+        legendDiv.style.fontFamily = 'sans-serif';
+        legendDiv.style.lineHeight = '18px';
+        legendDiv.style.fontWeight = '300';
+        legendDiv.style.color = 'black';
+        chartContainerRef.current.appendChild(legendDiv);
         
-        // const symbolName = 'AEROSPACE';
+        const symbolName = '평균 수익률';
 
-        //     const getLastBar = (series) => {
-        //     const lastIndex = series.dataByIndex(Number.MAX_SAFE_INTEGER, -1);
-        //     return series.dataByIndex(lastIndex);
-        //     };
+            const getLastBar = (series) => {
+            const lastIndex = series.dataByIndex(Number.MAX_SAFE_INTEGER, -1);
+            return series.dataByIndex(lastIndex);
+            };
 
-        //     const formatPrice = (price) => (Math.round(price * 100) / 100).toFixed(2);
+            const formatPrice = (price) => (Math.round(price * 100) / 100).toFixed(2);
 
-        //     const setTooltipHtml = (name, date, price) => {
-        //     legendDiv.innerHTML = `
-        //         <div style="font-size: 24px; margin: 4px 0px;">${name}</div>
-        //         <div style="font-size: 22px; margin: 4px 0px;">${price}</div>
-        //         <div>${date}</div>
-        //     `;
-        //     };
+            const setTooltipHtml = (name, date, price) => {
+            legendDiv.innerHTML = `
+                <div style="font-size: 24px; margin-left: 33px; margin-top:40px; margin-bottom:8px">${name}</div>
+                <div style="font-size: 22px; margin-left: 33px;  margin-bottom:8px">${price}</div>
+                <div style="margin-left: 33px;">${date}</div>
+            `;
+            };
 
-        //     const updateLegend = (param) => {
-        //     const validCrosshairPoint = !(
-        //         param === undefined || param.time === undefined || param.point.x < 0 || param.point.y < 0
-        //     );
-        //     const bar = validCrosshairPoint ? param.seriesData.get(areaSeries) : getLastBar(areaSeries);
-        //     const time = bar.time;
-        //     const price = bar.value !== undefined ? bar.value : bar.close;
-        //     const formattedPrice = formatPrice(price);
-        //     setTooltipHtml(symbolName, time, formattedPrice);
-        //     };
+            const updateLegend = (param) => {
+            const validCrosshairPoint = !(
+                param === undefined || param.time === undefined || param.point.x < 0 || param.point.y < 0
+            );
+            const bar = validCrosshairPoint ? param.seriesData.get(areaSeries) : getLastBar(areaSeries);
+            const time = bar.time;
+            const price = bar.value !== undefined ? bar.value : bar.close;
+            const formattedPrice = formatPrice(price);
+            setTooltipHtml(symbolName, time, formattedPrice);
+            };
 
-        //     chart.subscribeCrosshairMove(updateLegend);
+            chart.subscribeCrosshairMove(updateLegend);
 
-        //     // Initial update
-        //     updateLegend(undefined);
+            // Initial update
+            updateLegend(undefined);
 
+        const toolTipWidth = 80;
+        const toolTipHeight = 80;
+        const toolTipMargin = 15;
+
+        const toolTip = document.createElement('div');
+        toolTip.style = `width: 96px; height: 80px; position: absolute; display: none; padding: 20px; box-sizing: border-box; font-size: 12px; text-align: left; z-index: 1000; top: 12px; left: 12px; pointer-events: none; border: 1px solid; border-radius: 2px;font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;`;
+        toolTip.style.background = 'white';
+        toolTip.style.color = 'black';
+        toolTip.style.borderColor = '#2962FF';
+        chartContainerRef.current.appendChild(toolTip);
 
         
         chart.timeScale().fitContent(); //시간축이 박스에 꽉차게
@@ -188,11 +195,11 @@ const BacktestChart = (props) => {
         >
         </div>
         <section>
-          <p>{backtestResult.sharpe_ratio}</p>
-          <p>{backtestResult.standard_deviation}</p>
-          <p>{backtestResult.annual_return}</p>
-          <p>{backtestResult.total_balance}</p>
-          <p>{backtestResult.mdd}</p>
+        <p>샤프 비율</p> {backtestResult.sharpe_ratio}
+         <p> 수익률 표준편차</p> {backtestResult.standard_deviation}
+         <p> 연간 수익률</p> {backtestResult.annual_return}
+         <p> 총 잔고</p> {backtestResult.total_balance.toFixed(3)}
+         <p> 최대 낙폭</p> {backtestResult.mdd.toFixed(3)}
         </section>
         </StyledGraphDiv>
     )
