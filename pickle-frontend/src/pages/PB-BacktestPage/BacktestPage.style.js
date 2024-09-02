@@ -8,11 +8,12 @@ export const StyledConsultContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
 `
 
 export const StyledConsultBox = styled.div`
     width: 1300px;
-    height: 790px;
+    height: 765px;
     border-radius: 20px;
     display: flex;
 `
@@ -23,8 +24,15 @@ export const StyledConsultSide = styled.div`
     border-radius: 20px 0px 0px 20px;
     z-index: 1000;
 `
+
+export const StyledLeftContent = styled.div`
+    flex:4;
+    border-right: solid 1px lightgrey;
+    background-color: white;
+`
+
 export const StyledConsultContentBox = styled.div`
     background-color: white;
     border-radius: 0px 20px 20px 0px;
-    flex: 9;
+    flex: 5;
 `

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledConsultSide, StyledConsultBox, StyledConsultContainer, StyledConsultContentBox } from "./BacktestPage.style";
+import { StyledConsultSide, StyledConsultBox, StyledConsultContainer, StyledConsultContentBox, StyledLeftContent } from "./BacktestPage.style";
 
 export default function BacktestPage(){  
 
@@ -7,8 +7,11 @@ export default function BacktestPage(){
         <>
         <StyledConsultContainer>
             <StyledConsultBox>
-                <StyledConsultSide></StyledConsultSide>
-                <StyledConsultContentBox></StyledConsultContentBox>
+                <StyledConsultSide/>
+                <StyledLeftContent></StyledLeftContent>
+                <StyledConsultContentBox>
+
+                </StyledConsultContentBox>
             </StyledConsultBox>
         </StyledConsultContainer>
         </>
