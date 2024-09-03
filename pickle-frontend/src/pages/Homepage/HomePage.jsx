@@ -70,20 +70,20 @@ export default function HomePage(){
                         <StyledContentBlock>
                             <StyledS1Text>
                                 <img src="/assets/home-bell.svg"></img>
-                                <span><p>예정된 상담 일정</p><hr></hr></span>
-                                <p style={{fontWeight:"700"}}>D-{Dday}</p>
+                                <span><div style={{marginBottom: "0px"}}>예정된 상담 일정</div><hr></hr></span>
+                                <div style={{marginBottom: "0px", fontWeight: "700"}}>D-{Dday}</div>
                                 <section>
-                                    <p>{consultYear}년 {consultMonth}월 {consultDay}일</p>
-                                    <p>{consultHour}시 {consultMin}분</p>
-                                    <p>{consultPB}PB</p>
+                                    <div style={{marginBottom: "0px"}}>{consultYear}년 {consultMonth}월 {consultDay}일</div>
+                                    <div style={{marginBottom: "0px"}}>{consultHour}시 {consultMin}분</div>
+                                    <div style={{marginBottom: "0px"}}>{consultPB}PB</div>
                                 </section>
                                 <img src="/assets/home-next.svg"></img>
                             </StyledS1Text>
                         </StyledContentBlock>
                         <StyledContentBlock>
                             <StyledS1Text>
-                                    <p>내가 보낸 요청</p>
-                                    <span><p>{consultReqNum}건</p></span>                               
+                                    <div>내가 보낸 요청</div>
+                                    <span><div>{consultReqNum}건</div></span>                               
                                     <img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img>
                             </StyledS1Text>
                         </StyledContentBlock>
@@ -100,7 +100,7 @@ export default function HomePage(){
                         <WalletCard texts={walletTexts} amounts={walletAmounts} />
                         <StyledAllMoneyContainer>
                             <AllMoneyTitle>내 포트폴리오 수익률
-                                <p>+5.1%</p>
+                                <div>+5.1%</div>
                             </AllMoneyTitle>
                             <AllMoney 
                                 maxWidth={"1000px"}
@@ -126,24 +126,24 @@ export default function HomePage(){
                         </StyledHead2Text>
                         <StyledContentFlex>                        
                             <StyledPbCard>
-                                <p>
+                                <div>
                                 ETF잘알<br/>
                                 PB
-                                </p>
+                                </div>
                                 <img src="/assets/home-pb1.svg"></img>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#FFDF6F"}}>
-                                <p>
+                                <div>
                                 국장 전문<br/>
                                 PB
-                                </p>
+                                </div>
                                 <img src="/assets/home-pb2.svg"></img>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#F8ADFF"}}>
-                                <p>
+                                <div>
                                 미장 전문<br/>
                                 PB
-                                </p>
+                                </div>
                                 <img src="/assets/home-pb3.svg"></img>
                             </StyledPbCard>
                         </StyledContentFlex>
