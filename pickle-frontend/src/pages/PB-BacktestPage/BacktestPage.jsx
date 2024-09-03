@@ -6,16 +6,21 @@ import {
     StyledConsultContentBox, 
     StyledLeftContent,
     HighlightBox,
-    LinkWrapper
+    LinkWrapper,
+    StyledBacktestHeader
 } from "./BacktestPage.style";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import profile from "/assets/backtest-profile.svg"
+import { Button } from "bootstrap";
 
 export default function BacktestPage(){  
     const [selectedIndex, setSelectedIndex] = useState(null);
     const handleClick = (index) => {
         setSelectedIndex(index === selectedIndex ? null : index);
     };
+    // TODO 상담방에 입장할 고객 이름
+    const cusName = "박찬란";
 
     return (
         <>
@@ -36,6 +41,11 @@ export default function BacktestPage(){
                     ))}
                 </StyledConsultSide>
                 <StyledLeftContent>
+                    <StyledBacktestHeader>
+                        <img src={profile}></img>
+                        {cusName} 고객님
+                        <Button>프리셋 불러오기</Button>
+                    </StyledBacktestHeader>
                 </StyledLeftContent>
                 <StyledConsultContentBox>
                 </StyledConsultContentBox>

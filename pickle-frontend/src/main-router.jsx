@@ -11,7 +11,7 @@ import Strategy from "./pages/PB-BacktestPage/Strategy";
 export const routers = [
     {
         path: "/",
-        element: <TestPage />,
+        element: <HomePage />,
         index: true,
     },
     {

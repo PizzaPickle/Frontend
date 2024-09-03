@@ -28,7 +28,7 @@ export const StyledConsultSide = styled.div`
     justify-content: center;
     p {
         margin-left: 20px;
-        color:  ${({ theme }) => theme.deep_gray};
+        color: ${({ theme }) => theme.colors.navy};
     }
     
 `
@@ -68,4 +68,18 @@ export const StyledConsultContentBox = styled.div`
     background-color: white;
     border-radius: 0px 20px 20px 0px;
     flex: 5;
+`
+
+export const StyledBacktestHeader = styled.div`
+    background-color: ${({ theme }) => theme.colors.dashboard_gray};
+    width: 100%;
+    height: 90px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    img {
+        
+    }
 `
