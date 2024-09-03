@@ -1,4 +1,4 @@
-import { SET_INPUT_VALUE } from './inputAction';
+import { SET_INPUT_VALUE } from './action';
 
 const initialState = {
   inputValue: '',

@@ -6,7 +6,7 @@ import {
 } from "./legend_edit.style";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setInputValue } from "../../../store/reducers/inputAction";
+import { setInputValue } from "../../../store/reducers/action";
 import { FormControl } from "react-bootstrap";
 
 

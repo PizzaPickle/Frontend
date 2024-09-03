@@ -9,7 +9,7 @@ import Dashboard from "./pages/PB-BacktestPage/Strategy";
 import Portfolio from "./pages/PB-BacktestPage/Portfolio";
 import Strategy from "./pages/PB-BacktestPage/Strategy";
 import Pblist from "./pages/pblistpage/Pblist";
-
+import Request from "./pages/requestpage/Request";
 
 export const routers = [
     {
@@ -22,7 +22,16 @@ export const routers = [
     },
     {
         path: "/pblist",
-        element: <Pblist />,
+        children: [
+            {
+                index: true,
+                element: <Pblist />,
+            },
+            {
+                path: "request",
+                element: <Request />,
+            }
+        ]
     },
     {
         path: "/consult/backtest",

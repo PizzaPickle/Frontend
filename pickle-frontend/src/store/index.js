@@ -2,10 +2,12 @@ import { combineReducers } from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
 import inputReducer from './reducers/input';
+import pbReducer from "./reducers/pbslice"
 
 export const rootReducer = combineReducers({
     user: userReducer,
     input: inputReducer,
+    pb: pbReducer,
 });
 
 const store = configureStore({

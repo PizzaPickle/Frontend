@@ -7,7 +7,7 @@ import {
 import Circular from "../circular-graph/Circular";
 import Legend from "../legend_edit/Legend_edit";
 import { useDispatch } from 'react-redux';
-import { setInputValue } from "../../../store/reducers/inputAction";
+import { setInputValue } from "../../../store/reducers/action";
 
 export default function LegendWithGraph({ data, width, height, top, left, fontSize, gap }) {
   

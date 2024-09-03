@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     id: null,
     name: "홍길동", // TODO 변경
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NyIsImlhdCI6MTcyNTM1ODAxMSwiZXhwIjoxNzI1MzU5ODExfQ.btKelnmfbezbIJ2uewYcebbv5W-PF1Bkp6gG7IuCtDI", 
+    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NyIsImlhdCI6MTcyNTM2MjY5OSwiZXhwIjoxNzI1MzY0NDk5fQ.UD-Y8gYqWO-b94hudj33wZKxSTjaV6YGD3LlASiTnZo", 
 };
 
 const userSlice = createSlice({
@@ -23,7 +23,7 @@ const userSlice = createSlice({
             state.token = null; // 토큰 삭제
         },
         setToken: (state, action) => {
-            // 토큰만 업데이트하는 액션
+            // 토큰 업데이트
             state.token = action.payload.token;
         },
     }
