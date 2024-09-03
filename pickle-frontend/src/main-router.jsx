@@ -8,6 +8,8 @@ import BacktestPage from "./pages/PB-BacktestPage/BacktestPage";
 import Dashboard from "./pages/PB-BacktestPage/Strategy";
 import Portfolio from "./pages/PB-BacktestPage/Portfolio";
 import Strategy from "./pages/PB-BacktestPage/Strategy";
+import Pblist from "./pages/pblistpage/Pblist";
+
 
 export const routers = [
     {
@@ -17,9 +19,11 @@ export const routers = [
     {
         path: "/mydata",
         element: <Mydata />
-        // index: true
     },
-    
+    {
+        path: "/pblist",
+        element: <Pblist />,
+    },
     {
         path: "/consult/backtest",
         children: [

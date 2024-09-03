@@ -22,7 +22,7 @@ export default function Sidebar() {
                 </Link>
                 </StyledSideTextGroup>
                 <StyledSideTextGroup>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/pblist" style={{ textDecoration: 'none' }}>
                 <section><img src="/assets/side-pb.svg" className="icon"></img><span style={{color: "#6F6C99"}}>PB 둘러보기</span></section>
                 </Link>
                 <section style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</section>

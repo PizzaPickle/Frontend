@@ -10,6 +10,7 @@ import car from "/assets/mydata-car.png"
 import { LegendWithGraphDiv } from "../../components/common/graph-width-legend/LegendWithGraph.style"
 import LegendWithGraph from "../../components/common/graph-width-legend/LegendWithGraph"
 import Circular from "../../components/common/circular-graph/Circular"
+import WalletCard from "../../components/common/wallet-card/WalletCard"
 
 export default function Mydata(){  
     //Login User 정보
@@ -170,6 +171,8 @@ export default function Mydata(){
                     </div>
                     </StyledContentBlock>
 
+                    <StyledContentBlock>
+                    </StyledContentBlock>
                     </StyledContentFlex>
                     </StyledHomeSection>
 
