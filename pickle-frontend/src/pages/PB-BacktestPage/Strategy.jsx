@@ -1,28 +1,20 @@
-import React, { useState } from "react";
-import { 
-    StyledConsultSide, 
-    StyledConsultBox, 
-    StyledConsultContainer, 
-    StyledConsultContentBox, 
-    StyledLeftContent,
-    HighlightBox,
-    LinkWrapper
-} from "./BacktestPage.style";
-import styled from "styled-components";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { StyledLeftContent, StyledConsultContentBox, LinkWrapper, HighlightBox, StyledConsultContainer, StyledConsultBox, StyledConsultSide } from "./BacktestPage.style";
 
-export default function BacktestPage(){  
+export default function Strategy(){
     const [selectedIndex, setSelectedIndex] = useState(null);
     const handleClick = (index) => {
         setSelectedIndex(index === selectedIndex ? null : index);
     };
 
     return (
+
         <>
         <StyledConsultContainer>
             <StyledConsultBox>
                 <StyledConsultSide>
-                    {[
+                {[
                         { text: "상담 요청서", link: "/consult/backtest" },
                         { text: "기존 전략", link: "/consult/backtest/portfolio" },
                         { text: "전략 생성", link: "/consult/backtest/strategy" }
@@ -39,8 +31,9 @@ export default function BacktestPage(){
                 </StyledLeftContent>
                 <StyledConsultContentBox>
                 </StyledConsultContentBox>
-            </StyledConsultBox>
+        </StyledConsultBox>
         </StyledConsultContainer>
         </>
-    );
+    )
+
 }

@@ -4,16 +4,33 @@ import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 import HomePage from "./pages/Homepage/HomePage";
 import BacktestPage from "./pages/PB-BacktestPage/BacktestPage";
+import Dashboard from "./pages/PB-BacktestPage/Strategy";
+import Portfolio from "./pages/PB-BacktestPage/Portfolio";
+import Strategy from "./pages/PB-BacktestPage/Strategy";
 
 export const routers = [
     {
         path: "/",
-        element: <TestPage />
-        // index: true
+        element: <TestPage />,
+        index: true,
     },
     {
         path: "/consult/backtest",
-        element: <BacktestPage />
+        children: [
+            {
+                index: true,
+                element: <BacktestPage />,
+
+            },
+            {
+                path: "portfolio", 
+                element: <Portfolio />, 
+            },
+            {
+                path: "strategy", 
+                element: <Strategy />,
+            },
+        ],
     },
     // {
     //     path: "/머있지?",

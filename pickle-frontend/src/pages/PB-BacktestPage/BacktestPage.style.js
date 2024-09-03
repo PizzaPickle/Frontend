@@ -12,9 +12,9 @@ export const StyledConsultContainer = styled.div`
 `
 
 export const StyledConsultBox = styled.div`
-    width: 1300px;
-    height: 765px;
-    border-radius: 20px;
+    width: 85%;
+    height: 97%;
+    border-radius: 20x;
     display: flex;
 `
 
@@ -23,7 +23,40 @@ export const StyledConsultSide = styled.div`
     flex: 1;
     border-radius: 20px 0px 0px 20px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    p {
+        margin-left: 20px;
+        color:  ${({ theme }) => theme.deep_gray};
+    }
+    
 `
+
+export const HighlightBox = styled.div`
+    display: ${(props) => (props.visible ? "block" : "none")};
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.1); /* 반투명 검은색 */
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* 텍스트보다 뒤에 위치 */
+    border-radius: 4px; /* 모서리 둥글게 */
+`;
+
+
+export const LinkWrapper = styled.div`
+    position: relative;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px; /* 클릭 영역을 넓히기 위해 padding 추가 */
+    &:hover {
+        border-radius: 20px;
+        background-color: rgba(56,63,101,0.08); /* 호버 시 배경색 */
+    }
+`;
+
 
 export const StyledLeftContent = styled.div`
     flex:4;
