@@ -21,8 +21,6 @@ export const routers = [
     },
     
     {
-        path: "/login",
-        element: <LoginPage />,
         path: "/consult/backtest",
         children: [
             {
