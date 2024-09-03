@@ -22,6 +22,7 @@ export const StyledHomeContainer = styled.div`
     height: 100vh;
     flex-direction: column;
     overflow-y: hidden;
+    
 `
 
 export const StyledHomeMainContent = styled.div`
@@ -73,8 +74,9 @@ export const StyledS1Text= styled.div`
         font-weight: 700;
     }
 
-    span > p {
+    span > div {
         text-align: center;
+        margin-bottom: 0px;
     }
     
     span > hr {
@@ -83,6 +85,7 @@ export const StyledS1Text= styled.div`
         background-color: #FFE35E; 
         margin-top: -5px; 
         border-radius: 20px;
+        margin-bottom: 0;
     }
 
     section {
@@ -96,7 +99,7 @@ export const StyledS1Text= styled.div`
         border-radius: 20px;
     }
 
-    section > p:nth-child(-n+2) {
+    section > div:nth-child(-n+2) {
         padding-right: 12px;
         border-right: 1px solid ${({ theme }) => theme.colors.line_gray};
     }
@@ -131,7 +134,7 @@ export const StyledPbCard = styled.div`
         }
     }
 
-    p {
+    div {
         position: absolute;
         z-index: 100;
         color: white;
@@ -161,7 +164,7 @@ export const AllMoneyTitle = styled.div`
     font-weight: 700;
 
     /* TODO 데이터에 따라 수정 필요 */
-    p {
+    div {
         color: ${({ theme }) => theme.colors.stockRed};;
     }
 `
