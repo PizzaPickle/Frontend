@@ -22,7 +22,7 @@ export const routers = [
     
     {
         path: "/login",
-        element: <LoginPage />
+        element: <LoginPage />,
         path: "/consult/backtest",
         children: [
             {
