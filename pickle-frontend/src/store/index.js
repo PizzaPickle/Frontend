@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
+import inputReducer from './reducers/input';
 
 export const rootReducer = combineReducers({
     user: userReducer,
+    input: inputReducer,
 });
 
 const store = configureStore({

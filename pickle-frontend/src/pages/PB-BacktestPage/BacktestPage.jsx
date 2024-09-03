@@ -8,13 +8,16 @@ import {
     HighlightBox,
     LinkWrapper,
     StyledBacktestHeader,
-    StyledLeftDiv
+    StyledLeftDiv,
 } from "./BacktestPage.style";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import profile from "/assets/backtest-profile.svg"
-import { Button } from "react-bootstrap";
+import { Button, InputGroup, Form } from "react-bootstrap";
 import Circular from "../../components/common/circular-graph/Circular";
+import LegendWithGraph from "../../components/common/legendwith_edit/LegendWithGraph_edit"
+import BacktestChart from "../../components/common/backtest/BacktestChart";
+import RunBacktestButton from "../../components/common/backtest/RunBacktestButton";
 
 export default function BacktestPage(){  
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -23,6 +26,8 @@ export default function BacktestPage(){
     };
     // TODO 상담방에 입장할 고객 이름
     const cusName = "박찬란";
+
+
 
     return (
         <>
@@ -52,13 +57,34 @@ export default function BacktestPage(){
                     </StyledBacktestHeader>
                     <StyledLeftDiv>
                         <section className="Top">
-                            <Circular></Circular>
+                            <article>
+                                <div>전략명 </div>
+                                <div>카테고리 </div>
+                            </article>
+                            {/* <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              placeholder="투자 금액 입력"
+                              aria-label="투자 금액 입력"
+                              aria-describedby="basic-addon2"
+                            />
+                            <Button variant="outline-secondary" id="button-addon2">
+                              적용
+                            </Button>
+                          </InputGroup>
+                            <div style={{position: "relative", width:"200px", margin: "20px"}}>
+                            <Circular data={data} top={"20%"} left={"-15%"} width={"290px"} height={"235px"}></Circular>
+                            <LegendWithGraph data={data} width={"100%"} left={"80%"} fontSize={"small"}></LegendWithGraph>
+                            </div> */}
                         </section>
                         <section className="Bottom">
+                        </section>
+                        <section className="footer">
                         </section>
                     </StyledLeftDiv>
                 </StyledLeftContent>
                 <StyledConsultContentBox>
+                <BacktestChart width={"90%"}></BacktestChart>
                 </StyledConsultContentBox>
             </StyledConsultBox>
         </StyledConsultContainer>

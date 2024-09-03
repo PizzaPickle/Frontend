@@ -166,7 +166,7 @@ export default function Mydata(){
                     <StyledContentBlock style={{position: "relative"}}>
                     <div style={{position: "relative", width:"200px"}}>
                     <Circular data={data} top={"20%"} left={"-15%"} width={"290px"} height={"235px"}></Circular>
-                    <LegendWithGraph data={data} width={"300"} left={"80%"} fontSize={"small"}></LegendWithGraph>
+                    <LegendWithGraph data={data} width={"300px"} left={"80%"} fontSize={"small"}></LegendWithGraph>
                     </div>
                     </StyledContentBlock>
 
