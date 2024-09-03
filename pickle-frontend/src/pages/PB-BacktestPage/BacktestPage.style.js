@@ -26,8 +26,9 @@ export const StyledConsultSide = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    p {
-        margin-left: 20px;
+    div {
+        margin-left: 0.7rem;
+        margin-right: 0.7rem;
         color: ${({ theme }) => theme.colors.navy};
     }
     
@@ -59,6 +60,8 @@ export const LinkWrapper = styled.div`
 
 
 export const StyledLeftContent = styled.div`
+    display: flex;
+    flex-direction: column;
     flex:4;
     border-right: solid 1px lightgrey;
     background-color: white;
@@ -71,15 +74,41 @@ export const StyledConsultContentBox = styled.div`
 `
 
 export const StyledBacktestHeader = styled.div`
+    flex:1;
     background-color: ${({ theme }) => theme.colors.dashboard_gray};
     width: 100%;
-    height: 90px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    color:  ${({ theme }) => theme.colors.deep_gray};
+    
+    .user {
+        flex: 2;
+        margin-left: 20px;
+        display: flex;
+        gap: 10px;
+    }
 
-    img {
-        
+    Button {
+        margin-right: 20px;
+        color:  ${({ theme }) => theme.colors.deep_gray};
+        border: 1px solid ${({ theme }) => theme.colors.line_gray};
+
+    }
+`
+
+export const StyledLeftDiv = styled.div`
+    display: flex;
+    flex:9;
+    flex-direction: column;
+    height: 100%;
+
+    .Top {
+        flex: 3;
+        border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
+    }
+
+    .Bottom {
+        flex: 5;
     }
 `

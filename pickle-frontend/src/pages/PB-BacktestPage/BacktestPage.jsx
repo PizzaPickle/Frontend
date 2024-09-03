@@ -7,12 +7,14 @@ import {
     StyledLeftContent,
     HighlightBox,
     LinkWrapper,
-    StyledBacktestHeader
+    StyledBacktestHeader,
+    StyledLeftDiv
 } from "./BacktestPage.style";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import profile from "/assets/backtest-profile.svg"
-import { Button } from "bootstrap";
+import { Button } from "react-bootstrap";
+import Circular from "../../components/common/circular-graph/Circular";
 
 export default function BacktestPage(){  
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -35,17 +37,26 @@ export default function BacktestPage(){
                         <LinkWrapper key={index} onClick={() => handleClick(index)}>
                             <HighlightBox visible={selectedIndex === index} />
                             <Link to={item.link} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <p>{item.text}</p>
+                                <div>{item.text}</div>
                             </Link>
                         </LinkWrapper>
                     ))}
                 </StyledConsultSide>
                 <StyledLeftContent>
                     <StyledBacktestHeader>
+                        <section className="user">
                         <img src={profile}></img>
                         {cusName} 고객님
-                        <Button>프리셋 불러오기</Button>
+                        </section>
+                        <Button variant="light">프리셋 불러오기</Button>
                     </StyledBacktestHeader>
+                    <StyledLeftDiv>
+                        <section className="Top">
+                            <Circular></Circular>
+                        </section>
+                        <section className="Bottom">
+                        </section>
+                    </StyledLeftDiv>
                 </StyledLeftContent>
                 <StyledConsultContentBox>
                 </StyledConsultContentBox>
