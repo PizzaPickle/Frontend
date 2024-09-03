@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     id: null,
-    name: ""
+    name: "홍길동" //TODO 변경
 };
 
 const userSlice = createSlice({

@@ -42,6 +42,10 @@ export const ColorCircle = styled.div`
 export const LegendLeftContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap:  ${(props) => props.gap || '10px'};
   background: none;
 `;
+
+export const LegendAlert = styled.div`
+  background-color: white;
+`

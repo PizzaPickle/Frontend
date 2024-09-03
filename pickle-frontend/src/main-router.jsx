@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 import HomePage from "./pages/homepage/HomePage";
+import Mydata from "./pages/mydata/Mydata";
 import BacktestPage from "./pages/PB-BacktestPage/BacktestPage";
 import Dashboard from "./pages/PB-BacktestPage/Strategy";
 import Portfolio from "./pages/PB-BacktestPage/Portfolio";
@@ -14,6 +15,14 @@ export const routers = [
         element: <HomePage />,
     },
     {
+        path: "/mydata",
+        element: <Mydata />
+        // index: true
+    },
+    
+    {
+        path: "/login",
+        element: <LoginPage />
         path: "/consult/backtest",
         children: [
             {
