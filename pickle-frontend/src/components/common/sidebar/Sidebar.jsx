@@ -15,15 +15,15 @@ export default function Sidebar() {
                 </Link>
                 <StyledSideTextGroup>
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                <section><img src="/assets/side-port.svg" className="icon"></img><span>내 포트폴리오</span></section>
+                <section><img src="/assets/side-port.svg" className="icon"></img><span style={{color: "#6F6C99"}}>내 포트폴리오</span></section>
                 </Link>
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                <section style={{"font-size": "small", "margin-left": "30px"}}>전략 관리</section>
+                <section style={{"font-size": "small", "margin-left": "30px", color: "#6F6C99"}}>전략 관리</section>
                 </Link>
                 </StyledSideTextGroup>
                 <StyledSideTextGroup>
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                <section><img src="/assets/side-pb.svg" className="icon"></img><span>PB 둘러보기</span></section>
+                <section><img src="/assets/side-pb.svg" className="icon"></img><span style={{color: "#6F6C99"}}>PB 둘러보기</span></section>
                 </Link>
                 <section style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</section>
                 </StyledSideTextGroup>
