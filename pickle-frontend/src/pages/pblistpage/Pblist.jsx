@@ -6,6 +6,8 @@ import { StyledHeadText } from "../Homepage/HomePage.style";
 import { StyledPbSection, StyledPbCard, StyledPbontainer, StyledReserveContainer, StyledPbSelectContainer } from "./pblist.style";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Pblist() {
   const [pbData, setPbData] = useState([]); // API 응답 데이터를 저장할 상태 변수
@@ -13,6 +15,7 @@ export default function Pblist() {
   const [selectedPb, setSelectedPb] = useState(null); // 선택된 PB를 저장할 상태 변수
   const [showCardOnly, setShowCardOnly] = useState(false); // 카드만 보이게 할지 여부를 결정하는 상태 변수
   const { token } = useSelector(state => state.user); // Redux 상태에서 token 가져오기
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [selectedMainField, setSelectedMainField] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
@@ -25,6 +28,20 @@ export default function Pblist() {
     const tagMatch = selectedTag === "" || pb.tags.includes(selectedTag);
     return mainFieldMatch && tagMatch;
   });
+
+  // DateTime형식 변환
+  const formatDate = (date) => {
+    if (!date) return '';
+
+    return date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      weekday: 'long',
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,10 +128,10 @@ export default function Pblist() {
               <StyledPbontainer className="PbContainer">
                 {showCardOnly && selectedPb ? (
                   <StyledPbSelectContainer>
-                  <div>
                     <StyledHeadText>
                     {selectedPb.username}PB와의 상담을 예약할게요.
                   </StyledHeadText>
+                  <section>
                   <StyledPbCard>
                     {selectedPb.img && <img src={selectedPb.img} alt={`${selectedPb.username} 이미지`} />}
                     <section className="self-introduce">
@@ -148,11 +165,28 @@ export default function Pblist() {
                       </article>
                     </section>
                   </StyledPbCard>
-                  </div>
-            
                   <StyledReserveContainer>
-                          dd
+                      <div className="DatePick">
+                        <DatePicker
+                          selected={selectedDate}                // 선택된 날짜와 시간 상태
+                          onChange={(date) => setSelectedDate(date)} // 날짜와 시간이 변경될 때 상태 업데이트
+                          showTimeSelect                         // 시간 선택 기능 활성화
+                          dateFormat="Pp"                        // 날짜와 시간 형식
+                          timeFormat="HH:mm"                     // 시간 형식
+                          timeIntervals={30}                     // 시간 선택 간격 (15분 간격)
+                          placeholderText="날짜와 시간을 선택해주세요." // 기본 안내 문구
+                        />
+                      </div>
+                      {selectedDate && (
+                        <div>
+                          <span>예약 날짜</span>
+                          <p>{formatDate(selectedDate)}</p>
+                        </div>
+                      )}
+                    <Button>다음으로</Button>
+
                     </StyledReserveContainer>
+                  </section>
                     
                 </StyledPbSelectContainer>
 

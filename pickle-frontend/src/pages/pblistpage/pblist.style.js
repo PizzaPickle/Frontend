@@ -6,12 +6,19 @@ export const StyledPbontainer = styled.div`
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
-
+    
 `
 
 export const StyledPbSelectContainer = styled.div`
     display: flex;
     gap: 10px;
+    flex-direction: column;
+    width: 100%;
+
+    section {
+        display: flex;
+        gap: 30px;
+    }
 `
 
 export const StyledPbCard = styled.div`
@@ -22,6 +29,7 @@ export const StyledPbCard = styled.div`
     gap: 40px;
     padding: 40px;
     width: 400px;
+    max-width: 400px;
     height: 600px;
     justify-content: space-between;
     flex: 1 1 calc(25% - 16px); /* 4개씩 배치되도록 설정 (총 너비의 25% - 간격) */
@@ -80,7 +88,11 @@ export const StyledPbCard = styled.div`
 `
 export const StyledReserveContainer = styled.div`
     
+    height: 100%;
 
+    .DatePick {
+        width: 800px;
+    }
 `
 
 export const StyledPbSection = styled.div`
