@@ -1,13 +1,14 @@
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { combineReducers } from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
-import inputReducer from './reducers/input';
-import pbReducer from "./reducers/pbslice"
+import pbReducer from "./reducers/pbselect";
+import dateReducer from "./reducers/dateselect";
 
 export const rootReducer = combineReducers({
     user: userReducer,
-    input: inputReducer,
     pb: pbReducer,
+    date: dateReducer,
 });
 
 const store = configureStore({

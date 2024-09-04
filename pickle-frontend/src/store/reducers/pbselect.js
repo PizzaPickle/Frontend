@@ -2,25 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     selectedPb: null,
-    selectedDate: null,
 };
 
 const pbSlice = createSlice({
-    name: "pb",
+    name: "selectedPb",
     initialState: initialState,
     reducers: {
-        setSelectedPb: (state, action) => {
+        setPb(state, action){
             state.selectedPb = action.payload;
-        },
-        setSelectedDate: (state, action) => {
-            state.selectedDate = action.payload;
+            console.log(action.payload); // 여기에 payload가 올바르게 전달되는지 확인
         },
     }
 });
 
 export const {
-    setSelectedPb,
-    setSelectedDate,
+    setPb,
 } = pbSlice.actions;
 
 export default pbSlice.reducer;
