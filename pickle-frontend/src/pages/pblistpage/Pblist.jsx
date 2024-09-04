@@ -23,7 +23,7 @@ export default function Pblist() {
   const [showSelectedPb, setShowSelectedPb] = useState(false);
   const { token } = useSelector((state) => state.user); 
   const [tmpDate, setTmpDate] = useState(null);
-  const selectedDate = useSelector((state) => state.date.selectedDate)
+  // const selectedDate = useSelector((state) => state.date.selectedDate)
   const [showReqWrite, setShowReqWrite] = useState(false);
 
   const [selectedMainField, setSelectedMainField] = useState("");
@@ -93,6 +93,7 @@ export default function Pblist() {
   const handleReqWrite = () => {
     if (tmpDate !== null && selectedPb !== null) {
       dispatch(setDate(tmpDate.toISOString())); //선택 날짜 저장 (ISO문자열로 변환)
+      navigate('/pblist/request')
     }
     else {
     alert("날짜와 시간을 선택해주세요.")
