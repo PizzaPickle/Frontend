@@ -21,7 +21,7 @@ export default function Portfolio(){
                     <LinkWrapper key={index} onClick={() => handleClick(index)}>
                         <HighlightBox visible={selectedIndex === index} />
                         <Link to={item.link} style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <p>{item.text}</p>
+                            <div>{item.text}</div>
                         </Link>
                     </LinkWrapper>
                 ))}

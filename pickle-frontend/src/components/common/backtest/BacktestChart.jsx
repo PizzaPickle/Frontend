@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createChart } from 'lightweight-charts';
 import { StyledColorLegend, StyledGraphDiv } from './Backtest.style';
+import RunBacktestButton from './RunBacktestButton';
 
 const BacktestChart = (props) => {
 
@@ -184,7 +185,7 @@ const BacktestChart = (props) => {
 
   return (
     <>
-    <button onClick={handleBacktest}>Run Backtest</button>
+    <RunBacktestButton onClick={handleBacktest}></RunBacktestButton>
     
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       

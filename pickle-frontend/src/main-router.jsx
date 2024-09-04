@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-
 import TestPage from './routes/test/TestPage';
 import AllMoney from './components/common/mydata/allmoney/AllMoney';
 import HomePage from './pages/homepage/HomePage';
@@ -9,17 +8,36 @@ import Dashboard from './pages/PB-BacktestPage/Strategy';
 import Portfolio from './pages/PB-BacktestPage/Portfolio';
 import Strategy from './pages/PB-BacktestPage/Strategy';
 import RealTimeConsulting from './pages/RealtimeConsulting/RealtimeConsulting';
+import Pblist from "./pages/pblistpage/Pblist";
+import Request from "./pages/requestpage/Request";
+import RequestMydata from "./pages/requestpage/RequestMydata"
 
 export const routers = [
-	{
-		path: '/',
-		element: <HomePage />,
-	},
-	{
-		path: '/mydata',
-		element: <Mydata />,
-		// index: true
-	},
+    {
+      path: "/",
+      element: <HomePage />,
+    },
+    {
+        path: "/mydata",
+        element: <Mydata />
+    },
+    {
+        path: "/pblist",
+        children: [
+            {
+                index: true,
+                element: <Pblist />,
+            },
+            {
+                path: "request",
+                element: <Request />,
+            },
+            {
+                path: "consultdata",
+                element: <RequestMydata/>,
+            }
+        ]
+    },
 
 	{
 		path: '/consult/backtest',
