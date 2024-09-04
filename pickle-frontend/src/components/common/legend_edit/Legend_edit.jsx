@@ -6,7 +6,6 @@ import {
 } from "./legend_edit.style";
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setInputValue } from "../../../store/reducers/action";
 import { FormControl } from "react-bootstrap";
 
 
@@ -14,7 +13,6 @@ export default function LegendEdit({ category, activate, gap }) {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const handleChange = (event) => {
-    dispatch(setInputValue(event.target.value));
   };
 
 
