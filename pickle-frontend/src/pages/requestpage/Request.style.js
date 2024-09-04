@@ -1,14 +1,35 @@
 import styled, { css } from "styled-components";
 
 export const StyledRequestDiv = styled.div`
-    width: 100%;
+    width: 80%;
     display: flex;
+    flex-direction: column;
     gap: 15px;
 
     section {
         display: flex;
         flex-direction: column;
     }
+
+    
+
+    #next-btn {
+        width: 100%;
+        position: relative;
+
+        Button {
+        font-size: large;
+        width: 200px;
+        height: 70px;
+        position: absolute;
+        right: 20px;
+        }
+    }
+
+`
+
+export const StyledRequestBoxDiv = styled.div`
+    display: flex;
 `
 
 export const StyledOptionSelect = styled.div`

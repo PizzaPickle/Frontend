@@ -132,6 +132,122 @@ export default function Request() {
                 </Form.Label>
               </Form.Group>
             </Form>
+              <StyledRequestBoxDiv>
+                <StyledContentBlock style={{flex:"4"}}>
+                <section>
+                <Form>
+                  <Form.Group controlId="formInvestPrice"
+                   style={{padding: "10px"}}>
+                    원하는 투자 금액을 입력해주세요.
+                    <Form.Label style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
+                    투자 가능 금액 {formatCurrency(mydataInvestPrice)} 중 투자할 금액
+                    <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
+                      type="text"
+                      value={investPrice}
+                      onChange={(e) => handleInputWithComma(e)}
+                      onBlur={handleInputWithCommaPlus}
+                      placeholder="ex. 250,000,000"
+                      max="8"
+                    />원
+                    </Form.Label>
+
+                  </Form.Group>
+                  고정 수입을 입력해주세요.
+                  <Form.Group controlId="formIncome">
+                    <Form.Label  style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
+                      안정적으로 들어오는 월 고정 수입
+                    <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
+                      type="number"
+                      value={income}
+                      onChange={(e) => setIncome(e.target.value)}
+                      placeholder="ex. 300"
+                    />만 원
+                  </Form.Label>
+                  </Form.Group>
+
+                  <Form.Group controlId="formWhenToNeedMoney" style={{display:"flex", alignItems:"center"}}>
+                  자금 필요시기는
+                    <Form.Label style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
+                    <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
+                      type="number"
+                      value={whenToNeedMoney}
+                      onChange={(e) => setWhenToNeedMoney(e.target.value)}
+                      onBlur={handleWhenToNeedMoneyPlus} //최대 100년 후
+                      placeholder="ex.3"
+                      max="100"
+                    />년 후
+                    </Form.Label>
+                  </Form.Group>
+                </Form>
+                </section>
+                </StyledContentBlock>
+
+                <StyledContentBlock style={{flex:"4"}}>
+                  <StyledOptionSelect>
+                  <section>
+                  <div className="option-first">
+                  {householdOptions.map((opt,ind)=>{
+                      console.log(householdType === ind)
+                    return (
+                      <div className={householdType === ind ? 'selected' : 'option'}
+                      key={ind}
+                      onClick={()=>handleHouseholdSelect(ind)}
+                      > <p style={{"marginBottom":"0"}}>{opt}</p>
+                    </div>
+                    )
+                  })}
+                  </div>
+                  </section>
+                  <section>
+                  <div className="option-second">
+
+                  {dependentOptions.map((opt,ind)=>{
+                    return (
+                      <div className={dependent === ind ? 'selected' : 'option'}
+                
+                      key={ind}
+                      onClick={()=>handleDependentSelect(ind)}
+                      > <p style={{"marginBottom":"0"}}>{opt}</p>
+                    </div>
+                    )
+                  })}
+                  </div>
+                  </section>
+                  <section>
+                  <div className="option-third">
+                  {investImpOptions.map((opt,ind)=>{
+                    return (
+                      <div className={investImp === ind ? 'selected' : 'option'}
+                
+                      key={ind}
+                      onClick={()=>handleInvestImpSelect(ind)}
+                      > <p style={{"marginBottom":"0"}}>{opt}</p>
+                    </div>
+                    )
+                  })}
+                  </div>
+                  </section>
+
+                  <section>
+                  <div className="option-fourth">
+                  {investLossOptions.map((opt,ind)=>{
+                    return (
+                      <div className={investLoss === ind ? 'selected' : 'option'}
+                
+                      key={ind}
+                      onClick={()=>handleInvestLossSelect(ind)}
+                      > <p style={{"marginBottom":"0"}}>{opt}</p>
+                    </div>
+                    )
+                  })}
+                  </div>
+                  </section>
+                  </StyledOptionSelect>
+                </StyledContentBlock>
+            </StyledRequestBoxDiv>
+            <section id="next-btn">
+            <Button 
+            onClick={handleRequest}>다음으로</Button>
             </section>
             </StyledContentBlock>
 

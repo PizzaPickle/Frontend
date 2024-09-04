@@ -10,6 +10,7 @@ import Portfolio from "./pages/PB-BacktestPage/Portfolio";
 import Strategy from "./pages/PB-BacktestPage/Strategy";
 import Pblist from "./pages/pblistpage/Pblist";
 import Request from "./pages/requestpage/Request";
+import RequestMydata from "./pages/requestpage/RequestMydata"
 
 export const routers = [
     {
@@ -30,6 +31,10 @@ export const routers = [
             {
                 path: "request",
                 element: <Request />,
+            },
+            {
+                path: "consultdata",
+                element: <RequestMydata/>,
             }
         ]
     },

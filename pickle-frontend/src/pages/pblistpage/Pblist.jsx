@@ -24,7 +24,6 @@ export default function Pblist() {
   const { token } = useSelector((state) => state.user); 
   const [tmpDate, setTmpDate] = useState(null);
   // const selectedDate = useSelector((state) => state.date.selectedDate)
-  const [showReqWrite, setShowReqWrite] = useState(false);
 
   const [selectedMainField, setSelectedMainField] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
@@ -42,7 +41,7 @@ export default function Pblist() {
     const date = new Date(isoString);
 
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -89,11 +88,10 @@ export default function Pblist() {
     setTmpDate(date)
   }
 
-  //다음으로 -> 요청작성 페이지로 이동
   const handleReqWrite = () => {
     if (tmpDate !== null && selectedPb !== null) {
       dispatch(setDate(tmpDate.toISOString())); //선택 날짜 저장 (ISO문자열로 변환)
-      navigate('/pblist/request')
+      navigate('/pblist/consultdata')
     }
     else {
     alert("날짜와 시간을 선택해주세요.")

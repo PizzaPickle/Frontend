@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    selectedDate: null,
+    selectedDate: "",
 };
 
 const dateSlice = createSlice({
@@ -10,7 +10,7 @@ const dateSlice = createSlice({
     reducers: {
         setDate(state, action){
             state.selectedDate = action.payload;
-            console.log(action.payload); // 여기에 payload가 올바르게 전달되는지 확인
+            console.log(action.payload); 
         },
     }
 });

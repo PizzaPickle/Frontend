@@ -28,11 +28,10 @@ export const StyledPbCard = styled.div`
     flex-direction: column;
     gap: 40px;
     padding: 40px;
-    width: 400px;
-    max-width: 400px;
+    width: 300px;
+    max-width: 300px;
     height: 600px;
     justify-content: space-between;
-    flex: 1 1 calc(25% - 16px); /* 4개씩 배치되도록 설정 (총 너비의 25% - 간격) */
 
     section {
     }
