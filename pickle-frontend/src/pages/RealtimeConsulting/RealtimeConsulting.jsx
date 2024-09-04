@@ -17,6 +17,7 @@ import {
 	StyledTab,
 	StyledTabContent,
 } from './RealtimeConsulting.style';
+import ConsultingSession from './ConsultingSession';
 
 const RealtimeConsultingRoom = () => {
 	//TODO: 테스트일 때만 'soo', 배포 시 삭제
@@ -28,6 +29,8 @@ const RealtimeConsultingRoom = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [inCall, setInCall] = useState(false);
+	const [currentRoomId, setCurrentRoomId] = useState(null);
+	const [roomInfo, setRoomInfo] = useState([]);
 	const socketRef = useRef(null);
 
 	useEffect(() => {
@@ -107,11 +110,46 @@ const RealtimeConsultingRoom = () => {
 	};
 
 	const joinConsultingRoom = (roomId) => {
-		if (socketRef.current && socketRef.current.connected) {
-			socketRef.current.emit('joinRoom', { userId, roomId });
-			setInCall(true);
-			// TODO: 상담방 입장 후의 로직 (페이지 이동)
+		console.log(`Joining room: ${roomId}`);
+
+		// 기존 소켓 연결 해제
+		if (socketRef.current) {
+			socketRef.current.disconnect();
 		}
+
+		// 새로운 소켓 연결 생성
+		socketRef.current = io('http://localhost:3000');
+
+		socketRef.current.on('connect', () => {
+			console.log('New socket connected for consulting room');
+
+			socketRef.current.emit('joinConsultingRoom', { userId, roomId });
+
+			socketRef.current.on('joinedConsultingRoom', (response) => {
+				console.log('Joined consulting room:', response);
+				setRoomInfo(response);
+				setInCall(true);
+				setCurrentRoomId(roomId);
+			});
+
+			socketRef.current.on('error', (error) => {
+				console.error('Error joining consulting room:', error);
+			});
+		});
+	};
+
+	const leaveConsultingRoom = () => {
+		if (socketRef.current) {
+			socketRef.current.emit('leaveConsultingRoom', { userId, roomId: currentRoomId });
+			socketRef.current.disconnect();
+		}
+		setInCall(false);
+		setCurrentRoomId(null);
+		setRoomInfo([]);
+
+		// 대기실용 소켓 재연결
+		socketRef.current = io('http://localhost:3000');
+		requestWaitingRooms();
 	};
 
 	const formatDate = (dateString) => {
@@ -193,43 +231,47 @@ const RealtimeConsultingRoom = () => {
 			<StyledConsultingMainContent>
 				<Sidebar />
 				<StyledConsultingContent>
-					<StyledHead2Text>{userName.slice(1)}님의 실시간 상담</StyledHead2Text>
-
-					<StyledTabs>
-						<StyledTab active={activeTab === 'waiting'} onClick={() => setActiveTab('waiting')}>
-							대기중
-						</StyledTab>
-						<StyledTab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
-							상담내역
-						</StyledTab>
-					</StyledTabs>
-
-					<StyledTabContent>
-						{activeTab === 'waiting' && (
-							<StyledConsultingSection>
-								<StyledContentBlock>
-									<div id="welcome" className="section">
-										<h4>대기중인 상담룸</h4>
-									</div>
-									<div id="roomList" className="section">
-										<StyledContentFlex>{renderWaitingRooms()}</StyledContentFlex>
-									</div>
-								</StyledContentBlock>
-							</StyledConsultingSection>
-						)}
-						{activeTab === 'history' && (
-							<StyledConsultingSection>
-								<StyledContentBlock>
-									<div id="history" className="section">
-										<h4>상담 내역</h4>
-									</div>
-									<div id="historyList" className="section">
-										{renderConsultingHistory()}
-									</div>
-								</StyledContentBlock>
-							</StyledConsultingSection>
-						)}
-					</StyledTabContent>
+					{!inCall ? (
+						<>
+							<StyledHead2Text>{userName.slice(1)}님의 실시간 상담</StyledHead2Text>
+							<StyledTabs>
+								<StyledTab active={activeTab === 'waiting'} onClick={() => setActiveTab('waiting')}>
+									대기중
+								</StyledTab>
+								<StyledTab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
+									상담내역
+								</StyledTab>
+							</StyledTabs>
+							<StyledTabContent>
+								{activeTab === 'waiting' && (
+									<StyledConsultingSection>
+										<StyledContentBlock>
+											<div id="welcome" className="section">
+												<h4>대기중인 상담룸</h4>
+											</div>
+											<div id="roomList" className="section">
+												<StyledContentFlex>{renderWaitingRooms()}</StyledContentFlex>
+											</div>
+										</StyledContentBlock>
+									</StyledConsultingSection>
+								)}
+								{activeTab === 'history' && (
+									<StyledConsultingSection>
+										<StyledContentBlock>
+											<div id="history" className="section">
+												<h4>상담 내역</h4>
+											</div>
+											<div id="historyList" className="section">
+												{renderConsultingHistory()}
+											</div>
+										</StyledContentBlock>
+									</StyledConsultingSection>
+								)}
+							</StyledTabContent>
+						</>
+					) : (
+						<ConsultingSession userId={userId} roomId={currentRoomId} socket={socketRef.current} onLeave={leaveConsultingRoom} />
+					)}
 				</StyledConsultingContent>
 			</StyledConsultingMainContent>
 		</StyledConsultingContainer>
