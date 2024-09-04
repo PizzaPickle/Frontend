@@ -29,7 +29,7 @@ const ACTION_STREAM_TYPES = {
 
 const MESSAGE_TYPES = { METADATA: 'metadata', CHAT: 'chat', SYSTEM: 'system' };
 
-const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
+const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 	const [muted, setMuted] = useState(false);
 	const [cameraOff, setCameraOff] = useState(false);
 	const [isScreenSharing, setIsScreenSharing] = useState(false);
@@ -146,6 +146,11 @@ const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
 			],
 		});
 
+		dataChannelRef.current = peerConnectionRef.current.createDataChannel('communication');
+		dataChannelRef.current.onmessage = handleDataChannelMessageReceived;
+		dataChannelRef.current.onopen = () => console.log('Data channel is open');
+		dataChannelRef.current.onclose = () => console.log('Data channel is closed');
+
 		peerConnectionRef.current.onicecandidate = handleIceCandidate;
 		peerConnectionRef.current.ontrack = handleTrackEvent;
 		peerConnectionRef.current.oniceconnectionstatechange = handleICEConnectionStateChange;
@@ -188,6 +193,7 @@ const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
 
 	const handlePeerDisconnection = () => {
 		addSystemMessageToChat('상대방과의 연결이 끊어졌습니다.');
+		// TODO: 내 공유 화면 및 비디오 초기화
 	};
 	const handleReceiveOffer = async (offer) => {
 		console.log('Offer received');
@@ -260,14 +266,18 @@ const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
 
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && dataChannelRef.current) {
-			sendChatMessage(inputMessage);
+			const messageData = {
+				senderId: userId,
+				senderName: userName,
+				content: inputMessage,
+			};
+			sendChatMessage(messageData);
 			addMessageToChat('나', inputMessage);
 			setInputMessage('');
 		}
 	};
-
-	const sendChatMessage = (message) => {
-		sendDataChannelMessage(MESSAGE_TYPES.CHAT, { content: message });
+	const sendChatMessage = (messageData) => {
+		sendDataChannelMessage(MESSAGE_TYPES.CHAT, messageData);
 	};
 
 	const sendDataChannelMessage = (type, content) => {
@@ -276,7 +286,6 @@ const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
 			dataChannelRef.current.send(message);
 		}
 	};
-
 	const handleDataChannelMessageReceived = (event) => {
 		const message = JSON.parse(event.data);
 		switch (message.type) {
@@ -284,20 +293,21 @@ const ConsultingSession = ({ userId, roomId, socket, onLeave }) => {
 				handleStreamMetadata(message.content.action);
 				break;
 			case MESSAGE_TYPES.CHAT:
-				addMessageToChat('상대방', message.content.content);
+				const { senderId, senderName, content } = message.content;
+				const sender = senderId === userId ? '나' : senderName;
+				addMessageToChat(sender, content);
 				break;
 			case MESSAGE_TYPES.SYSTEM:
-				addSystemMessageToChat(message.content.content);
+				addSystemMessageToChat(message.content);
 				break;
 		}
 	};
-
 	const addMessageToChat = (sender, message) => {
 		setChatMessages((prev) => [...prev, { sender, message }]);
 	};
 
 	const addSystemMessageToChat = (message) => {
-		setChatMessages((prev) => [...prev, { sender: 'System', message, isSystem: true }]);
+		setChatMessages((prev) => [...prev, { sender: 'PICKLE', message, isSystem: true }]);
 	};
 
 	const handleStreamMetadata = (streamType) => {

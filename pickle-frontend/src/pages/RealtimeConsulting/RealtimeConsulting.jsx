@@ -270,7 +270,13 @@ const RealtimeConsultingRoom = () => {
 							</StyledTabContent>
 						</>
 					) : (
-						<ConsultingSession userId={userId} roomId={currentRoomId} socket={socketRef.current} onLeave={leaveConsultingRoom} />
+						<ConsultingSession
+							userId={userId}
+							userName={userName}
+							roomId={currentRoomId}
+							socket={socketRef.current}
+							onLeave={leaveConsultingRoom}
+						/>
 					)}
 				</StyledConsultingContent>
 			</StyledConsultingMainContent>
