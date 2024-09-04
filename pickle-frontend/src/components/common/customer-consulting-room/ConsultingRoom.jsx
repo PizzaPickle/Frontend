@@ -20,7 +20,7 @@ import {
 	Container,
 } from './ConsultingRoom.style';
 
-export default function ConsultingRoom({ room, pbName, pbImage, status, officeName, consultingTime, daysUntilConsulting, onJoinRoom }) {
+export default function ConsultingRoom({ pbName, pbImage, status, officeName, consultingTime, daysUntilConsulting, onJoinRoom }) {
 	return (
 		<Container>
 			<CardContainer>
