@@ -69,6 +69,7 @@ export const ChatContainer = styled.div`
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
+	cursor: grab;
 `;
 
 export const ChatMessages = styled.div`

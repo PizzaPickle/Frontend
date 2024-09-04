@@ -41,6 +41,11 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 	const [microphones, setMicrophones] = useState([]);
 	const [selectedCamera, setSelectedCamera] = useState('');
 	const [selectedMicrophone, setSelectedMicrophone] = useState('');
+	const [isChatVisible, setIsChatVisible] = useState(false);
+
+	const [isDragging, setIsDragging] = useState(false);
+	const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+	const [chatPosition, setChatPosition] = useState({ x: 20, y: 20 });
 
 	const myVideoRef = useRef();
 	const peerVideoRef = useRef();
@@ -49,6 +54,7 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 	const screenStreamRef = useRef();
 	const peerConnectionRef = useRef();
 	const dataChannelRef = useRef();
+	const chatContainerRef = useRef();
 
 	useEffect(() => {
 		if (!socket) return;
@@ -164,6 +170,42 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 			dataChannelRef.current.onmessage = handleDataChannelMessageReceived;
 		};
 	};
+	const handleChatToggle = () => {
+		setIsChatVisible((prevState) => !prevState);
+	};
+
+	const handleMouseDown = (e) => {
+		setIsDragging(true);
+		const chatRect = chatContainerRef.current.getBoundingClientRect();
+		setDragOffset({
+			x: e.clientX - chatRect.left,
+			y: e.clientY - chatRect.top,
+		});
+		chatContainerRef.current.style.cursor = 'grabbing';
+	};
+
+	const handleMouseMove = (e) => {
+		if (!isDragging) return;
+		const newX = e.clientX - dragOffset.x;
+		const newY = e.clientY - dragOffset.y;
+		setChatPosition({ x: newX, y: newY });
+	};
+
+	const handleMouseUp = () => {
+		setIsDragging(false);
+		chatContainerRef.current.style.cursor = 'grab';
+	};
+
+	useEffect(() => {
+		if (isDragging) {
+			window.addEventListener('mousemove', handleMouseMove);
+			window.addEventListener('mouseup', handleMouseUp);
+		}
+		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
+			window.removeEventListener('mouseup', handleMouseUp);
+		};
+	}, [isDragging]);
 
 	const handleIceCandidate = (event) => {
 		if (event.candidate) {
@@ -391,6 +433,9 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 				<ControlButton onClick={handleScreenShare} active={isScreenSharing}>
 					<MonitorUp size={24} />
 				</ControlButton>
+				<ControlButton onClick={handleChatToggle}>
+					<MessageCircle size={24} />
+				</ControlButton>
 				<ControlButton onClick={onLeave} style={{ backgroundColor: '#dc3545' }}>
 					<PhoneOff size={24} />
 				</ControlButton>
@@ -412,28 +457,38 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 					))}
 				</select>
 			</DeviceSelect>
-
-			<ChatContainer>
-				<ChatMessages>
-					{chatMessages.map((msg, index) => (
-						<p key={index} style={{ color: msg.isSystem ? 'lightblue' : 'white' }}>
-							<strong>{msg.sender}:</strong> {msg.message}
-						</p>
-					))}
-				</ChatMessages>
-				<ChatInputContainer>
-					<ChatInput
-						type="text"
-						placeholder="메시지를 입력하세요..."
-						value={inputMessage}
-						onChange={(e) => setInputMessage(e.target.value)}
-						onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-					/>
-					<SendButton onClick={handleSendMessage}>
-						<Send size={20} />
-					</SendButton>
-				</ChatInputContainer>
-			</ChatContainer>
+			{isChatVisible && (
+				<ChatContainer
+					ref={chatContainerRef}
+					onMouseDown={handleMouseDown}
+					style={{
+						position: 'absolute',
+						top: `${chatPosition.y}px`,
+						left: `${chatPosition.x}px`,
+						cursor: isDragging ? 'grabbing' : 'grab',
+					}}
+				>
+					<ChatMessages>
+						{chatMessages.map((msg, index) => (
+							<p key={index} style={{ color: msg.isSystem ? 'lightblue' : 'white' }}>
+								<strong>{msg.sender}:</strong> {msg.message}
+							</p>
+						))}
+					</ChatMessages>
+					<ChatInputContainer>
+						<ChatInput
+							type="text"
+							placeholder="메시지를 입력하세요..."
+							value={inputMessage}
+							onChange={(e) => setInputMessage(e.target.value)}
+							onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+						/>
+						<SendButton onClick={handleSendMessage}>
+							<Send size={20} />
+						</SendButton>
+					</ChatInputContainer>
+				</ChatContainer>
+			)}
 		</Container>
 	);
 };

@@ -173,3 +173,18 @@ export const StyledTab = styled.button`
 export const StyledTabContent = styled.div`
 	margin-top: 20px;
 `;
+
+export const DeviceSelect = styled.div`
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 10px;
+
+	select {
+		padding: 5px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		background-color: white;
+		font-size: 14px;
+	}
+`;
