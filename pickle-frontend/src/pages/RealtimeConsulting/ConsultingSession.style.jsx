@@ -1,4 +1,16 @@
 import styled, { css, keyframes } from 'styled-components';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -20,16 +32,6 @@ export const VideoContainer = styled.div`
 export const Video = styled.video`
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
-`;
-
-export const SmallVideo = styled.video`
-	position: absolute;
-	width: 200px;
-	height: 150px;
-	bottom: 20px;
-	right: 20px;
-	border-radius: 10px;
 	object-fit: cover;
 `;
 
@@ -70,12 +72,29 @@ export const ChatContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	cursor: grab;
+	animation: ${fadeIn} 0.5s ease-in-out;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+	&:active {
+		cursor: grabbing;
+	}
 `;
 
 export const ChatMessages = styled.div`
 	flex: 1;
 	overflow-y: auto;
 	padding: 10px;
+	scrollbar-width: thin;
+	scrollbar-color: #3a3a3a transparent;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #3a3a3a;
+		border-radius: 10px;
+	}
 `;
 
 export const ChatInputContainer = styled.div`
@@ -104,6 +123,10 @@ export const SendButton = styled.button`
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+
+	&:hover {
+		background-color: #5a5a5a;
+	}
 `;
 
 export const Timer = styled.div`
@@ -115,6 +138,7 @@ export const Timer = styled.div`
 	border-radius: 15px;
 	font-size: 14px;
 `;
+
 export const DeviceSelect = styled.div`
 	display: flex;
 	justify-content: center;
@@ -127,5 +151,84 @@ export const DeviceSelect = styled.div`
 		border: 1px solid #ccc;
 		background-color: white;
 		font-size: 14px;
+	}
+`;
+
+export const SharedScreenContainer = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.8);
+
+	video {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+`;
+export const VideoGrid = styled.div`
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1rem;
+	width: 100%;
+	height: 100%;
+`;
+export const VideoWrapper = styled.div`
+	position: relative;
+	width: 50%;
+	height: 100%;
+`;
+
+export const VideoLayout = styled.div`
+	display: flex;
+	flex-direction: ${(props) => (props.isBothSharing ? 'column' : 'row')};
+	height: 100%;
+`;
+
+export const MainVideo = styled.video`
+	width: ${(props) => {
+		if (!props.isSharing) return '50%';
+		if (props.isBothSharing) return '50%';
+		return '70%';
+	}};
+	height: ${(props) => {
+		if (!props.isSharing) return '100%';
+		if (props.isBothSharing) return '70%';
+		return '100%';
+	}};
+	object-fit: cover;
+`;
+
+export const SecondaryVideos = styled.div`
+	display: flex;
+	flex-direction: ${(props) => (props.isBothSharing ? 'row' : 'column')};
+	width: ${(props) => (props.isBothSharing ? '100%' : '30%')};
+	height: ${(props) => (props.isBothSharing ? '30%' : '100%')};
+`;
+
+export const SmallVideo = styled.video`
+	width: ${(props) => (props.isBothSharing ? '50%' : '100%')};
+	height: ${(props) => (props.isBothSharing ? '100%' : '50%')};
+	object-fit: cover;
+`;
+
+export const PlaceholderVideo = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #2a2a2a;
+	color: white;
+
+	p {
+		margin-top: 10px;
+		font-size: 18px;
 	}
 `;

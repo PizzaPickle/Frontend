@@ -123,7 +123,7 @@ const RealtimeConsultingRoom = () => {
 		socketRef.current.on('connect', () => {
 			console.log('New socket connected for consulting room');
 
-			socketRef.current.emit('joinConsultingRoom', { userId, roomId });
+			socketRef.current.emit('joinConsultingRoom', { userId, roomId, userName });
 
 			socketRef.current.on('joinedConsultingRoom', (response) => {
 				console.log('Joined consulting room:', response);

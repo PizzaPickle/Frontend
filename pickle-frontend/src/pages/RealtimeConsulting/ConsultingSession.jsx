@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, Video, MonitorUp, MessageCircle, Send, PhoneOff } from 'lucide-react';
+
 import {
 	Container,
 	VideoContainer,
@@ -13,6 +14,9 @@ import {
 	SendButton,
 	Timer,
 	DeviceSelect,
+	VideoLayout,
+	MainVideo,
+	SecondaryVideos,
 } from './ConsultingSession.style';
 
 const DEVICE_TYPES = {
@@ -42,20 +46,21 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 	const [selectedCamera, setSelectedCamera] = useState('');
 	const [selectedMicrophone, setSelectedMicrophone] = useState('');
 	const [isChatVisible, setIsChatVisible] = useState(false);
-
+	const [isAnyoneSharing, setIsAnyoneSharing] = useState(false);
+	const [isBothSharing, setIsBothSharing] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
 	const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 	const [chatPosition, setChatPosition] = useState({ x: 20, y: 20 });
-
+	const [hasEntered, setHasEntered] = useState(false);
 	const myVideoRef = useRef();
 	const peerVideoRef = useRef();
-	const sharedScreenRef = useRef();
+	const mySharedScreenRef = useRef();
+	const peerSharedScreenRef = useRef();
 	const myStreamRef = useRef();
 	const screenStreamRef = useRef();
 	const peerConnectionRef = useRef();
 	const dataChannelRef = useRef();
 	const chatContainerRef = useRef();
-
 	useEffect(() => {
 		if (!socket) return;
 
@@ -68,6 +73,15 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 			socket.on('offer', handleReceiveOffer);
 			socket.on('answer', handleAnswer);
 			socket.on('ice', handleNewICECandidateMsg);
+
+			if (!hasEntered) {
+				addSystemMessageToChat(`${userName}께서 요청하신 방으로 입장했습니다!`);
+				setHasEntered(true);
+			}
+
+			socket.on('newUserJoined', ({ userName, message }) => {
+				addSystemMessageToChat(`${userName}님이 입장하셨습니다.`);
+			});
 		};
 
 		initializeSession();
@@ -83,7 +97,7 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 			cleanupResources();
 			clearInterval(timer);
 		};
-	}, [socket, roomId]);
+	}, [socket, roomId, hasEntered]);
 
 	const createAndSendOffer = async () => {
 		try {
@@ -283,8 +297,8 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 			try {
 				const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
 				screenStreamRef.current = stream;
-				sharedScreenRef.current.srcObject = stream;
 				setIsScreenSharing(true);
+				setIsAnyoneSharing(true);
 				stream.getTracks().forEach((track) => {
 					peerConnectionRef.current.addTrack(track, stream);
 				});
@@ -296,16 +310,14 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 			stopScreenShare();
 		}
 	};
-
 	const stopScreenShare = () => {
 		if (screenStreamRef.current) {
 			screenStreamRef.current.getTracks().forEach((track) => track.stop());
 			setIsScreenSharing(false);
-			sharedScreenRef.current.srcObject = null;
+			setIsAnyoneSharing(isPeerScreenSharing);
 			sendStreamMetadata(ACTION_STREAM_TYPES.STOP_SCREENSHARE);
 		}
 	};
-
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && dataChannelRef.current) {
 			const messageData = {
@@ -356,10 +368,11 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 		switch (streamType) {
 			case ACTION_STREAM_TYPES.SCREENSHARE:
 				setIsPeerScreenSharing(true);
+				setIsAnyoneSharing(true);
 				break;
 			case ACTION_STREAM_TYPES.STOP_SCREENSHARE:
 				setIsPeerScreenSharing(false);
-				if (sharedScreenRef.current) sharedScreenRef.current.srcObject = null;
+				setIsAnyoneSharing(isScreenSharing);
 				break;
 		}
 	};
@@ -417,11 +430,34 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 
 	return (
 		<Container>
-			<VideoContainer>
-				<video ref={peerVideoRef} autoPlay playsInline />
-				<SmallVideo ref={myVideoRef} autoPlay playsInline muted />
+			<VideoLayout isSharing={isAnyoneSharing} isBothSharing={isBothSharing}>
+				{!isAnyoneSharing && (
+					<>
+						<MainVideo ref={myVideoRef} autoPlay playsInline muted />
+						<MainVideo ref={peerVideoRef} autoPlay playsInline />
+					</>
+				)}
+				{isAnyoneSharing && !isBothSharing && (
+					<>
+						<MainVideo ref={isScreenSharing ? mySharedScreenRef : peerSharedScreenRef} autoPlay playsInline />
+						<SecondaryVideos isSharing={true}>
+							<SmallVideo ref={myVideoRef} autoPlay playsInline muted isSharing={true} />
+							<SmallVideo ref={peerVideoRef} autoPlay playsInline isSharing={true} />
+						</SecondaryVideos>
+					</>
+				)}
+				{isBothSharing && (
+					<>
+						<MainVideo ref={mySharedScreenRef} autoPlay playsInline />
+						<MainVideo ref={peerSharedScreenRef} autoPlay playsInline />
+						<SecondaryVideos isSharing={true} isBothSharing={true}>
+							<SmallVideo ref={myVideoRef} autoPlay playsInline muted isSharing={true} />
+							<SmallVideo ref={peerVideoRef} autoPlay playsInline isSharing={true} />
+						</SecondaryVideos>
+					</>
+				)}
 				<Timer>진행시간 {formatTime(elapsedTime)}</Timer>
-			</VideoContainer>
+			</VideoLayout>
 
 			<ControlsContainer>
 				<ControlButton onClick={handleMuteClick} active={!muted}>
@@ -468,6 +504,7 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 						cursor: isDragging ? 'grabbing' : 'grab',
 					}}
 				>
+					<div style={{ padding: '8px', fontWeight: 'bold', color: 'white' }}>채팅방</div>
 					<ChatMessages>
 						{chatMessages.map((msg, index) => (
 							<p key={index} style={{ color: msg.isSystem ? 'lightblue' : 'white' }}>
@@ -478,7 +515,7 @@ const ConsultingSession = ({ userId, userName, roomId, socket, onLeave }) => {
 					<ChatInputContainer>
 						<ChatInput
 							type="text"
-							placeholder="메시지를 입력하세요..."
+							placeholder="메시지를 입력하세요."
 							value={inputMessage}
 							onChange={(e) => setInputMessage(e.target.value)}
 							onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
