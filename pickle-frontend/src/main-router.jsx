@@ -12,6 +12,7 @@ import Pblist from "./pages/pblistpage/Pblist";
 import Request from "./pages/requestpage/Request";
 import RequestMydata from "./pages/requestpage/RequestMydata"
 import React from 'react';
+import Preset from './pages/pb/presetPage/Preset';
 
 export const routers = [
     {
@@ -62,6 +63,20 @@ export const routers = [
 		element: <RealTimeConsulting />,
 		// index: true
 	},
+	{
+		path: '/pb',
+		children: [
+			{
+				index: true,
+				element: <Preset />,
+			},
+			{
+				path: 'preset',
+				element: <Preset />,
+			}
+		],
+	},
+	
 	// {
 	//     path: "/머있지?",
 	//     element:

@@ -2,27 +2,27 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     id: null,
-    name: "홍길동", // TODO 변경
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NyIsImlhdCI6MTcyNTUxMjY3OCwiZXhwIjoxNzI1NTE2Mjc4fQ.OBRC2O9BM_32c8cRzrkXG0ezlzKUIYJW0WPk9jVdzaI", 
+    name: "윤재욱", // TODO 변경
+    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NyIsImlhdCI6MTcyNTUwNzE4MSwiZXhwIjoxNzI1NTEwNzgxfQ.4asZdVJV5Gv-rXo-3ctPBc5mCO5Myb47V_aiETIAGgY", 
 };
 
 const userSlice = createSlice({
-    name: "user",
+    name: "pbuser",
     initialState: initialState,
     reducers: {
-        setUser: (state, action) => {
+        setPbUser: (state, action) => {
             // 로그인 했을 때 로직 예시
             state.id = action.payload.user.id;
             state.name = action.payload.user.name;
             state.token = action.payload.token; // 토큰 설정
         },
-        logoutUser: (state) => {
+        logoutPbUser: (state) => {
             // 로그아웃
             state.id = null;
             state.name = "";
             state.token = null; // 토큰 삭제
         },
-        setToken: (state, action) => {
+        setPbToken: (state, action) => {
             // 토큰 업데이트
             state.token = action.payload.token;
         },
@@ -30,9 +30,9 @@ const userSlice = createSlice({
 });
 
 export const {
-    setUser,
-    logoutUser,
-    setToken, 
+    setPbUser,
+    logoutPbUser,
+    setPbToken, 
 } = userSlice.actions;
 
 export default userSlice.reducer;

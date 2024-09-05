@@ -1,5 +1,6 @@
 import { CircularGraph } from "./CircularGraph";
 import { StyledGraphDiv } from "./CircularGraph.style";
+import React from "react";
 
 export default function Circular(props) {
   return (

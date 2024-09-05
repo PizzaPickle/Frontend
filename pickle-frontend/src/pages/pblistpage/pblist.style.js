@@ -107,4 +107,17 @@ export const StyledPbSection = styled.div`
         display: flex;
         gap: 20px;
     }
+
+    .filtering {
+        display: flex;
+        gap: 20px;
+        line-height: 2;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        section {
+            display: flex;
+            gap: 10px;
+        }
+    }
 `
