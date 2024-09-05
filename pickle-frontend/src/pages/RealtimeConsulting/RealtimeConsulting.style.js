@@ -188,3 +188,14 @@ export const DeviceSelect = styled.div`
 		font-size: 14px;
 	}
 `;
+const PlaceholderContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f0f0f0;
+	color: #666;
+	font-size: 1.5rem;
+	flex-direction: column;
+`;
