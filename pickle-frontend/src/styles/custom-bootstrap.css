@@ -1,0 +1,114 @@
+/* src/styles/custom-bootstrap.css */
+#custom-dropdown {
+    background-color: transparent;
+    color: #02004C;
+    border: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+
+}
+
+#custom-dropdown:hover {
+    background-color:#E7ECF9;
+    transition: none,
+}
+
+#x-btn {
+    text-decoration: none;
+    color: #02004C;
+}
+
+p, h1, h2, h3, h4, h5 {
+    margin-bottom: 0;
+}
+
+#reserve-btn {
+    background-color:#02004C;
+    border: none;
+    padding: 20px 50px 20px 50px;
+    border-radius: 15px;
+}
+
+#reserve-btn:hover {
+    opacity: 0.9;
+    box-shadow: 1px 0px 0px 0px black;
+}
+
+.react-datepicker-wrapper {
+    width:100%;
+}
+.react-datepicker__input-container {
+    width: 100%;
+}
+
+.react-datepicker__input-container button {
+    width: 100%;
+    border: none;
+    padding: 8px;
+    background: transparent;
+}
+
+.react-datepicker__triangle {
+    display: none;
+  }
+
+.react-datepicker__input-container input {
+    display: none;
+}
+
+.react-datepicker {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.react-datepicker__header {
+    margin-top: 2%;
+    background-color: rgb(255, 255, 255);
+    border-bottom: none;
+    border-radius: 0;
+}
+
+.custom-backdrop {
+    background-color: rgba(0, 0, 0, 0.1) !important; /* 투명도 조정 */
+}
+
+#reserve-list {
+    
+}
+.reserve-item {
+    padding-left: 20px;
+    line-height: 3;
+}
+
+#date-next-btn {
+    border-radius: 0 0 3px 0;
+}
+
+#modal-header {
+    border-bottom: 0px;
+    padding-bottom: 20px;
+    padding-top: 40px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(242, 242, 242, 0.98);
+}
+
+#custom-modal > .modal-content {
+    border: none;
+    border-radius: 30px;
+}
+#modal-body {
+    margin: 10px 0 0 10px;
+}
+
+#modal-footer {
+    border: none;
+}
+
+.modal-yes:hover {
+}
