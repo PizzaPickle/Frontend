@@ -77,7 +77,11 @@ export default function Pblist() {
     setTmpDate(date)
   }
   
-  
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   const handleReqWrite = () => {
     if (tmpDate !== null && selectedPb !== null) {
@@ -364,14 +368,24 @@ export default function Pblist() {
                         <img src="/assets/pb-reserve.svg" alt="reserve" />
                         PB 예약하기
                       </div>
+
+                      {/* 이미지 로딩을 감지하기 위한 별도의 영역 */}
+                      <img 
+                        src="/assets/caleander-icon.svg" 
+                        style={{ width: "80px", display: 'none' }} // 실제로 보이지 않게 설정
+                        onLoad={handleImageLoad}
+                        alt="Calendar Icon"
+                      />
+
                       <Modal id="custom-modal"
                       aria-labelledby="contained-modal-title-vcenter"
                       centered
-                      show={showModal} onHide={handleNoClick}
-                      backdropClassName="custom-backdrop" // 커스텀 클래스 추가
+                      show={showModal && imageLoaded} onHide={handleNoClick}
+                      backdropClassName="custom-backdrop" 
                       >
                         <Modal.Header id="modal-header">
-                          <img src="/assets/caleander-icon.svg" style={{"width":"80px"}}></img>
+                          <img 
+                          src="/assets/caleander-icon.svg" style={{"width":"80px"}}></img>
                           <h5>상담 예약 진행</h5></Modal.Header>
                       <Modal.Body id="modal-body"><b>{clickedPb?.username}PB</b>와 상담 날짜 예약을 진행할게요.</Modal.Body>
                       <Modal.Footer id="modal-footer">

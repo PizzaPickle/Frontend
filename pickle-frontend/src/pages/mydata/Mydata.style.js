@@ -57,9 +57,9 @@ export const StyledMyBadgeBox = styled.div`
 
     .badge-info {
         position: absolute;
-        min-width: 210px;
+        min-width: 260px;
         height: auto;
-        font-size: 10px;
+        font-size: 0.8rem;
         top: 10%;
         left: 75%;
         border-radius: 14px;
