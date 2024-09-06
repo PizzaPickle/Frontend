@@ -97,7 +97,7 @@ export default function HomePage(){
                      나의 투자 현황을 살펴보세요.
                     </StyledHead2Text>
                     
-                    <StyledContentFlex>
+                    <StyledContentFlex style={{alignItems:"center"}}>
                         <WalletCard texts={walletTexts} amounts={walletAmounts} />
                         <StyledAllMoneyContainer>
                             <AllMoneyTitle>내 포트폴리오 수익률
@@ -107,7 +107,7 @@ export default function HomePage(){
                             gap={"15px"}
                             infoVisible={"hidden"}
                                 maxWidth={"1000px"}
-                                height={"230px"}
+                                height={"250px"}
                                 padding={"50px"}
                                 showNum={3}
                                 balanceInfo={balanceInfoData}
@@ -116,6 +116,7 @@ export default function HomePage(){
                                 cardWidth={"200px"}
                                 lastTextSize={"large"}
                                 lastTextColor={"#FF5C00"} /* TODO 데이터에 따라 수정 필요 */
+                                auto={"true"}
                             />
                         </StyledAllMoneyContainer>
                     </StyledContentFlex>

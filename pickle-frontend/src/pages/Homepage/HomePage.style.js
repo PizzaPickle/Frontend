@@ -153,7 +153,6 @@ export const StyledContentFlex = styled.div`
 `
 export const StyledAllMoneyContainer = styled.div`
     position: relative;
-
 `
 
 export const AllMoneyTitle = styled.div`
