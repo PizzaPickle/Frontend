@@ -22,6 +22,10 @@ p, h1, h2, h3, h4, h5 {
     margin-bottom: 0;
 }
 
+hr {
+    opacity: 1;
+}
+
 #reserve-btn {
     background-color:#02004C;
     border: none;

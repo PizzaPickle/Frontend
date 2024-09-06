@@ -83,10 +83,11 @@ export const StyledS1Text= styled.div`
     span > hr {
         border: none;
         height: 6px;
-        background-color: #FFE35E; 
+        background-color: #ffe774; 
         margin-top: -5px; 
         border-radius: 20px;
         margin-bottom: 0;
+        width: 122px;
     }
 
     section {
