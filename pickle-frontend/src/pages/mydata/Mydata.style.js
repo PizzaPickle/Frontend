@@ -6,6 +6,12 @@ export const shine = keyframes`
   }
 `;
 
+export const StyledMydataSection = styled.div `
+  width: 1200px;
+  height: auto;
+
+`
+
 export const StyledMyBadge = styled.div`
     position: relative;
   width: 145px;

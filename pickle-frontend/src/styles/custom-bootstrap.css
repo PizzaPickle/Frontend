@@ -32,6 +32,7 @@ p, h1, h2, h3, h4, h5 {
 #reserve-btn:hover {
     opacity: 0.9;
     box-shadow: 1px 0px 0px 0px black;
+    
 }
 
 .react-datepicker-wrapper {

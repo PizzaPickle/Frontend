@@ -16,7 +16,9 @@ export default function Preset() {
             <StyledHead2Text>
                 내가 만든 프리셋
             </StyledHead2Text>
-            <StyledContentBlock></StyledContentBlock>
+            <StyledContentBlock>
+                dds
+            </StyledContentBlock>
         </StyledHomeContent>
         </StyledHomeMainContent>
         </StyledHomeContainer>
