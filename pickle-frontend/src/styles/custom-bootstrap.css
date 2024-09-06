@@ -27,16 +27,15 @@ hr {
 }
 
 #reserve-btn {
-    background-color:#02004C;
+    background: linear-gradient(90deg, #0028ab, #3f12d3);
     border: none;
     padding: 20px 50px 20px 50px;
     border-radius: 15px;
+    transition: all 0.2s ease-in;
 }
 
 #reserve-btn:hover {
-    opacity: 0.9;
-    box-shadow: 1px 0px 0px 0px black;
-    
+    opacity: 0.8;
 }
 
 .react-datepicker-wrapper {

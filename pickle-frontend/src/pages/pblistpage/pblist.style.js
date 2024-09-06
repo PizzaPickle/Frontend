@@ -8,6 +8,13 @@ export const StyledPbontainer = styled.div`
     height: 100%;
     flex-wrap: wrap;
     
+    
+    .pb-card:hover {
+    box-shadow: 0 .2rem 2rem rgba(2, 83, 216, 0.09);
+    transition: all 0.1s ease-in;
+
+    }
+    
 `
 
 export const StyledPbSelectContainer = styled.div`
@@ -20,6 +27,8 @@ export const StyledPbSelectContainer = styled.div`
         display: flex;
         gap: 30px;
     }
+
+        
 `
 
 export const StyledPbCard = styled.div`
@@ -36,6 +45,10 @@ export const StyledPbCard = styled.div`
     justify-content: space-between;
     box-shadow: 0px 10px 10px rgba(0,0,0,0.02);
 
+    #introduction {
+            font-size: 0.85rem;
+        }
+
     section {
         color:  ${({ theme }) => theme.colors.deep_gray};
 
@@ -44,9 +57,6 @@ export const StyledPbCard = styled.div`
         }
         #location {
             font-size: 0.9rem;
-        }
-        #introduction {
-            font-size: 0.7rem;
         }
     }
 
@@ -118,6 +128,7 @@ export const StyledPbCard = styled.div`
     .reserve {
         display: flex;
         justify-content: center;
+
         
         #reserve-btn {
         width: 100%;

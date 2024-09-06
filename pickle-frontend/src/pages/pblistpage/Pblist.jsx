@@ -330,7 +330,7 @@ export default function Pblist() {
                 filteredData.length > 0 &&
                 !showSelectedPb &&
                filteredData.map((pb, i) => (
-                  <StyledPbCard key={i}>
+                  <StyledPbCard className="pb-card" key={i}>
                     {pb.img && <img src={pb.img} alt={`${pb.username} 이미지`} />}
                     <section className="self-introduce">
                       <div id="name">{pb.username}PB</div>
@@ -338,7 +338,6 @@ export default function Pblist() {
                         <img src="/assets/pb-location.svg" alt="location" />
                         {pb.branchOffice}
                       </div>
-                      <div id="introduction">{pb.introduction}</div>
                     </section>
                     <section className="sector">
                       <article className="mainfield">
@@ -360,11 +359,14 @@ export default function Pblist() {
                         <div id="price">{pb.minConsultingAmount}만원 이상</div>
                       </article>
                     </section>
+                    <div id="introduction">{pb.introduction}</div>
+
                     <section className="reserve">
                       <div
                         id="reserve-btn"
                         onClick={() => handlePbClick(pb)}
                       >
+                        
                         <img src="/assets/pb-reserve.svg" alt="reserve" />
                         PB 예약하기
                       </div>
