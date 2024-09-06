@@ -51,7 +51,8 @@ export default function HomePage(){
     ];
 
     const balanceInfoData = [
-        
+        { label: "none ", amount: " none" },
+        { label: "none ", amount: " none" },
     ];
 
     return (
@@ -103,6 +104,8 @@ export default function HomePage(){
                                 <div>+5.1%</div>
                             </AllMoneyTitle>
                             <AllMoney 
+                            gap={"15px"}
+                            infoVisible={"hidden"}
                                 maxWidth={"1000px"}
                                 height={"230px"}
                                 padding={"50px"}

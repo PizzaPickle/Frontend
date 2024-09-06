@@ -8,27 +8,30 @@ export const Container = styled.div`
     padding-left: ${(props) => props.padding || '24px'}; 
     padding-right: ${(props) => props.padding || '24px'}; 
     border-radius: 16px;
+    gap: ${(props) => props.gap || '0px'};
     
     display: flex;
-    align-items: end;
+    flex-direction: column;
+    align-items: flex-start;
     padding-bottom: 40px;
 `;
 
-// export const BankInfo = styled.p`
-//     background-color:#F1F5FF;
-//     display:flex;
-//     gap:20px;
-//     padding: 10px;
-//     align-items: self-end;
-//     color: #020050;
-//     font-size: 14px;
-//     margin-bottom: 21px;
+export const BankInfo = styled.p`
+    visibility: ${(props) => props.infoVisible || 'visible'}; ;
+    background-color:#F1F5FF;
+    display:flex;
+    gap:20px;
+    padding: 10px;
+    align-items: center;
+    color: #020050;
+    font-size: 14px;
+    margin-bottom: 21px;
     
-// `;
+`;
 
 export const BankTitle = styled.span`
     background-color:#F1F5FF;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #020050;
     
@@ -49,7 +52,6 @@ export const BalanceRow = styled.div`
    background-color:#F1F5FF;
    gap:10px;
    display: flex;
-
 
 `;
 
@@ -153,5 +155,6 @@ export const CurrentBalance = styled.div`
     background-color:#FFFFFF;
     font-size:  ${(props) => props.lastTextSize || '14px'};
     color: ${(props) => props.lastTextColor || '#202224'}; 
+    white-space: pre-wrap;
 `;
 

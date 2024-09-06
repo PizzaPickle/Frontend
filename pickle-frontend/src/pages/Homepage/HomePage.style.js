@@ -37,6 +37,7 @@ export const StyledHomeContent = styled.div`
 `
 
 export const StyledHeadText = styled.div`
+    padding-top: 15px;
     font-size: xx-large;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.navy};
@@ -47,7 +48,7 @@ export const StyledHomeSection= styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 
     article {
         display: flex;
