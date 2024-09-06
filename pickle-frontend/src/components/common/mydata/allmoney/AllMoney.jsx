@@ -20,16 +20,20 @@ import {
     CurrentBalance,
     BodyContainer
 } from "./AllMoney.style";
+import CustomArrow from "./CustomArrow";
 
 export default function AllMoney(props) {
     const settings = {
+        dots: true,
         className: 'slider variable-width',
+        lazyLoad: true,
         slidesToShow: props.showNum,
         slidesToScroll: 1,
         speed: 500,
         infinite: true,
-        useCSS: true
-        
+        useCSS: true,
+        nextArrow: <CustomArrow direction="next" />,
+    prevArrow: <CustomArrow direction="prev" />
     };
 
     return (
