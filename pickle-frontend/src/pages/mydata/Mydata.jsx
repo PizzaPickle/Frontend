@@ -249,7 +249,7 @@ export default function Mydata(){
                       <StyledHead2Text>
                           획득한 자산 뱃지
                       </StyledHead2Text>
-                        <StyledContentBlock style={{position: "relative"}}>
+                        <StyledContentBlock style={{position: "relative", width:"fit-content"}}>
                             <StyledMyBadgeBox>
                             {/* TODO map으로 뱃지 생성하기 */}
                             <StyledMyBadge
