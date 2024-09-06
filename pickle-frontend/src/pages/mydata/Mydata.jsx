@@ -2,121 +2,77 @@ import React from "react"
 import { useState } from "react"
 import Header from "../../components/common/header/Header"
 import Sidebar from "../../components/common/sidebar/Sidebar"
-import { StyledHead2Text, StyledContentBlock, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHomeSection, StyledContentFlex } from "../Homepage/HomePage.style"
+import { StyledHead2Text, StyledHeadText, StyledContentBlock, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHomeSection, StyledContentFlex } from "../Homepage/HomePage.style"
 import { useSelector } from "react-redux"
-import { StyledImageText, StyledMyBadge, StyledMyBadgeBox } from "./Mydata.style"
+import { StyledImageText, StyledMyBadge, StyledMyBadgeBox, StyledMydataSection } from "./Mydata.style"
 import locking from "/assets/mydata-locking.svg" 
 import car from "/assets/mydata-car.png" 
 import { LegendWithGraphDiv } from "../../components/common/graph-width-legend/LegendWithGraph.style"
 import LegendWithGraph from "../../components/common/graph-width-legend/LegendWithGraph"
 import Circular from "../../components/common/circular-graph/Circular"
 import WalletCard from "../../components/common/wallet-card/WalletCard"
+import { useEffect } from "react"
+import AllMoney from "../../components/common/mydata/allmoney/AllMoney"
 
 export default function Mydata(){  
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
     const userName = useSelector((state) => state.user.name);
+    const { token } = useSelector((state) => state.user); 
 
     //Badge-info 텍스트
     const locking_info = ["은행 잔액 대비 인출가능금액 30% 이하", "은행 적금 5000만원 이상"]
 
-    let data = [
-        {
-          id: "해외주식",
-          label: 2,
-          value: 0.1,
-          color: "#FFC27B",
-          productList: [
-            {
-              code: "005930",
-              ratio: 25,
-              themeName: "반도체",
-              name: "해외주식1",
-            },
-            {
-              code: "000660",
-              ratio: 75,
-              themeName: "반도체",
-              name: "해외주식2",
-            },
-          ],
-        },
-        {
-          id: "채권",
-          label: 3,
-          value: 0.234,
-          color: "#FF8B67",
-          productList: [
-            {
-              code: "005930",
-              ratio: 10,
-              themeName: "반도체",
-              name: "채권1",
-            },
-            {
-              code: "000660",
-              ratio: 90,
-              themeName: "반도체",
-              name: "채권2",
-            },
-          ],
-        },
-        {
-          id: "ETF",
-          label: 4,
-          value: 0.404,
-          color: "#FFADB6",
-          productList: [
-            {
-              code: "005930",
-              ratio: 40,
-              themeName: "ETF1",
-              name: "삼성전자",
-            },
-            {
-              code: "000660",
-              ratio: 60,
-              themeName: "ETF2",
-              name: "하이닉스",
-            },
-          ],
-        },
-        {
-          id: "원자재",
-          label: 5,
-          value: 0.24,
-          color: "#ffd9ad",
-          productList: [
-            {
-              code: "005930",
-              ratio: 44,
-              themeName: "원자재1",
-              name: "원자재1원자재1원자재1",
-            },
-            {
-              code: "000660",
-              ratio: 56,
-              themeName: "원자재2",
-              name: "하이닉스",
-            },
-          ],
-        },
-      ];
+    //마이데이터 요청
+    const [error, setError] = useState(null);
+    const [myBankdata, setMyBankdata] = useState([]);
+    const [mySecdata, setMySecdata] = useState([]);
+    const [myHousedata, setMyHousedata] = useState([]);
+    const [myDebtdata, setMyDebtdata] = useState([]);
+
+    //부동산 값 포맷
+    function formatCurrency(value) {
+      const billions = Math.floor(value / 100000000);
+      const millions = Math.floor((value % 100000000) / 10000);
       
-      let productList = [
-        {
-          code: "005930",
-          ratio: 30,
-          themeName: "반도체",
-          name: "삼성전자",
-        },
-        {
-          code: "000660",
-          ratio: 70,
-          themeName: "반도체",
-          name: "하이닉스",
-        },
-      ];
+      const billionPart = billions > 0 ? `${billions}억 ` : '';
+      const millionPart = millions > 0 ? `${millions}만` : '';
+  
+      return `${billionPart}${millionPart}`.trim() || '0원';
+  }
+
+    //부동산 유형 포맷
+    function getHousingType(type) {
+          switch (type) {
+              case '1':
+                  return '토지';
+              case '2':
+                  return '건물';
+              case '3':
+                  return '아파트';
+              case '4':
+                  return '연립';
+              case '5':
+                  return '빌라';
+              default:
+                  return '기타'; // 디폴트값
+          }
+      }
+
+    const [slidesBankData,setSlidesBankData] = useState([]);
+    const [balanceBankInfoData, setBalanceBankInfoData] = useState([]);
+
+    const [slidesSecData,setSlidesSecData] = useState([]);
+    const [balanceSecInfoData, setBalanceSecInfoData] = useState([]);
+
+    const [slidesHouseData,setSlidesHouseData] = useState([]);
+    const [balanceHouseInfoData, setBalanceHouseInfoData] = useState([]);
+ 
+    const [slidesDebtData,setSlidesDebtData] = useState([]);
+    const [balanceDebtInfoData, setBalanceDebtInfoData] = useState([]);
+
+    
+
     useEffect(() => {
       const fetchData = async () => {
           try {
@@ -246,6 +202,33 @@ export default function Mydata(){
   }, [token]);
   
 
+  
+  //   const slidesData = [
+  //     {
+  //         bankName: "은행기관1",
+  //         accountType: "보통예금",
+  //         productName: "예금상품명1",
+  //         currentBalance: "현재잔액 100,000원"
+  //     },
+  //     {
+  //         bankName: "은행기관2",
+  //         accountType: "보통예금",
+  //         productName: "예금상품명2",
+  //         currentBalance: "현재잔액 200,000원"
+  //     },
+  //     {
+  //         bankName: "은행기관3",
+  //         accountType: "보통예금",
+  //         productName: "예금상품명3",
+  //         currentBalance: "현재잔액 300,000원"
+
+  //     }
+  // ];
+
+  // const balanceInfoData = [
+  //     { label: "총 잔액", amount: "356,439,000원" },
+  //     { label: "총 출금가능금액", amount: "356,439,000원" }
+  // ];
 
     return (
         <>
@@ -254,12 +237,18 @@ export default function Mydata(){
             <StyledHomeMainContent>                
                 <Sidebar/>
                 <StyledHomeContent>
-                    <StyledHead2Text>
-                        {userName.slice(1)}님의 뱃지
-                    </StyledHead2Text>
+                  <StyledMydataSection>
+                    <StyledHeadText style={{margin:"10px 0px 25px 0px"}}>
+                    마이 자산 데이터
+                    </StyledHeadText>
+
 
                     {/* section 1 */}
                     <StyledHomeSection>
+    
+                      <StyledHead2Text>
+                          획득한 자산 뱃지
+                      </StyledHead2Text>
                         <StyledContentBlock style={{position: "relative"}}>
                             <StyledMyBadgeBox>
                             {/* TODO map으로 뱃지 생성하기 */}
@@ -280,33 +269,92 @@ export default function Mydata(){
                     {/* section 2 */}
                     <StyledHomeSection>
                         <StyledHead2Text>
-                            {userName.slice(1)}님의 자산 특성은?
+                            {userName.slice(1)}님의 자산을 모아봤어요.
                         </StyledHead2Text>
-                    <StyledContentFlex>
+                    <StyledContentFlex style={{"flexWrap":"wrap"}}>
 
-                    <StyledContentBlock style={{position: "relative"}}>
+                    {/* <StyledContentBlock style={{position: "relative"}}>
                     <StyledImageText>                    
                     <img src={car}></img>
                     <span><p id="text">움직이는 현금차</p>
                     유동성의 특성이 강해요.</span>
                     </StyledImageText>
-                    </StyledContentBlock>
+                    </StyledContentBlock> */}
 
-                    <StyledContentBlock style={{position: "relative"}}>
+                    {/* <StyledContentBlock style={{position: "relative"}}>
                     <div style={{position: "relative", width:"200px"}}>
                     <Circular data={data} top={"20%"} left={"-15%"} width={"290px"} height={"235px"}></Circular>
                     <LegendWithGraph data={data} width={"300px"} left={"80%"} fontSize={"small"}></LegendWithGraph>
                     </div>
+                    </StyledContentBlock> */}
+
+                    <StyledContentBlock>
+                    {balanceBankInfoData && (
+                    <AllMoney 
+                    cardWidth={"220px"}
+                    maxWidth={"530px"}
+                        height={"250px"}
+                        showNum={2}
+                        bankTitle="은행"
+                        balanceInfo={balanceBankInfoData}
+                        slides={slidesBankData}
+                    />
+                    )
+                    }   
+                    </StyledContentBlock>
+                    <StyledContentBlock>
+                    {balanceSecInfoData && (
+                    <AllMoney 
+                    cardWidth={"220px"}
+                    maxWidth={"530px"}
+
+                        height={"250px"}
+                        showNum={2}
+                        bankTitle="증권"
+                        balanceInfo={balanceSecInfoData}
+                        slides={slidesSecData}
+                    />
+                    )
+                    }   
                     </StyledContentBlock>
 
                     <StyledContentBlock>
+                    {balanceHouseInfoData && (
+                    <AllMoney 
+                    cardWidth={"220px"}
+                    maxWidth={"530px"}
+
+                        height={"250px"}
+                        showNum={2}
+                        bankTitle="부동산"
+                        balanceInfo={balanceHouseInfoData}
+                        slides={slidesHouseData}
+                    />
+                    )
+                    }   
                     </StyledContentBlock>
+
+                    <StyledContentBlock>
+                    {balanceDebtInfoData && (
+                    <AllMoney 
+                    cardWidth={"220px"}
+                    maxWidth={"530px"}
+
+                        height={"250px"}
+                        showNum={2}
+                        bankTitle="대출"
+                        balanceInfo={balanceDebtInfoData}
+                        slides={slidesDebtData}
+                    />
+                    )
+                    }   
+                    </StyledContentBlock>
+
                     </StyledContentFlex>
                     </StyledHomeSection>
 
-
+                    </StyledMydataSection>
                 </StyledHomeContent>
-                
             </StyledHomeMainContent>
         </StyledHomeContainer>
         </>
