@@ -9,4 +9,28 @@
 
   body {
     background-color: #F5F8FF;
+<<<<<<< HEAD
   } */
+=======
+    scroll-behavior: smooth;
+  }
+
+  /* 웹킷 브라우저용 */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+>>>>>>> 75ff9730d0b26d260e06eac67fdfd59e82180fab

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const StyledRequestDiv = styled.div`
-    width: 80%;
+    width: 85%;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -15,27 +15,33 @@ export const StyledRequestDiv = styled.div`
 
     #next-btn {
         width: 100%;
-        position: relative;
+        display: flex;
+        align-items: end;
+
 
         Button {
         font-size: large;
         width: 200px;
         height: 70px;
-        position: absolute;
-        right: 20px;
         }
     }
+
 
 `
 
 export const StyledRequestBoxDiv = styled.div`
     display: flex;
+    h6 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 `
 
 export const StyledOptionSelect = styled.div`
     display: flex;
     flex-direction: column;
     gap: 30px;
+    justify-content: center;
 
     section {
         display: flex;

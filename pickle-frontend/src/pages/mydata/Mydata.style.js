@@ -6,6 +6,12 @@ export const shine = keyframes`
   }
 `;
 
+export const StyledMydataSection = styled.div `
+  width: 1200px;
+  height: auto;
+
+`
+
 export const StyledMyBadge = styled.div`
   position: relative;
   width: 145px;
@@ -52,6 +58,7 @@ export const StyledMyBadge = styled.div`
 export const StyledMyBadgeBox = styled.div`
   position: relative;
 
+<<<<<<< HEAD
   .badge-info {
     position: absolute;
     min-width: 210px;
@@ -64,6 +71,25 @@ export const StyledMyBadgeBox = styled.div`
     background-color: white;
     z-index: 100;
     color: #636566;
+=======
+    .badge-info {
+        position: absolute;
+        min-width: 260px;
+        height: auto;
+        font-size: 0.8rem;
+        top: 10%;
+        left: 75%;
+        border-radius: 14px;
+        padding: 13px;
+        background-color: white;
+        z-index: 100;
+        color: #636566;
+        
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+    }
+>>>>>>> 75ff9730d0b26d260e06eac67fdfd59e82180fab
 
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
