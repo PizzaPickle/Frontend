@@ -26,11 +26,13 @@ jobs:
         node-version: '20'
 
     - name: Install Dependencies
+      working-directory: Frontend/pickle-frontend
       run: |
         rm -rf node_modules package-lock.json
         npm install
 
     - name: Build
+      working-directory: Frontend/pickle-frontend
       run: npm run build
 
     - name: Setup SSH and Deploy to EC2
