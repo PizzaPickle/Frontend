@@ -1,20 +1,59 @@
-import { defaultInstance } from './axiosInstance';
+import { defaultInstance } from "./axiosInstance";
 
-export const customerLogin = async (id, password) => {
-	try {
-		const data = defaultInstance.post('/customer/login', {
-			id: id,
-			password: password,
-		});
-		// if(대충 token 있으면) {
-		// TODO
-		//     cookie 저장하는 코드~ 이 쿠키는 httpOnly여야 합니다
-		// }
-		return data;
-	} catch (error) {
-		//에러 핸들링 로직
-		console.log(error);
-	}
+export const customerJoin = async (formData) => {
+  try {
+    const response = await defaultInstance.post(
+      `/pickle-customer/api/join`,
+      formData
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("고객 회원가입 실패:", error);
+  }
+};
+
+export const pbJoin = async (formData) => {
+  try {
+    const response = await defaultInstance.post(
+      `/pickle-pb/api/join`,
+      formData
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("pb 회원가입 실패", error);
+  }
+};
+
+export const customerToken = async (formData) => {
+  try {
+    const response = await defaultInstance.post(
+      `/pickle-customer/api/token`,
+      formData
+    );
+    const token = response.data.data;
+    console.log(token);
+
+    localStorage.setItem("accessToken", token);
+    console.log(localStorage);
+    return token;
+  } catch (error) {
+    console.error("고객 로그인 실패", error);
+  }
+};
+
+export const pbToken = async (formData) => {
+  try {
+    const response = await defaultInstance.post(
+      `/pickle-pb/api/token`,
+      formData
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("고객 로그인 실패", error);
+  }
 };
 
 /**
@@ -30,13 +69,15 @@ export const customerLogin = async (id, password) => {
  * @returns 고객의 상담 내역 조회
  */
 export const fetchConsultingHistories = async () => {
-	try {
-		const response = await defaultInstance.get(`/pickle-common/api/consulting/customer/histories`);
-		return response.data;
-	} catch (error) {
-		console.error('API 요청 중 오류 발생:', error);
-		throw error;
-	}
+  try {
+    const response = await defaultInstance.get(
+      `/pickle-common/api/consulting/customer/histories`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:", error);
+    throw error;
+  }
 };
 //TODO: TEST. 백에서 API 미완성
 /**
@@ -45,11 +86,13 @@ export const fetchConsultingHistories = async () => {
  * @returns 전략ID에 해당하는 전략 가져오기
  */
 export const fetchStrategyResult = async (strategyId) => {
-	try {
-		const response = await defaultInstance.get(`/pickle-common/api/strategy/result/${strategyId}`);
-		return response.data;
-	} catch (error) {
-		console.error('API 요청 중 오류 발생:', error);
-		throw error;
-	}
+  try {
+    const response = await defaultInstance.get(
+      `/pickle-common/api/strategy/result/${strategyId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:", error);
+    throw error;
+  }
 };
