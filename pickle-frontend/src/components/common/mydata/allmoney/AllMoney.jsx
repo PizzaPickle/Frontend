@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,6 +23,9 @@ import {
 import CustomArrow from "./CustomArrow";
 
 export default function AllMoney(props) {
+    const [currentSlide, setCurrentSlide] = useState(0);
+  
+
     const settings = {
         dots: true,
         className: 'slider variable-width',
@@ -30,10 +33,12 @@ export default function AllMoney(props) {
         slidesToShow: props.showNum,
         slidesToScroll: 1,
         speed: 500,
-        infinite: true,
+        infinite: false,
         useCSS: true,
-        nextArrow: <CustomArrow direction="next" />,
-    prevArrow: <CustomArrow direction="prev" />
+        beforeChange: (current, next) => setCurrentSlide(next),
+    nextArrow: <CustomArrow direction="next" isVisible={currentSlide < props.slides.length - props.showNum} />,
+    prevArrow: <CustomArrow direction="prev" isVisible={currentSlide > 0} />
+    
     };
 
     return (

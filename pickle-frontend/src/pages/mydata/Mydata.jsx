@@ -32,15 +32,19 @@ export default function Mydata(){
 
     //부동산 값 포맷
     function formatCurrency(value) {
-      const billions = Math.floor(value / 100000000);
-      const millions = Math.floor((value % 100000000) / 10000);
+        const isNegative = value < 0;
+        const absValue = Math.abs(value);
+        
+        const billions = Math.floor(absValue / 100000000);
+        const millions = Math.floor((absValue % 100000000) / 10000);
       
-      const billionPart = billions > 0 ? `${billions}억 ` : '';
-      const millionPart = millions > 0 ? `${millions}만` : '';
-  
-      return `${billionPart}${millionPart}`.trim() || '0원';
-  }
-
+        const billionPart = billions > 0 ? `${billions}억 ` : '';
+        const millionPart = millions > 0 ? `${millions}만` : '';
+      
+        const formattedValue = `${billionPart}${millionPart}`.trim() || '0원';
+        
+        return isNegative ? `-${formattedValue}` : formattedValue;
+      }
     //부동산 유형 포맷
     function getHousingType(type) {
           switch (type) {

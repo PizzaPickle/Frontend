@@ -18,7 +18,6 @@ export const Container = styled.div`
 
 export const BankInfo = styled.p`
     visibility: ${(props) => props.infoVisible || 'visible'}; ;
-    background-color:#F1F5FF;
     display:flex;
     gap:20px;
     padding: 10px;
@@ -29,7 +28,6 @@ export const BankInfo = styled.p`
 `;
 
 export const BankTitle = styled.span`
-    background-color:#F1F5FF;
     font-size: 1.2rem;
     font-weight: 600;
     color: #020050;
@@ -38,7 +36,6 @@ export const BankTitle = styled.span`
 `;
 
 export const BankAmount = styled.span`
-    background-color:#F1F5FF;
 `;
 
 export const BalanceContainer = styled.div`
@@ -48,21 +45,17 @@ export const BalanceContainer = styled.div`
 `;
 
 export const BalanceRow = styled.div`
-   background-color:#F1F5FF;
    gap:10px;
    display: flex;
 
 `;
 
 export const Label = styled.span`
-   background-color:#F1F5FF;
 `;
 
 export const Amount = styled.span`
-   background-color:#F1F5FF;
 `;
 export const BodyContainer=styled.div`
-  background-color: #F1F5FF;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -73,7 +66,6 @@ export const BodyContainer=styled.div`
 
 `;
 export const SliderContainer = styled.div`
-  background-color: #F1F5FF;
   
 
   .slick-prev:hover:before,
@@ -103,7 +95,6 @@ export const SliderContainer = styled.div`
   }
   .slick-list{
     width: ${(props) => props.listWidth|| '480px'}; 
-    background-color: #F1F5FF;
   }
   
   .slick-slide > div > div > div {
