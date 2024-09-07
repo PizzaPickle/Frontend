@@ -1,4 +1,4 @@
-name: main Branch Deployment
+name: Main Branch Deployment
 
 on:
   push:
@@ -25,12 +25,14 @@ jobs:
         node-version: '20'
         
     - name: Install Dependencies
-      working-directory: Frontend/pickle-frontend
-      run: npm install
+      run: |
+        cd Frontend/pickle-frontend
+        npm install
       
     - name: Build
-      working-directory: Frontend/pickle-frontend
-      run: npm run build
+      run: |
+        cd Frontend/pickle-frontend
+        npm run build
       
     - name: Deploy to EC2
       env:
@@ -39,8 +41,8 @@ jobs:
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no -i private_key" --delete Frontend/pickle-frontend/dist/ ${USER}@${HOST}:/home/ubuntu/react-app/FrontEnd/pickle-frontend
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no -i private_key" --delete Frontend/pickle-frontend/dist/ ${USER}@${HOST}:/home/ubuntu/react-app/Frontend/pickle-frontend
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
           cd /home/ubuntu/react-app/Frontend/pickle-frontend &&
-          npm install  &&
+          npm install &&
           pm2 restart react-app || pm2 start npm --name "react-app" -- run preview'
