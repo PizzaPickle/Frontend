@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [closed] # 풀 리퀘스트가 닫힐 때 이벤트를 트리거
+    types: [closed]
 
 jobs:
   deploy:
@@ -24,9 +24,11 @@ jobs:
         node-version: '20'
         
     - name: Install Dependencies
+      working-directory: Frontend/pickle-frontend
       run: npm install
       
     - name: Build
+      working-directory: Frontend/pickle-frontend
       run: npm run build
       
     - name: Deploy to EC2
@@ -36,8 +38,8 @@ jobs:
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no -i private_key" --delete build/ ${USER}@${HOST}:/home/ubuntu/react-app/
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no -i private_key" --delete Frontend/pickle-frontend/dist/ ${USER}@${HOST}:/home/ubuntu/react-app/FrontEnd/pickle-frontend
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-          cd /home/ubuntu/react-app &&
-          npm install  &&
-          pm2 restart react-app || pm2 start npm --name "react-app" -- start'
+          cd /home/ubuntu/react-app/Frontend/pickle-frontend &&
+          npm install --production &&
+          pm2 restart react-app || pm2 start npm --name "react-app" -- run preview'
