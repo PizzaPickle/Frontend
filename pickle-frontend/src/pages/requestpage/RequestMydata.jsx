@@ -303,6 +303,192 @@ export default function RequestMydata() {
         </div>
         </StyledHomeContent>
         </StyledHomeMainContent>
+            <Header />
+            <StyledHomeMainContent>
+                <Sidebar />
+                <StyledHomeContent style={{overflow:"hidden"}}>
+                    <div style={{width:"910px",display:"flex",justifyContent:"space-between", alignItems:"flex-end"}}>
+                    <StyledHeadText>
+                        {userName.slice(1)}님의 자산 상담에서 <br/>
+                            필요한 정보를 PB에게 보내주세요.
+                    <p style={{marginTop:"15px",fontSize:"small",fontWeight:"400"}}>※ 자산 정보를 보내지 않을 경우, PB는 내 자산에 대한 정보를 확인할 수 없습니다.</p>
+
+                    </StyledHeadText>
+
+                    <Button 
+                    id="mydata-api"
+                    onClick={onClickMydataButton}>다음으로</Button>
+                    </div>
+                    <StyledMydataReqContainer>
+
+                    <StyledCheckboxDiv>
+
+                        <Form>
+                            <Form.Check
+                            type="checkbox"
+                            id="all-check"
+                            label="전체"
+                            checked={selectAll}
+                            onChange={handleSelectAll}
+                            />
+                            <div>
+
+                            <Form.Check
+                            type="checkbox"
+                            id="bank-check"
+                            label="은행"
+                            checked={showBank}
+                            onChange={() => {
+                                setShowBank(!showBank);
+                                if (selectAll && !showBank && !showSec && !showHouse && !showDebt) {
+                                setSelectAll(false);
+                                }
+                                if (!selectAll && showBank && showSec && showHouse && showDebt) {
+                                setSelectAll(true);
+                                }
+                            }}
+                            />
+                            <Form.Check
+                            type="checkbox"
+                            id="sec-check"
+                            label="증권"
+                            checked={showSec}
+                            onChange={() => {
+                                setShowSec(!showSec);
+                                if (selectAll && !showBank && !showSec && !showHouse && !showDebt) {
+                                setSelectAll(false);
+                                }
+                                if (!selectAll && showBank && showSec && showHouse && showDebt) {
+                                setSelectAll(true);
+                                }
+                            }}
+                            />
+                            <Form.Check
+                            type="checkbox"
+                            id="house-check"
+                            label="부동산"
+                            checked={showHouse}
+                            onChange={() => {
+                                setShowHouse(!showHouse);
+                                if (selectAll && !showBank && !showSec && !showHouse && !showDebt) {
+                                setSelectAll(false);
+                                }
+                                if (!selectAll && showBank && showSec && showHouse && showDebt) {
+                                setSelectAll(true);
+                                }
+                            }}
+                            />
+                            <Form.Check
+                            type="checkbox"
+                            id="debt-check"
+                            label="대출"
+                            checked={showDebt}
+                            onChange={() => {
+                                setShowDebt(!showDebt);
+                                if (selectAll && !showBank && !showSec && !showHouse && !showDebt) {
+                                setSelectAll(false);
+                                }
+                                if (!selectAll && showBank && showSec && showHouse && showDebt) {
+                                setSelectAll(true);
+                                }
+                            }}
+                            />
+                            </div>
+                        </Form>
+
+                    </StyledCheckboxDiv>
+                    
+                    <StyledMydataContainer>
+
+
+                    <div id="mydata-screenshot" style={{width:"fit-content",marginTop:"120px",height:"fit-content"}}>
+                        {showBank && (
+                            <StyledContentBlock style={{ backgroundColor: "transparent" }}>
+                                {balanceBankInfoData && (
+                                    <MydataScreen
+                                        cardWidth={"220px"}
+                                        maxWidth={"530px"}
+                                        height={"250px"}
+                                        showNum={2}
+                                        bankTitle="은행"
+                                        balanceInfo={balanceBankInfoData}
+                                        slides={slidesBankData}
+                                    />
+                                )}
+                            </StyledContentBlock>
+                        )}
+    
+                        {showSec && (
+                            <StyledContentBlock style={{ backgroundColor: "transparent" }}>
+                                {balanceSecInfoData && (
+                                    <MydataScreen
+                                        cardWidth={"220px"}
+                                        maxWidth={"530px"}
+                                        height={"250px"}
+                                        showNum={2}
+                                        bankTitle="증권"
+                                        balanceInfo={balanceSecInfoData}
+                                        slides={slidesSecData}
+                                    />
+                                )}
+                            </StyledContentBlock>
+                        )}
+    
+                        {showHouse && (
+                            <StyledContentBlock style={{ backgroundColor: "transparent" }}>
+                                {balanceHouseInfoData && (
+                                    <MydataScreen
+                                        cardWidth={"220px"}
+                                        maxWidth={"530px"}
+                                        height={"250px"}
+                                        showNum={2}
+                                        bankTitle="부동산"
+                                        balanceInfo={balanceHouseInfoData}
+                                        slides={slidesHouseData}
+                                    />
+                                )}
+                            </StyledContentBlock>
+                        )}
+    
+                        {showDebt && (
+                            <StyledContentBlock style={{ backgroundColor: "transparent" }}>
+                                {balanceDebtInfoData && (
+                                    <MydataScreen
+                                        cardWidth={"220px"}
+                                        maxWidth={"530px"}
+                                        height={"250px"}
+                                        showNum={2}
+                                        bankTitle="대출"
+                                        balanceInfo={balanceDebtInfoData}
+                                        slides={slidesDebtData}
+                                    />
+                                )}
+                            </StyledContentBlock>
+                        )}
+                    </div>
+                    </StyledMydataContainer>
+                    </StyledMydataReqContainer>
+                </StyledHomeContent>
+                <Modal id="custom-modal"
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                      show={showModal} onHide={handleNoClick}
+                      backdropClassName="custom-backdrop" 
+                      >
+
+                      <Modal.Body id="modal-body">
+                        선택한 내 자산 정보를 PB에게 보낼까요?
+                      </Modal.Body>
+                      <Modal.Footer id="modal-footer">
+                        <Button className="modal-no" variant="light" onClick={handleNoClick}>
+                          No
+                        </Button>
+                        <Button className="modal-yes" variant="light" onClick={handleYesClick}>
+                          Yes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+            </StyledHomeMainContent>
         </StyledHomeContainer>
     )
 
