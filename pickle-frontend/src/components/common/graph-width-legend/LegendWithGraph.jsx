@@ -6,6 +6,7 @@ import {
 } from "./LegendWithGraph.style";
 import Circular from "../circular-graph/Circular";
 import Legend from "../legend/Legend";
+import React from "react";
 
 export default function LegendWithGraph({ data, width, height, top, left, fontSize, gap }) {
   return (

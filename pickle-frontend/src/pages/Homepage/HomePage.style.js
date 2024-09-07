@@ -37,6 +37,7 @@ export const StyledHomeContent = styled.div`
 `
 
 export const StyledHeadText = styled.div`
+    padding-top: 15px;
     font-size: xx-large;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.navy};
@@ -47,7 +48,7 @@ export const StyledHomeSection= styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 
     article {
         display: flex;
@@ -82,10 +83,11 @@ export const StyledS1Text= styled.div`
     span > hr {
         border: none;
         height: 6px;
-        background-color: #FFE35E; 
+        background-color: #ffe774; 
         margin-top: -5px; 
         border-radius: 20px;
         margin-bottom: 0;
+        width: 122px;
     }
 
     section {
@@ -151,7 +153,6 @@ export const StyledContentFlex = styled.div`
 `
 export const StyledAllMoneyContainer = styled.div`
     position: relative;
-
 `
 
 export const AllMoneyTitle = styled.div`
