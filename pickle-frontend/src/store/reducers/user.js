@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     id: null,
     name: "홍길동", // TODO 변경
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMiIsImlhdCI6MTcyNTYwMjk3NCwiZXhwIjoxNzI1NjA0Nzc0fQ.LPyUAYmnsk6Ngn14nlTKEevXmYfq1Ay_cBc8zibAxAw", 
+    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNSIsImlhdCI6MTcyNTY5OTgxMywiZXhwIjoxNzI1NzAxNjEzfQ.sfvnKNZcwldPq63i_hDMoq_Dhz9jV87dBW7mhDt38OQ", 
 };
 
 const userSlice = createSlice({

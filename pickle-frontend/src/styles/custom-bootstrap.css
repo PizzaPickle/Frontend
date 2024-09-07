@@ -110,6 +110,17 @@ hr {
     margin: 10px 0 0 10px;
 }
 
+#modal-body > div > span > p {
+    font-size: small;
+    padding-bottom: 10px;
+}
+
+
+#modal-body > div > div >  p {
+    padding-bottom: 10px;
+
+}
+
 #modal-footer {
     border: none;
 }
@@ -117,3 +128,11 @@ hr {
 .modal-yes:hover {
 }
 
+#all-check:checked {
+    background-color: rgb(25, 54, 136);
+    border: none;
+}
+
+#mydata-api {
+    height: 50px;
+}

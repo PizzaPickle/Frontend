@@ -120,7 +120,7 @@ export default function Pblist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/pickle-pb/api/pblist", {
+        const response = await fetch("/api/pickle-pb/pblist", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
