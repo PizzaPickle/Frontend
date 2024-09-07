@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - deploy
       
   pull_request:
     branches:
@@ -41,5 +42,5 @@ jobs:
         rsync -avz -e "ssh -o StrictHostKeyChecking=no -i private_key" --delete Frontend/pickle-frontend/dist/ ${USER}@${HOST}:/home/ubuntu/react-app/FrontEnd/pickle-frontend
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
           cd /home/ubuntu/react-app/Frontend/pickle-frontend &&
-          npm install --production &&
+          npm install  &&
           pm2 restart react-app || pm2 start npm --name "react-app" -- run preview'
