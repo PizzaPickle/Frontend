@@ -20,6 +20,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: List files
+      run: ls -R
+
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
@@ -27,13 +30,13 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        cd Frontend/pickle-frontend
+        cd Frontend/pickle-frontend || exit
         rm -rf node_modules package-lock.json
         npm install
 
     - name: Build
       run: |
-        cd Frontend/pickle-frontend
+        cd Frontend/pickle-frontend || exit
         npm run build
 
     - name: Setup SSH and Deploy to EC2
