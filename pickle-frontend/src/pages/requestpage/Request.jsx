@@ -16,7 +16,7 @@ export default function Request() {
   const [showForm, setShowForm] = useState(true);
   const [showNewContent, setShowNewContent] = useState(false);
 
-  const selectedPb = useSelector((state) => state.pb.selectedPb);
+  const selectedPb = useSelector((state) => state.pb.selectedPb.username);
   const selectedDate = useSelector((state) => state.date.selectedDate);
   const userName = useSelector((state) => state.user.name);
   const formatCurrency = (amount) => {
@@ -26,10 +26,10 @@ export default function Request() {
   let [investPrice, setInvestPrice] = useState('');
   let [income, setIncome] = useState('');
   let [whenToNeedMoney, setWhenToNeedMoney] = useState('');
-  let [householdType, setHouseholdType] = useState(0);
-  let [dependent, setDependent] = useState(0);
-  let [investImp, setInvestImp] = useState(0);
-  let [investLoss, setInvestLoss] = useState(0);
+  let [householdType, setHouseholdType] = useState(100);
+  let [dependent, setDependent] = useState(100);
+  let [investImp, setInvestImp] = useState(100);
+  let [investLoss, setInvestLoss] = useState(100);
 
   // 선택 가능한 옵션
   const householdOptions = ['외벌이','맞벌이','은퇴함','자영업'];
@@ -56,14 +56,8 @@ export default function Request() {
 
 
   const handleRequest = () => {
-    // TODO
-    // 상담 요청서 POST 요청
-    console.log("투자가격", investPrice, "고정수입", income, "자금필요시기", whenToNeedMoney,
-      "가계상황", householdType, "피부양자", dependent, "투자중요", investImp, "포폴손실", investLoss
-    );
-
     // 전체를 응답하지 않은 경우 alert
-    if (investPrice !== '' && income !== '' && whenToNeedMoney !== '' && householdType !== 0 && dependent !== 0 && investImp !== 0 && investLoss !== 0) {
+    if (investPrice !== '' && income !== '' && whenToNeedMoney !== '' && householdType !== 100 && dependent !== 100 && investImp !== 100 && investLoss !== 100) {
       setShowForm(false);
       setShowNewContent(true);
     } else {
