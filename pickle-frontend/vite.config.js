@@ -20,7 +20,7 @@ export default defineConfig({
 				followRedirects: true, // 리디렉션 따르기
 				rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
 			},
-			'/pickle-pb': {
+			'/api/pickle-pb': {
 			target: 'http://localhost:8081',
 			changeOrigin: true,
 			secure: false, // HTTPS일 경우에도 사용할 수 있음
