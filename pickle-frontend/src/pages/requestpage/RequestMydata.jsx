@@ -1,37 +1,39 @@
 import React, { useState } from "react";
-import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../Homepage/HomePage.style";
+import { StyledContentBlock, StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../Homepage/HomePage.style";
 import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import html2canvas from "html2canvas";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { setmydataURL } from "../../store/reducers/mydataurl";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import MydataScreen from "./MydataScreen";
+import { Form } from 'react-bootstrap';
+import { StyledCheckboxDiv, StyledMydataContainer, StyledMydataReqContainer } from "./RequestMydata.style";
+import { useNavigate } from "react-router-dom";
 
 export default function RequestMydata() {
-  // TODO 
-  // 버튼 눌러서 서버에 넘기고 받은 URL을 redux로 보관하기
+    const navigate = useNavigate();
+
+    //Login User 정보
+    const { token } = useSelector((state) => state.user); 
+    const userName = useSelector((state) => state.user.name);
+
+    //마이데이터 요청
+    const [error, setError] = useState(null);
+    const [myBankdata, setMyBankdata] = useState([]);
+    const [mySecdata, setMySecdata] = useState([]);
+    const [myHousedata, setMyHousedata] = useState([]);
+    const [myDebtdata, setMyDebtdata] = useState([]);
 
 
-  const mydataURL = useSelector((state) => state.mydataURL.mydataURL);
-  // const dispatch = useDispatch();
+    const [slidesBankData,setSlidesBankData] = useState([]);
+    const [balanceBankInfoData, setBalanceBankInfoData] = useState([]);
 
+    const [slidesSecData,setSlidesSecData] = useState([]);
+    const [balanceSecInfoData, setBalanceSecInfoData] = useState([]);
 
-  function dataURLtoBlob(dataURL) {
-    // dataURL의 앞부분을 분리 (ex: "data:image/png;base64,")
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]); // base64 디코딩
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new Blob([u8arr], { type: mime });
-}
     const [slidesHouseData,setSlidesHouseData] = useState([]);
     const [balanceHouseInfoData, setBalanceHouseInfoData] = useState([]);
   
@@ -202,41 +204,44 @@ export default function RequestMydata() {
 }, [token]);
 
     //마이데이터 스크린샷 버튼
+    // TODO 마이데이터 API POST
     const onClickMydataButton = () => {
-        const target = document.getElementById("mydata-screenshot");
-        if (!target) {
-          return alert("요청서에 보내실 마이데이터를 선택해주세요.");
-        }
-        html2canvas(target).then((canvas) => {
-          // 캡처된 이미지를 Data URL 형식으로 변환하여 상태에 저장
-          const url = canvas.toDataURL("request-mydata/png");
-          // dispatch(setmydataURL(url));
-          getImageBlob();
-        }).catch((error)=>{
-          console.log(error)
-            alert("저장 중 오류가 발생하였습니다.")
-        });
-        }
+        setShowModal(true)
+      };
 
       //url->Blob->FormData변환
       const getImageBlob = async () => {
 
         const target = document.getElementById("mydata-screenshot");
-        if (!target) {
-            return alert("요청서에 보내실 마이데이터를 선택해주세요.");
-        }
-
         try {
-            const canvas = await html2canvas(target);
+        // target 크기 지정
+        const { offsetWidth, offsetHeight } = target;
+        target.style.width = `${offsetWidth}px`;
+        target.style.height = `${offsetHeight}px`;
+
+        const canvas = await html2canvas(target, {
+          scale: 4, // 해상도 저하 이슈 해결
+          backgroundColor: '#f6f7fa' // 이미지 배경색 설정
+      });
 
             return new Promise((resolve, reject) => {
                 canvas.toBlob((blob) => {
                     if (!blob) {
                         return reject("Blob 생성 실패");
                     }
+                    const dataURL = canvas.toDataURL("image/png");
 
+                    // 이미지 확인을 위한 로컬 다운로드
+                    const link = document.createElement('a');
+                    link.href = dataURL;
+                    link.download = 'screenshot.png'; 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                      
                     const formData = new FormData();
                     formData.append('file', blob, 'screenshot.png'); 
+                    
                     
                     for (let [key, value] of formData.entries()) {
                       if (value instanceof File) {
@@ -257,7 +262,23 @@ export default function RequestMydata() {
         }
       };
 
-    return (
+
+
+      // Modal 관리
+      const [showModal, setShowModal] = useState(false);
+      const handleYesClick = () => {
+        const target = document.getElementById("mydata-screenshot");
+
+        // TODO 마이데이터 API POST 추가
+        getImageBlob();
+        navigate("/pblist/request");
+        setShowModal(false); // 모달 닫기
+
+      };
+    
+      const handleNoClick = () => {
+        setShowModal(false);
+      };
 
       const [showBank, setShowBank] = useState(true);
       const [showSec, setShowSec] = useState(true);
@@ -288,21 +309,6 @@ export default function RequestMydata() {
 
       return (
         <StyledHomeContainer>
-        <Header />
-        <StyledHomeMainContent>
-            <Sidebar />
-        <StyledHomeContent>
-        <StyledHeadText>
-            마이데이터 전송 화면입니다.
-        </StyledHeadText>
-        <Button onClick={onClickMydataButton}>마이데이터를 요청서에 저장하기</Button>
-        <div id="mydata-screenshot" style={{ width: '200px', height: '200px', backgroundColor: 'lightgray' }}>
-                My Data Screenshot Area
-            </div>
-        <div>
-        </div>
-        </StyledHomeContent>
-        </StyledHomeMainContent>
             <Header />
             <StyledHomeMainContent>
                 <Sidebar />
@@ -491,5 +497,4 @@ export default function RequestMydata() {
             </StyledHomeMainContent>
         </StyledHomeContainer>
     )
-
-}
+  };
