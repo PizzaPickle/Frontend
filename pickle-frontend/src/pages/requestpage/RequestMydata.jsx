@@ -258,6 +258,35 @@ export default function RequestMydata() {
       };
 
     return (
+
+      const [showBank, setShowBank] = useState(true);
+      const [showSec, setShowSec] = useState(true);
+      const [showHouse, setShowHouse] = useState(true);
+      const [showDebt, setShowDebt] = useState(true);
+      const [selectAll, setSelectAll] = useState(false);
+      const handleSelectAll = () => {
+        const newValue = !selectAll;
+        setSelectAll(newValue);
+        setShowBank(newValue);
+        setShowSec(newValue);
+        setShowHouse(newValue);
+        setShowDebt(newValue);
+      };
+
+      const updateSelectAll = () => {
+        if (showBank && showSec && showHouse && showDebt) {
+          setSelectAll(true);
+        } else {
+          setSelectAll(false);
+        }
+      };
+    
+      useEffect(() => {
+        updateSelectAll();
+      }, [showBank, showSec, showHouse, showDebt]);
+    
+
+      return (
         <StyledHomeContainer>
         <Header />
         <StyledHomeMainContent>
