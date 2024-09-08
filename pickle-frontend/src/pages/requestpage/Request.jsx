@@ -7,8 +7,40 @@ import { StyledHomeContainer, StyledContentBlock, StyledHomeMainContent, StyledH
 import { StyledOptionSelect, StyledRequestBoxDiv, StyledRequestDiv } from "./Request.style";
 import { Button, Form } from "react-bootstrap";
 import { StyledPbSection } from "../pblistpage/pblist.style";
+import { Modal } from "react-bootstrap";
 
 export default function Request() {
+  //ISO 날짜 문자열 파싱
+  function formatDate(isoString) {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${year}년 ${month}월 ${day}일`;
+  }
+  function formatTime(isoString) {
+    const date = new Date(isoString);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    return `${hours}시 ${minutes}분` 
+  }
+  
+  // Modal 관리
+  const [showModal, setShowModal] = useState(false);
+  const handleClick = () => {
+    setShowModal(true);
+  }
+  const handleYesClick = () => {
+    
+    // TODO 요청보내기 API 연동
+  };
+
+  const handleNoClick = () => {
+    setShowModal(false);
+  };
+  
   // TODO
   // mydata 데이터 redux로 저장해서 유동자산(투자가능금액) 불러오기
   const mydataInvestPrice = 2100488000;
@@ -16,7 +48,7 @@ export default function Request() {
   const [showForm, setShowForm] = useState(true);
   const [showNewContent, setShowNewContent] = useState(false);
 
-  const selectedPb = useSelector((state) => state.pb.selectedPb);
+  const selectedPb = useSelector((state) => state.pb.selectedPb.username);
   const selectedDate = useSelector((state) => state.date.selectedDate);
   const userName = useSelector((state) => state.user.name);
   const formatCurrency = (amount) => {
@@ -26,10 +58,10 @@ export default function Request() {
   let [investPrice, setInvestPrice] = useState('');
   let [income, setIncome] = useState('');
   let [whenToNeedMoney, setWhenToNeedMoney] = useState('');
-  let [householdType, setHouseholdType] = useState(0);
-  let [dependent, setDependent] = useState(0);
-  let [investImp, setInvestImp] = useState(0);
-  let [investLoss, setInvestLoss] = useState(0);
+  let [householdType, setHouseholdType] = useState(100);
+  let [dependent, setDependent] = useState(100);
+  let [investImp, setInvestImp] = useState(100);
+  let [investLoss, setInvestLoss] = useState(100);
 
   // 선택 가능한 옵션
   const householdOptions = ['외벌이','맞벌이','은퇴함','자영업'];
@@ -56,14 +88,8 @@ export default function Request() {
 
 
   const handleRequest = () => {
-    // TODO
-    // 상담 요청서 POST 요청
-    console.log("투자가격", investPrice, "고정수입", income, "자금필요시기", whenToNeedMoney,
-      "가계상황", householdType, "피부양자", dependent, "투자중요", investImp, "포폴손실", investLoss
-    );
-
     // 전체를 응답하지 않은 경우 alert
-    if (investPrice !== '' && income !== '' && whenToNeedMoney !== '' && householdType !== 0 && dependent !== 0 && investImp !== 0 && investLoss !== 0) {
+    if (investPrice !== '' && income !== '' && whenToNeedMoney !== '' && householdType !== 100 && dependent !== 100 && investImp !== 100 && investLoss !== 100) {
       setShowForm(false);
       setShowNewContent(true);
     } else {
@@ -123,7 +149,7 @@ export default function Request() {
       <Header />
       <StyledHomeMainContent>
         <Sidebar />
-        <StyledHomeContent style={{overflow:"hidden"}}>
+        <StyledHomeContent style={{overflow:"auto"}}>
           <StyledPbSection  style={{margin:"20px"}}>
           {showForm ? (
             <>
@@ -139,7 +165,7 @@ export default function Request() {
                 <Form>
                   <Form.Group controlId="formInvestPrice"
                    style={{padding: "10px"}}>
-                    원하는 투자 금액을 입력해주세요.
+                    <h6>원하는 투자 금액을 입력해주세요.</h6>
                     <Form.Label style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
                     투자 가능 금액 {formatCurrency(mydataInvestPrice)} 중 투자할 금액
                     <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
@@ -153,11 +179,12 @@ export default function Request() {
                     </Form.Label>
 
                   </Form.Group>
-                  고정 수입을 입력해주세요.
-                  <Form.Group controlId="formIncome">
+                  <Form.Group controlId="formIncome"
+                  style={{padding: "10px"}}>
+                  <h6>고정 수입을 입력해주세요.</h6>
                     <Form.Label  style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
                       안정적으로 들어오는 월 고정 수입
-                    <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
+                    <Form.Control style={{width: "110px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
                       type="number"
                       value={income}
                       onChange={(e) => setIncome(e.target.value)}
@@ -166,10 +193,11 @@ export default function Request() {
                   </Form.Label>
                   </Form.Group>
 
-                  <Form.Group controlId="formWhenToNeedMoney" style={{display:"flex", alignItems:"center"}}>
-                  자금 필요시기는
+                  <Form.Group controlId="formWhenToNeedMoney" 
+                  style={{display:"flex", alignItems:"center", padding:"10px"}}>
+                  <h6>자금 필요시기는</h6>
                     <Form.Label style={{display:"flex", backgroundColor: "white", margin: "10px", padding: "20px", borderRadius: "20px"}}>
-                    <Form.Control style={{width: "200px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
+                    <Form.Control style={{width: "70px", height: "30px", border:"none",borderBottom: '1px solid gray',borderRadius: 0}}
                       type="number"
                       value={whenToNeedMoney}
                       onChange={(e) => setWhenToNeedMoney(e.target.value)}
@@ -186,6 +214,7 @@ export default function Request() {
                 <StyledContentBlock style={{flex:"4"}}>
                   <StyledOptionSelect>
                   <section>
+                    <h6>현재 가계 상황은</h6>
                   <div className="option-first">
                   {householdOptions.map((opt,ind)=>{
                       console.log(householdType === ind)
@@ -200,8 +229,8 @@ export default function Request() {
                   </div>
                   </section>
                   <section>
+                  <h6>피부양자</h6>
                   <div className="option-second">
-
                   {dependentOptions.map((opt,ind)=>{
                     return (
                       <div className={dependent === ind ? 'selected' : 'option'}
@@ -215,6 +244,7 @@ export default function Request() {
                   </div>
                   </section>
                   <section>
+                  <h6>투자할 때 중요한 것은</h6>
                   <div className="option-third">
                   {investImpOptions.map((opt,ind)=>{
                     return (
@@ -229,7 +259,8 @@ export default function Request() {
                   </div>
                   </section>
 
-                  <section>
+                  <section style={{display:"flex",flexDirection:"column",gap:"0px"}}>
+                  <h6>포트폴리오에서 한 달 간 10%의 손실이 발생했다면,</h6>
                   <div className="option-fourth">
                   {investLossOptions.map((opt,ind)=>{
                     return (
@@ -259,9 +290,10 @@ export default function Request() {
             <StyledHeadText>
             상담에 관한 요청 사항을 자유롭게 작성해주세요.
           </StyledHeadText>
-              <StyledContentBlock style={{"width":"80%"}}>
+              <StyledContentBlock style={{width:"80%",position:"relative"}}>
                 <div className="container mt-4">
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}
+                >
                   <Form.Group controlId="formTextArea">
                     <Form.Control style={{"backgroundColor": "transparent",
                       "border": "none",
@@ -276,10 +308,60 @@ export default function Request() {
                       isInvalid={isError}
                     />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
-                    제출
-                  </Button>
                 </Form>
+                
+                  <Button variant="primary" type="submit"
+                  onClick={handleClick}
+                  style={{position:"absolute",right:"0",marginTop:"40px",width:"100px",padding:"10px"}}>
+                    완료
+                  </Button>
+
+                  <Modal
+                  id="custom-modal"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={showModal} onHide={handleNoClick}
+                  backdropClassName="custom-backdrop" 
+                  >
+                    <Modal.Header id="modal-header">
+                      <img src="/assets/request.svg" width={"90px"}></img>
+                    <div style={{textAlign:"center"}}>
+                    <b>예약 신청</b>
+                      </div>
+                    </Modal.Header>
+                  <Modal.Body id="modal-body">
+                    <div style={{display:"flex", justifyContent:"space-around", alignItems:"center", backgroundColor:"#FCFCFC", borderRadius:"10px",padding:"20px 20px 0px 20px"}}>
+                      <div>
+                        <p style={{fontWeight:"700",fontSize:"small"}}>예약할 PB <span style={{display:"flex",flexDirection:"column",fontWeight:"400",marginBottom:"5px"}}>{selectedPb}</span></p>
+                        <p style={{fontWeight:"700",fontSize:"small"}}>상담일 <span style={{display:"flex",flexDirection:"column",fontWeight:"400",marginBottom:"5px"}}>{formatDate(selectedDate)}</span></p>
+                        <p style={{fontWeight:"700",fontSize:"small"}}>상담시간 <span style={{display:"flex",flexDirection:"column",fontWeight:"400",marginBottom:"5px"}}>{formatTime(selectedDate)}</span></p>
+                      </div>
+                      <span>
+                      <p><b>투자고려 금액</b> {investPrice}원</p>
+                      <p><b>월 수입</b> {income}만원</p>
+                      <p><b>자금필요 시기</b> {whenToNeedMoney}년 후</p>
+                      <p><b>가계상황</b> {householdOptions[householdType]}</p>
+                      <p><b>피부양자</b> {dependentOptions[dependent]}</p>
+                      </span>
+                    </div>
+                    <br />
+                    <p style={{display:"flex", flexDirection:"column", gap:"10px",fontSize:"0.7rem",padding:"20px 20px 20px 20px", backgroundColor:"#FCFCFC", borderRadius:"10px"}}>
+                     <b>요청 사항</b> {consultText}</p>
+                     
+                      </Modal.Body>
+                      <hr style={{color:"#e8e9eda0"}}></hr>
+                      <div style={{textAlign:"center", marginTop:"10px"}}>
+                    예약 신청을 완료할까요?
+                      </div>
+                      <Modal.Footer id="modal-footer">
+                        <Button className="modal-no" variant="light" onClick={handleNoClick}>
+                          No
+                        </Button>
+                        <Button className="modal-yes" variant="light" onClick={handleYesClick}>
+                          Yes
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
               </div>
               </StyledContentBlock>
           </>

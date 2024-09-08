@@ -5,6 +5,7 @@ import Header from '../../components/common/header/Header';
 import Sidebar from '../../components/common/sidebar/Sidebar';
 import ConsultingRoom from '../../components/common/customer-consulting-room/ConsultingRoom';
 import ConsultingRoomHistory from '../../components/common/customer-consulting-room/ConsultingRoomHistory';
+import { fetchConsultingHistories } from '../../api/customerApi';
 import {
 	StyledHead2Text,
 	StyledContentBlock,
@@ -17,10 +18,11 @@ import {
 	StyledTab,
 	StyledTabContent,
 } from './RealtimeConsulting.style';
-import ConsultingSession from './ConsultingSession';
+
+const SOCKET_SERVER_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:3000/api';
 
 const RealtimeConsultingRoom = () => {
-	//TODO: 테스트일 때만 'soo', 배포 시 삭제
 	const userId = useSelector((state) => state.user?.id) || 'soo';
 	const userName = useSelector((state) => state.user?.name) || 'soo';
 	const [waitingRooms, setWaitingRooms] = useState([]);
@@ -28,14 +30,10 @@ const RealtimeConsultingRoom = () => {
 	const [activeTab, setActiveTab] = useState('waiting');
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [inCall, setInCall] = useState(false);
-	const [currentRoomId, setCurrentRoomId] = useState(null);
-	const [roomInfo, setRoomInfo] = useState([]);
 	const socketRef = useRef(null);
 
 	useEffect(() => {
-		//TODO: 추후 실시간 상담 서버로 변경
-		socketRef.current = io('http://localhost:3000');
+		socketRef.current = io(SOCKET_SERVER_URL);
 
 		socketRef.current.on('connect', () => {
 			console.log('Socket connected');
@@ -45,8 +43,7 @@ const RealtimeConsultingRoom = () => {
 		});
 
 		socketRef.current.on('receiveRoomList', (roomList) => {
-			const rooms = JSON.parse(roomList);
-			setWaitingRooms(rooms);
+			setWaitingRooms(JSON.parse(roomList));
 		});
 
 		return () => {
@@ -71,36 +68,12 @@ const RealtimeConsultingRoom = () => {
 	};
 
 	const fetchConsultingHistory = async () => {
-		const fakeData = [
-			{
-				id: 1,
-				pbName: '오수연',
-				status: '완료',
-				startTime: '2024-09-03T10:15:30.000Z',
-				strategyId: 'strat001',
-			},
-			{
-				id: 2,
-				pbName: '이원규',
-				status: '대기중',
-				startTime: '2024-09-03T10:15:30.000Z',
-				strategyId: 'strat002',
-			},
-			{
-				id: 3,
-				pbName: '윤재욱',
-				status: '취소됨',
-				startTime: '2024-09-03T10:15:30.000Z',
-				strategyId: 'strat003',
-			},
-		];
 		setIsLoading(true);
 		setError(null);
 		try {
-			setConsultingHistory(fakeData);
-			//TODO: pickle-common 서버에 API 요청,
-			// const response = await fetchConsultingHistories();
-			// setConsultingHistory(response.data);
+			const response = await fetchConsultingHistories();
+			const data = await response.json();
+			setConsultingHistory(data);
 		} catch (err) {
 			setError('상담 내역을 불러오는 데 실패했습니다. 다시 시도해 주세요.');
 			console.error('Error fetching consulting history:', err);
@@ -109,47 +82,40 @@ const RealtimeConsultingRoom = () => {
 		}
 	};
 
-	const joinConsultingRoom = (roomId) => {
-		console.log(`Joining room: ${roomId}`);
+	const joinConsultingRoom = (roomId, userName, userId) => {
+		// 동적으로 폼을 생성
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = `${API_BASE_URL}/consulting-room/${roomId}`;
+		form.target = `consultingRoom_${roomId}`; // 새 창의 이름 설정
 
-		// 기존 소켓 연결 해제
-		if (socketRef.current) {
-			socketRef.current.disconnect();
-		}
+		// roomId 필드 생성
+		const roomIdField = document.createElement('input');
+		roomIdField.type = 'hidden';
+		roomIdField.name = 'roomId';
+		roomIdField.value = roomId;
+		form.appendChild(roomIdField);
 
-		// 새로운 소켓 연결 생성
-		socketRef.current = io('http://localhost:3000');
+		// userName 필드 생성
+		const userNameField = document.createElement('input');
+		userNameField.type = 'hidden';
+		userNameField.name = 'userName';
+		userNameField.value = userName;
+		form.appendChild(userNameField);
 
-		socketRef.current.on('connect', () => {
-			console.log('New socket connected for consulting room');
+		// userId 필드 생성
+		const userIdField = document.createElement('input');
+		userIdField.type = 'hidden';
+		userIdField.name = 'userId';
+		userIdField.value = userId;
+		form.appendChild(userIdField);
 
-			socketRef.current.emit('joinConsultingRoom', { userId, roomId });
+		// 폼을 새 창에서 제출하기
+		document.body.appendChild(form);
+		form.submit();
 
-			socketRef.current.on('joinedConsultingRoom', (response) => {
-				console.log('Joined consulting room:', response);
-				setRoomInfo(response);
-				setInCall(true);
-				setCurrentRoomId(roomId);
-			});
-
-			socketRef.current.on('error', (error) => {
-				console.error('Error joining consulting room:', error);
-			});
-		});
-	};
-
-	const leaveConsultingRoom = () => {
-		if (socketRef.current) {
-			socketRef.current.emit('leaveConsultingRoom', { userId, roomId: currentRoomId });
-			socketRef.current.disconnect();
-		}
-		setInCall(false);
-		setCurrentRoomId(null);
-		setRoomInfo([]);
-
-		// 대기실용 소켓 재연결
-		socketRef.current = io('http://localhost:3000');
-		requestWaitingRooms();
+		// 폼 제출 후 DOM에서 제거
+		document.body.removeChild(form);
 	};
 
 	const formatDate = (dateString) => {
@@ -186,6 +152,8 @@ const RealtimeConsultingRoom = () => {
 	};
 
 	const renderWaitingRooms = () => {
+		if (isLoading) return <p>로딩 중...</p>;
+		if (error) return <p>{error}</p>;
 		if (waitingRooms.length === 0) return <p>대기중인 상담방이 없습니다.</p>;
 
 		return waitingRooms.map((room) => (
@@ -198,31 +166,25 @@ const RealtimeConsultingRoom = () => {
 				officeName={room.pbBranchOffice}
 				consultingTime={formatDate(room.date)}
 				daysUntilConsulting={calculateDaysUntilConsulting(room.date)}
-				onJoinRoom={() => joinConsultingRoom(room.roomId)}
+				onJoinRoom={() => joinConsultingRoom(room.roomId, userName, userId)}
 			/>
 		));
 	};
-	const addMinutes = (dateString, minutes) => {
-		const date = new Date(dateString);
-		return new Date(date.getTime() + minutes * 60000);
-	};
+
 	const renderConsultingHistory = () => {
 		if (isLoading) return <p>로딩 중...</p>;
 		if (error) return <p>{error}</p>;
 		if (!consultingHistory || consultingHistory.length === 0) return <p>상담 내역이 없습니다.</p>;
-		return consultingHistory.map((history) => {
-			const endTime = addMinutes(history.startTime, 30);
-			return (
-				<ConsultingRoomHistory
-					key={history.id}
-					pbName={history.pbName}
-					status={history.status}
-					startTime={formatDate(history.startTime)}
-					endTime={formatDate(endTime)}
-					strategyId={history.strategyId}
-				/>
-			);
-		});
+		return consultingHistory.map((history) => (
+			<ConsultingRoomHistory
+				key={history.id}
+				pbName={history.pbName}
+				status={history.status}
+				startTime={formatDate(history.startTime)}
+				endTime={formatDate(history.endTime)}
+				strategyId={history.strategyId}
+			/>
+		));
 	};
 
 	return (
@@ -231,53 +193,41 @@ const RealtimeConsultingRoom = () => {
 			<StyledConsultingMainContent>
 				<Sidebar />
 				<StyledConsultingContent>
-					{!inCall ? (
-						<>
-							<StyledHead2Text>{userName.slice(1)}님의 실시간 상담</StyledHead2Text>
-							<StyledTabs>
-								<StyledTab active={activeTab === 'waiting'} onClick={() => setActiveTab('waiting')}>
-									대기중
-								</StyledTab>
-								<StyledTab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
-									상담내역
-								</StyledTab>
-							</StyledTabs>
-							<StyledTabContent>
-								{activeTab === 'waiting' && (
-									<StyledConsultingSection>
-										<StyledContentBlock>
-											<div id="welcome" className="section">
-												<h4>대기중인 상담룸</h4>
-											</div>
-											<div id="roomList" className="section">
-												<StyledContentFlex>{renderWaitingRooms()}</StyledContentFlex>
-											</div>
-										</StyledContentBlock>
-									</StyledConsultingSection>
-								)}
-								{activeTab === 'history' && (
-									<StyledConsultingSection>
-										<StyledContentBlock>
-											<div id="history" className="section">
-												<h4>상담 내역</h4>
-											</div>
-											<div id="historyList" className="section">
-												{renderConsultingHistory()}
-											</div>
-										</StyledContentBlock>
-									</StyledConsultingSection>
-								)}
-							</StyledTabContent>
-						</>
-					) : (
-						<ConsultingSession
-							userId={userId}
-							userName={userName}
-							roomId={currentRoomId}
-							socket={socketRef.current}
-							onLeave={leaveConsultingRoom}
-						/>
-					)}
+					<StyledHead2Text>{userName.slice(1)}님의 실시간 상담</StyledHead2Text>
+					<StyledTabs>
+						<StyledTab active={activeTab === 'waiting'} onClick={() => setActiveTab('waiting')}>
+							대기중
+						</StyledTab>
+						<StyledTab active={activeTab === 'history'} onClick={() => setActiveTab('history')}>
+							상담내역
+						</StyledTab>
+					</StyledTabs>
+					<StyledTabContent>
+						{activeTab === 'waiting' && (
+							<StyledConsultingSection>
+								<StyledContentBlock>
+									<div id="welcome" className="section">
+										<h4>대기중인 상담룸</h4>
+									</div>
+									<div id="roomList" className="section">
+										<StyledContentFlex>{renderWaitingRooms()}</StyledContentFlex>
+									</div>
+								</StyledContentBlock>
+							</StyledConsultingSection>
+						)}
+						{activeTab === 'history' && (
+							<StyledConsultingSection>
+								<StyledContentBlock>
+									<div id="history" className="section">
+										<h4>상담 내역</h4>
+									</div>
+									<div id="historyList" className="section">
+										{renderConsultingHistory()}
+									</div>
+								</StyledContentBlock>
+							</StyledConsultingSection>
+						)}
+					</StyledTabContent>
 				</StyledConsultingContent>
 			</StyledConsultingMainContent>
 		</StyledConsultingContainer>
