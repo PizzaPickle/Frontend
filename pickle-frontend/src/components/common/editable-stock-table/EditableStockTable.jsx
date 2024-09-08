@@ -1,4 +1,3 @@
-import ProgressBar from "./ProgressBar";
 import {
   StockTableText,
   StockTableContainer,
@@ -7,11 +6,15 @@ import {
   Td,
   Thead,
   Th,
-} from "./stockTable.style";
+  AlertContainer,
+} from "./editable-stockTable.style";
 import React from "react";
+import ProgressBar from "./ProgressBar";
+import { useSelector } from "react-redux";
 
-export default function StockTable({ productList, width }) {
+export default function EditableStockTable({ category, productList, width }) {
   const keysOrder = ["name", "code", "themeName", "ratio"];
+  console.log(category.isValidProductRatio);
 
   return (
     <StockTableContainer width={width}>
@@ -39,7 +42,11 @@ export default function StockTable({ productList, width }) {
               {keysOrder.map((value) => (
                 <Td key={value}>
                   {value === "ratio" ? (
-                    <ProgressBar ratio={product[value]} />
+                    <ProgressBar
+                      category={category}
+                      ratio={product[value]}
+                      product={product}
+                    />
                   ) : (
                     <StockTableText>{product[value]}</StockTableText>
                   )}
@@ -49,6 +56,9 @@ export default function StockTable({ productList, width }) {
           ))}
         </tbody>
       </Table>
+      {!category.isValidProductRatio && (
+        <AlertContainer>종목들의 비율 합은 100이여야 합니다.</AlertContainer>
+      )}
     </StockTableContainer>
   );
 }
