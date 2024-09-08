@@ -54,6 +54,11 @@ const RealtimeConsultingRoom = () => {
 	}, []);
 
 	useEffect(() => {
+		// 탭 변경 시 로딩 및 에러 상태 초기화
+		setIsLoading(false);
+		setError(null);
+
+		
 		if (activeTab === 'waiting') {
 			requestWaitingRooms();
 		} else if (activeTab === 'history') {

@@ -16,6 +16,10 @@ import { useNavigate } from "react-router-dom";
 export default function RequestMydata() {
     const navigate = useNavigate();
 
+    const onClickPrev = () => {
+        navigate('/pblist')
+      };
+
     //Login User 정보
     const { token } = useSelector((state) => state.user); 
     const userName = useSelector((state) => state.user.name);
@@ -203,64 +207,78 @@ export default function RequestMydata() {
     fetchData();
 }, [token]);
 
-    //마이데이터 스크린샷 버튼
-    // TODO 마이데이터 API POST
+
+    const getAssetMessage = () => {
+        const selectedAssets = [];
+        if (showBank) selectedAssets.push("은행");
+        if (showDebt) selectedAssets.push("대출");
+        if (showHouse) selectedAssets.push("부동산");
+        if (showSec) selectedAssets.push("증권");
+
+        const assetMessage = selectedAssets.length > 0
+        ? `선택한 ${selectedAssets.join(", ")} 자산을 상담 정보로 같이 보낼까요?`
+        : "자산 정보를 PB에게 보내지 않고 예약을 진행할까요?";
+        return assetMessage;
+    }
+
+    //확인창
     const onClickMydataButton = () => {
-        setShowModal(true)
-      };
+        getAssetMessage();
+        setShowModal(true);
+    };
 
-      //url->Blob->FormData변환
-      const getImageBlob = async () => {
+    //url->Blob->FormData변환
+    const getImageBlob = async () => {
 
-        const target = document.getElementById("mydata-screenshot");
-        try {
-        // target 크기 지정
-        const { offsetWidth, offsetHeight } = target;
-        target.style.width = `${offsetWidth}px`;
-        target.style.height = `${offsetHeight}px`;
+    const target = document.getElementById("mydata-screenshot");
+    try {
+    // target 크기 지정
+    const { offsetWidth, offsetHeight } = target;
+    target.style.width = `${offsetWidth}px`;
+    target.style.height = `${offsetHeight}px`;
 
-        const canvas = await html2canvas(target, {
-          scale: 4, // 해상도 저하 이슈 해결
-          backgroundColor: '#f6f7fa' // 이미지 배경색 설정
-      });
+    const canvas = await html2canvas(target, {
+        scale: 4, // 해상도 저하 이슈 해결
+        backgroundColor: '#f6f7fa' // 이미지 배경색 설정
+    });
 
-            return new Promise((resolve, reject) => {
-                canvas.toBlob((blob) => {
-                    if (!blob) {
-                        return reject("Blob 생성 실패");
+        return new Promise((resolve, reject) => {
+            canvas.toBlob((blob) => {
+                if (!blob) {
+                    return reject("Blob 생성 실패");
+                }
+                const dataURL = canvas.toDataURL("image/png");
+
+                // 이미지 확인을 위한 로컬 다운로드
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'screenshot.png'; 
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                    
+                const formData = new FormData();
+                formData.append('file', blob, 'screenshot.png'); 
+                
+                
+                for (let [key, value] of formData.entries()) {
+                    if (value instanceof File) {
+                    // 속성 확인
+                        console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
+                    } else {
+                        console.log(`${key}: ${value}`);
                     }
-                    const dataURL = canvas.toDataURL("image/png");
+                }
+                resolve(formData);
 
-                    // 이미지 확인을 위한 로컬 다운로드
-                    const link = document.createElement('a');
-                    link.href = dataURL;
-                    link.download = 'screenshot.png'; 
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                      
-                    const formData = new FormData();
-                    formData.append('file', blob, 'screenshot.png'); 
-                    
-                    
-                    for (let [key, value] of formData.entries()) {
-                      if (value instanceof File) {
-                        // 속성 확인
-                          console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
-                      } else {
-                          console.log(`${key}: ${value}`);
-                      }
-                  }
-                    resolve(formData);
-
-                    
-                }, "image/png");
-            });
-        } catch (error) {
-            console.log(error);
-            alert("이미지 변환 중 오류가 발생했습니다.");
-        }
-      };
+                
+            }, "image/png");
+        });
+    } catch (error) {
+        console.log(error);
+        alert("이미지 변환 중 오류가 발생했습니다.");
+    }
+    };
 
 
 
@@ -269,7 +287,7 @@ export default function RequestMydata() {
       const handleYesClick = () => {
         const target = document.getElementById("mydata-screenshot");
 
-        // TODO 마이데이터 API POST 추가
+        // TODO 마이데이터 파일 url저장 API POST 추가
         getImageBlob();
         navigate("/pblist/request");
         setShowModal(false); // 모달 닫기
@@ -312,7 +330,7 @@ export default function RequestMydata() {
             <Header />
             <StyledHomeMainContent>
                 <Sidebar />
-                <StyledHomeContent style={{overflow:"hidden"}}>
+                <StyledHomeContent style={{overflow:"hidden", padding:"40px"}}>
                     <div style={{width:"910px",display:"flex",justifyContent:"space-between", alignItems:"flex-end"}}>
                     <StyledHeadText>
                         {userName.slice(1)}님의 자산 상담에서 <br/>
@@ -320,10 +338,16 @@ export default function RequestMydata() {
                     <p style={{marginTop:"15px",fontSize:"small",fontWeight:"400"}}>※ 자산 정보를 보내지 않을 경우, PB는 내 자산에 대한 정보를 확인할 수 없습니다.</p>
 
                     </StyledHeadText>
-
+                    
+                    <div style={{display:"flex",gap:"10px"}}>
+                    <Button 
+                    id="goback"
+                     onClick={onClickPrev}>돌아가기</Button>
                     <Button 
                     id="mydata-api"
                     onClick={onClickMydataButton}>다음으로</Button>
+                    </div>
+
                     </div>
                     <StyledMydataReqContainer>
 
@@ -483,7 +507,8 @@ export default function RequestMydata() {
                       >
 
                       <Modal.Body id="modal-body">
-                        선택한 내 자산 정보를 PB에게 보낼까요?
+                        {/* 마이데이터 전송 확인 메세지 */}
+                        {getAssetMessage()}
                       </Modal.Body>
                       <Modal.Footer id="modal-footer">
                         <Button className="modal-no" variant="light" onClick={handleNoClick}>

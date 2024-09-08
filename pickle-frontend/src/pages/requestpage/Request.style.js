@@ -21,8 +21,8 @@ export const StyledRequestDiv = styled.div`
 
         Button {
         font-size: large;
-        width: 200px;
-        height: 70px;
+        width: 130px;
+        height: 50px;
         }
     }
 
@@ -42,6 +42,10 @@ export const StyledOptionSelect = styled.div`
     flex-direction: column;
     gap: 30px;
     justify-content: center;
+
+    .form-label {
+        margin-bottom: 0;
+    }
 
     section {
         display: flex;
