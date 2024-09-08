@@ -3,7 +3,7 @@ import { defaultInstance } from "./axiosInstance";
 export const customerJoin = async (formData) => {
   try {
     const response = await defaultInstance.post(
-      `/pickle-customer/api/join`,
+      `/api/pickle-customer/join`,
       formData
     );
     console.log(response);
@@ -13,46 +13,28 @@ export const customerJoin = async (formData) => {
   }
 };
 
-export const pbJoin = async (formData) => {
-  try {
-    const response = await defaultInstance.post(
-      `/pickle-pb/api/join`,
-      formData
-    );
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.error("pb 회원가입 실패", error);
-  }
-};
-
 export const customerToken = async (formData) => {
   try {
     const response = await defaultInstance.post(
-      `/pickle-customer/api/token`,
+      `/api/pickle-customer/token`,
       formData
     );
-    const token = response.data.data;
-    console.log(token);
 
-    localStorage.setItem("accessToken", token);
-    console.log(localStorage);
-    return token;
+    // 성공적인 응답이 있는지 확인
+    if (response.data && response.data.data) {
+      const token = response.data.data;
+      console.log(token);
+
+      localStorage.setItem("accessToken", token); // 토큰을 로컬 스토리지에 저장
+      console.log(localStorage);
+
+      return { success: true, token }; // 성공 시 반환 객체
+    } else {
+      throw new Error("로그인 응답 데이터가 유효하지 않음");
+    }
   } catch (error) {
     console.error("고객 로그인 실패", error);
-  }
-};
-
-export const pbToken = async (formData) => {
-  try {
-    const response = await defaultInstance.post(
-      `/pickle-pb/api/token`,
-      formData
-    );
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.error("고객 로그인 실패", error);
+    return { success: false, message: "고객 로그인 실패", error }; // 실패 시 반환 객체
   }
 };
 
