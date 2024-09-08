@@ -25,7 +25,12 @@ export default defineConfig({
 			changeOrigin: true,
 			secure: false, // HTTPS일 경우에도 사용할 수 있음
 			followRedirects: true, // 리디렉션 따르기
-			rewrite: (path) => path.replace(/^\/pickle-pb/, '/pickle-pb'),
+			},
+			'/api/pickle-common': {
+			target: 'http://localhost:8081',
+			changeOrigin: true,
+			secure: false, // HTTPS일 경우에도 사용할 수 있음
+			followRedirects: true, // 리디렉션 따르기
 			},
 			'/api/mydata': {
 			target: 'http://localhost:8080',

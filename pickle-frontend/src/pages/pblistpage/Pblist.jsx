@@ -84,7 +84,6 @@ export default function Pblist() {
   };
 
   const handleReqWrite = () => {
-    if (tmpDate !== null && selectedPb !== null) {
 
     const now = new Date();
     
@@ -96,16 +95,13 @@ export default function Pblist() {
       dispatch(setDate(tmpDate.toISOString())); //선택 날짜 저장 (ISO문자열로 변환)
       navigate('/pblist/consultdata')
     }
-    else {
-    alert("날짜와 시간을 선택해주세요.")
   }
-  };
 
   // 최소 날짜를 오늘로 설정
   const today = new Date(new Date().setDate(new Date().getDate()));
   // 최대 날짜를 오늘로부터 27주 후로 설정
   const sixMonthLater = new Date(new Date().setDate(new Date().getDate() + 189));
-
+  
 
   // 다중 선택 핸들러
   const handleMainFieldChange = (eventKey) => {
@@ -176,7 +172,7 @@ export default function Pblist() {
       <Header />
       <StyledHomeMainContent>
         <Sidebar />
-        <StyledHomeContent>
+        <StyledHomeContent style={{padding:"40px"}}>
           <StyledPbSection>
             {!showSelectedPb && (
               <div>
@@ -308,7 +304,6 @@ export default function Pblist() {
                           selected={tmpDate}
                           minDate={today}
                           maxDate={sixMonthLater}
-
                           open="open"
                         />
                       </div>
