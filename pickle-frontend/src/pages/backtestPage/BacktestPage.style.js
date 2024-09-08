@@ -7,7 +7,7 @@ export const StyledConsultContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 `;
 
 export const StyledConsultBox = styled.div`

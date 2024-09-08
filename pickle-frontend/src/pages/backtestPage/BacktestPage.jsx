@@ -24,7 +24,7 @@ import {
 } from "./BacktestPage.style";
 import { Link, useLocation } from "react-router-dom";
 import profile from "/assets/backtest-profile.svg";
-import { Button, InputGroup, Form } from "react-bootstrap";
+import { Button, InputGroup, Form, Modal } from "react-bootstrap";
 import Circular from "../../components/common/circular-graph/Circular";
 import BacktestChart from "../../components/common/backtest/BacktestChart";
 import RunBacktestButton from "../../components/common/backtest/RunBacktestButton";
@@ -121,7 +121,7 @@ export default function BacktestPage() {
                   <Circular
                     data={data}
                     top={"20%"}
-                    left={"-4%"}
+                    left={"-5%"}
                     width={"350px"}
                     height={"250px"}
                   />

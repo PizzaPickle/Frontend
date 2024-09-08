@@ -55,12 +55,13 @@ export default function SearchModal({
         size="md"
         show={activeSearchModal}
         onHide={() => setActiveSearchModal(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
+        // aria-labelledby="example-modal-sizes-title-lg"
+        id="custom-modal"
       >
-        <Modal.Header closeButton>
+        <Modal.Header id="modal-header" closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">종목 검색</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="modal-body">
           <SearchContainer>
             <BsSearch
               size={14}

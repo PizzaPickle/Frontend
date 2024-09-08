@@ -30,7 +30,7 @@ const initialState = {
       value: 20,
       color: "#FFC27B",
       productList: [],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: false,
     },
     {
@@ -39,7 +39,7 @@ const initialState = {
       value: 20,
       color: "#FF8B67",
       productList: [],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: false,
     },
     {
@@ -48,7 +48,7 @@ const initialState = {
       value: 20,
       color: "#FFADB6",
       productList: [],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: false,
     },
     {
@@ -57,7 +57,7 @@ const initialState = {
       value: 20,
       color: "#ffd9ad",
       productList: [],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: false,
     },
   ],
