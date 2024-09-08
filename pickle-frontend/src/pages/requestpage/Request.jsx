@@ -175,6 +175,55 @@ export default function Request() {
           </StyledHeadText>
 
           <StyledRequestDiv>
+            
+              <StyledContentBlock style={{padding:"20px 30px 10px 30px",display:"flex",flexDirection:"column",gap:"0px"}}>
+              <h6>기본 정보를 입력해주세요.</h6>
+                <StyledOptionSelect>
+              <Form style={{display:"flex", gap:"40px",alignItems:"center", textAlign:"center"}}>
+              <Form.Group controlId="age">
+              <article style={{display:"flex",alignItems:"center", gap:"5px"}}>
+              <Form.Label>나이</Form.Label>
+              <Form.Control style={{width:"70px"}}
+              type="text"
+              value={age}
+              onChange={handleAgeChange}
+              onBlur={handleAgeBlur} // 포커스를 벗어날 때 호출
+            ></Form.Control>세
+              </article>
+              </Form.Group>
+
+              <article style={{display:"flex",alignItems:"center", gap:"5px"}}>
+              <Form.Label>성별</Form.Label>
+              <section style={{height:"60px"}}>
+              <Form.Group controlId="gender">
+              {genderOptions.map((opt,ind)=>{
+                    return (
+                      <div className={gender === ind ? 'selected' : 'option'}
+                      key={ind}
+                      onClick={()=>handleGenderSelect(ind)}
+                      > <p style={{"marginBottom":"0"}}>{opt}</p>
+                    </div>
+                    )
+                  })}
+              </Form.Group>
+              </section>
+              </article>
+
+              <Form.Group controlId="age">
+              <article style={{display:"flex",alignItems:"center", gap:"5px"}}>
+              <Form.Label>직업</Form.Label>
+              <Form.Control style={{width:"140px"}}
+              value={job}
+              onChange={handleJobChange}
+              ></Form.Control>
+              </article>
+
+              </Form.Group>
+
+              </Form>
+              </StyledOptionSelect>
+
+                </StyledContentBlock>
               <StyledRequestBoxDiv>
                 <StyledContentBlock style={{flex:"4"}}>
                 <section>
