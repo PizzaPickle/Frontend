@@ -1,0 +1,142 @@
+/* Ensure full height and width */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.terms-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background: linear-gradient(
+    to bottom,
+    #eafcf4,
+    #ffffff
+  ); /* Light gradient background */
+}
+
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.terms-section {
+  width: 80%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.terms-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.main-label {
+  flex-grow: 1;
+  margin-left: 10px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.required-text {
+  color: #888;
+  margin-right: 10px;
+  font-size: 0.9em;
+}
+
+.arrow {
+  font-size: 1.2em;
+  color: #999;
+}
+
+.terms-details {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.terms-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.terms-item label {
+  margin-left: 10px;
+  font-size: 1em;
+}
+
+.terms-item label.checked {
+  color: #4caf50; /* Highlight checked text */
+}
+
+/* 모달의 배경 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 배경을 어둡게 */
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  z-index: 1000; /* 다른 요소 위에 나타나도록 */
+}
+
+/* 모달 콘텐츠 */
+.modal-tent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%; /* 넓이를 화면의 90%로 설정 */
+  max-width: 900px; /* 최대 넓이를 900px로 설정 */
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 모달에 그림자 추가 */
+}
+
+/* 모달 닫기 버튼 */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-close-button:hover {
+  color: red;
+}
+
+/* 화살표 버튼 */
+.arrow-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.arrow-button:hover {
+  color: #007bff;
+}
