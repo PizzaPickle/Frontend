@@ -13,6 +13,8 @@ import Request from "./pages/requestpage/Request";
 import RequestMydata from "./pages/requestpage/RequestMydata"
 import React from 'react';
 import Preset from './pages/pb/presetPage/Preset';
+import CustomerRequest from './pages/pb/customerRequestPage.jsx/CustomerRequest';
+import MyRequest from './pages/myrequest/MyRequest';
 
 export const routers = [
     {
@@ -40,6 +42,15 @@ export const routers = [
             }
         ]
     },
+	{
+        path: "/myrequest",
+        children: [
+            {
+                index: true,
+                element: <MyRequest />,
+            },
+        ]
+    },
 
 	{
 		path: '/consult/backtest',
@@ -63,6 +74,8 @@ export const routers = [
 		element: <RealTimeConsulting />,
 		// index: true
 	},
+
+	// PB 화면 페이지
 	{
 		path: '/pb',
 		children: [
@@ -73,6 +86,10 @@ export const routers = [
 			{
 				path: 'preset',
 				element: <Preset />,
+			},
+			{
+				path: 'request-list',
+				element: <CustomerRequest />,
 			}
 		],
 	},
