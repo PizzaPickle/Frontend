@@ -6,6 +6,12 @@ export const shine = keyframes`
   }
 `;
 
+export const StyledMydataSection = styled.div `
+  width: 1200px;
+  height: auto;
+
+`
+
 export const StyledMyBadge = styled.div`
   position: relative;
   width: 145px;
@@ -65,10 +71,24 @@ export const StyledMyBadgeBox = styled.div`
     z-index: 100;
     color: #636566;
 
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    pointer-events: none;
-  }
+
+    .badge-info {
+        position: absolute;
+        min-width: 260px;
+        height: auto;
+        font-size: 0.8rem;
+        top: 10%;
+        left: 75%;
+        border-radius: 14px;
+        padding: 13px;
+        background-color: white;
+        z-index: 100;
+        color: #636566;
+        
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+    }
 
   &:hover .badge-info {
     opacity: 1;

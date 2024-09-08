@@ -65,43 +65,59 @@ export const routers = [
     ],
   },
 
-  {
-    path: "/consult/backtest",
-    children: [
-      {
-        index: true,
-        element: <BacktestPage />,
-      },
-      {
-        path: "portfolio",
-        element: <Portfolio />,
-      },
-      {
-        path: "strategy",
-        element: <Strategy />,
-      },
-    ],
-  },
-  {
-    path: "/consulting/realtime-consulting",
-    element: <RealTimeConsulting />,
-    // index: true
-  },
-  // {
-  //     path: "/머있지?",
-  //     element:
-  //     index: true,
-  //     children: [
-  //         {
-  //             path:
-  //             element:
-  //         }
-  //     ]
-  // }
-  {
-    path: "/allmoney",
-    element: <AllMoney />,
-  },
+
+	{
+		path: '/consult/backtest',
+		children: [
+			{
+				index: true,
+				element: <BacktestPage />,
+			},
+			{
+				path: 'portfolio',
+				element: <Portfolio />,
+			},
+			{
+				path: 'strategy',
+				element: <Strategy />,
+			},
+		],
+	},
+	{
+		path: '/consulting/realtime-consulting',
+		element: <RealTimeConsulting />,
+		// index: true
+	},
+	{
+		path: '/pb',
+		children: [
+			{
+				index: true,
+				element: <Preset />,
+			},
+			{
+				path: 'preset',
+				element: <Preset />,
+			}
+		],
+	},
+	
+	// {
+	//     path: "/머있지?",
+	//     element:
+	//     index: true,
+	//     children: [
+	//         {
+	//             path:
+	//             element:
+	//         }
+	//     ]
+	// }
+	{
+		path: '/allmoney',
+		element: <AllMoney />,
+	},
+
 ];
 
 const router = createBrowserRouter(routers);
