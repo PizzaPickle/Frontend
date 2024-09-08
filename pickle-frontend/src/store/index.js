@@ -4,11 +4,13 @@ import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
 import pbReducer from "./reducers/pbselect";
 import dateReducer from "./reducers/dateselect";
+import strategyReducer from "./reducers/strategy";
 
 export const rootReducer = combineReducers({
     user: userReducer,
     pb: pbReducer,
     date: dateReducer,
+    strategy: strategyReducer
 });
 
 const store = configureStore({
