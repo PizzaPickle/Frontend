@@ -1,5 +1,6 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
+import React from "react";
 
 export const CircularGraph = ({ data }) => (
   <ResponsivePie

@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./theme";
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/custom-bootstrap.css';
 
 function App() {
   return (

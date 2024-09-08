@@ -6,7 +6,7 @@ export const StyledHeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 35px;
   margin-top: 10px;
   background-color: ${({ theme }) => theme.colors.background};
   border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
@@ -19,4 +19,8 @@ export const StyledHeaderContent = styled.div`
     width: 100%;
     margin: 50px;
     gap: 20px;
+
+    img {
+      margin-bottom: 10px;
+    }
 `

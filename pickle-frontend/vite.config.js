@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+
 	plugins: [
 		react({
 			jsxRuntime: 'classic',
@@ -20,13 +21,31 @@ export default defineConfig({
 				followRedirects: true, // 리디렉션 따르기
 				rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
 			},
-      '/pickle-pb': {
-      target: 'http://localhost:8080',
-      changeOrigin: true,
-      secure: false, // HTTPS일 경우에도 사용할 수 있음
-      followRedirects: true, // 리디렉션 따르기
-      rewrite: (path) => path.replace(/^\/pickle-pb/, '/pickle-pb'),
-    },
+
+			'/api/pickle-customer': {
+				target: 'http://localhost:8080',
+				changeOrigin: true,
+				secure: false, // HTTPS일 경우에도 사용할 수 있음
+				followRedirects: true, // 리디렉션 따르기
+				rewrite: (path) => path.replace(/^\/pickle-customer/, '/pickle-customer'),
+            },
+			
+
+			'/api/pickle-pb': {
+			target: 'http://localhost:8081',
+			changeOrigin: true,
+			secure: false, // HTTPS일 경우에도 사용할 수 있음
+			followRedirects: true, // 리디렉션 따르기
+			rewrite: (path) => path.replace(/^\/pickle-pb/, '/pickle-pb'),
+			},
+			'/api/mydata': {
+			target: 'http://localhost:8080',
+			changeOrigin: true,
+			secure: false, // HTTPS일 경우에도 사용할 수 있음
+			followRedirects: true, // 리디렉션 따르기
+			rewrite: (path) => path.replace(/^\/api\/mydata/, '/api/mydata'),
+			},
+
 		},
 	},
 });
