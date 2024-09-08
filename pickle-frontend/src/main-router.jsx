@@ -3,10 +3,10 @@ import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 import HomePage from "./pages/homepage/HomePage";
 import Mydata from "./pages/mydata/Mydata";
-import BacktestPage from "./pages/PB-BacktestPage/BacktestPage";
-import Dashboard from "./pages/PB-BacktestPage/Strategy";
-import Portfolio from "./pages/PB-BacktestPage/Portfolio";
-import Strategy from "./pages/PB-BacktestPage/Strategy";
+import BacktestPage from "./pages/backtestPage/BacktestPage";
+// import Dashboard from "./pages/PB-BacktestPage/Strategy";
+import Portfolio from "./pages/backtestPage/Portfolio";
+import Strategy from "./pages/backtestPage/Strategy";
 import RealTimeConsulting from "./pages/RealtimeConsulting/RealtimeConsulting";
 import Pblist from "./pages/pblistpage/Pblist";
 import Request from "./pages/requestpage/Request";
@@ -91,14 +91,14 @@ export const routers = [
 	{
 		path: '/pb',
 		children: [
-			{
-				index: true,
-				element: <Preset />,
-			},
-			{
-				path: 'preset',
-				element: <Preset />,
-			}
+			// {
+			// 	index: true,
+			// 	element: <Preset />,
+			// },
+			// {
+			// 	path: 'preset',
+			// 	element: <Preset />,
+			// }
 		],
 	},
 	

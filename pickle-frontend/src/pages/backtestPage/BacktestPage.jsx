@@ -121,7 +121,7 @@ export default function BacktestPage() {
                   <Circular
                     data={data}
                     top={"20%"}
-                    left={"-5%"}
+                    left={"-4%"}
                     width={"350px"}
                     height={"250px"}
                   />
