@@ -414,6 +414,38 @@ export default function Request() {
                     </Modal>
               </div>
               </StyledContentBlock>
+
+              <Modal
+                  id="custom-modal"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  show={showComplete} onHide={handleCompleteClose}
+                  backdropClassName="custom-backdrop" 
+                  >
+                    <Modal.Header id="modal-header">
+                      <img src="/assets/reserve-complete.svg" width={"90px"}></img>
+                    <div style={{textAlign:"center"}}>
+                    <b>PB 예약 완료</b>
+                      </div>
+                    </Modal.Header>
+                    <ModalBody style={{margin:"20px 20px 0px 20px", textAlign:"center"}}>
+                      <b>{selectedPb.username}PB</b>에게             
+                      상담 요청을 보냈습니다.<br /><br />
+                      예약날짜: {formatDate(selectedDate)}<br />
+                      상담시간: {formatTime(selectedDate)}
+                      <br /><br />
+                      <p style={{fontSize:"small"}}>※ 상담이 거절 됐을 경우, 거절 사유를 확인하고 다시 요청해주세요.</p>
+
+                      <br />
+                    </ModalBody>
+                    <Modal.Footer id="modal-footer">
+                    <Button 
+                    className="modal-yes" variant="light" onClick={handleCompleteClose}>
+                          Yes
+                        </Button>
+                    </Modal.Footer>
+                    
+                </Modal>
           </>
 
           ) : null
