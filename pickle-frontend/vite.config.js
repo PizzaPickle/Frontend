@@ -20,20 +20,27 @@ export default defineConfig({
         followRedirects: true, // 리디렉션 따르기
         rewrite: (path) => path.replace(/^\/backtest/, "/backtest"),
       },
-      "/pickle-customer": {
+      "/api/pickle-pb": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: false, // HTTPS일 경우에도 사용할 수 있음
+        followRedirects: true, // 리디렉션 따르기
+        rewrite: (path) => path.replace(/^\/api\/pickle-pb/, "/api/pickle-pb"),
+      },
+      "/api/mydata": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: false, // HTTPS일 경우에도 사용할 수 있음
+        followRedirects: true, // 리디렉션 따르기
+        rewrite: (path) => path.replace(/^\/api\/mydata/, "/api/mydata"),
+      },
+      "/api/pickle-customer": {
         target: "http://localhost:8080",
         changeOrigin: true,
         secure: false, // HTTPS일 경우에도 사용할 수 있음
         followRedirects: true, // 리디렉션 따르기
         rewrite: (path) =>
-          path.replace(/^\/pickle-customer/, "/pickle-customer"),
-      },
-      "/pickle-pb": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-        secure: false, // HTTPS일 경우에도 사용할 수 있음
-        followRedirects: true, // 리디렉션 따르기
-        rewrite: (path) => path.replace(/^\/pickle-pb/, "/pickle-pb"),
+          path.replace(/^\/api\/pickle-customer/, "/api/pickle-customer"),
       },
     },
   },

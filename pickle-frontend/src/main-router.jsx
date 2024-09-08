@@ -98,6 +98,21 @@ export const routers = [
   //         }
   //     ]
   // }
+
+  //   {
+  //     path: "/pb",
+  //     children: [
+  //       {
+  //         index: true,
+  //         element: <Preset />,
+  //       },
+  //       {
+  //         path: "preset",
+  //         element: <Preset />,
+  //       },
+  //     ],
+  //   },
+
   {
     path: "/allmoney",
     element: <AllMoney />,

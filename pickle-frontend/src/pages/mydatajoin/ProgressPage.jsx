@@ -1,20 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "./ProgressPage.css"; // 페이지에 대한 스타일을 따로 관리
+import { useNavigate } from "react-router-dom";
 
 export default function ProgressPage() {
   const [progress, setProgress] = useState(0); // 진행 상황을 나타내는 state
   const [isComplete, setIsComplete] = useState(false); // 로딩 완료 여부
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (progress < 100) {
       const timer = setInterval(() => {
-        setProgress((prevProgress) => prevProgress + 10);
-      }, 500); // 500ms마다 10%씩 증가
+        const increment = Math.random() < 0.5 ? 3 : 5;
+        setProgress((prevProgress) => Math.min(prevProgress + increment, 100));
+      }, 200);
       return () => clearInterval(timer);
     } else {
-      setIsComplete(true); // 100%가 되면 로딩 완료 상태로 전환
+      setIsComplete(true);
     }
   }, [progress]);
+
+  useEffect(() => {
+    if (isComplete) {
+      const timer = setTimeout(() => {
+        goToLoginPage(); // 4초 후 로그인 페이지로 이동
+      }, 4000); // 4초(4000ms) 후에 실행
+      return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머 정리
+    }
+  }, [isComplete]);
+
+  const goToLoginPage = () => {
+    navigate("/loginpage");
+  };
 
   return (
     <div className="progress-page">
@@ -35,12 +51,12 @@ export default function ProgressPage() {
             <p>피클 로고</p>
           </header>
           <img
-            src="/assets/Cones.png" // 실제 이미지 경로로 수정
+            src="/assets/Cones.png"
             alt="Completion Logo"
             className="completion-logo"
           />
           <h1>연결 완료!</h1>
-          <p>피클 서비스로 이동할게요.</p>
+          <p>로그인 페이지로 이동할게요.</p>
         </div>
       )}
     </div>
