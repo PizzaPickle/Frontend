@@ -124,6 +124,7 @@ export default function TestPage() {
   return (
     <>
     <BacktestChart></BacktestChart>
+    
     </>
   );
 }

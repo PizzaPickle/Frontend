@@ -9,4 +9,24 @@
 
   body {
     background-color: #F5F8FF;
+    scroll-behavior: smooth;
   }
+
+  /* 웹킷 브라우저용 */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -37,7 +37,6 @@ export const StyledConsultSide = styled.div`
 export const HighlightBox = styled.div`
     display: ${(props) => (props.visible ? "block" : "none")};
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.1); /* 반투명 검은색 */
     width: 3px;
     height: 100%;
     top: 0;
@@ -71,6 +70,7 @@ export const StyledConsultContentBox = styled.div`
     background-color: white;
     border-radius: 0px 20px 20px 0px;
     flex: 5;
+    padding: 20px;
 `
 
 export const StyledBacktestHeader = styled.div`

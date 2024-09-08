@@ -6,10 +6,11 @@ import {
 } from "./LegendWithGraph.style";
 import Circular from "../circular-graph/Circular";
 import Legend from "../legend/Legend";
+import React from "react";
 
-export default function GraphWithLegend({ data, width, height, top, left, fontSize, gap }) {
+export default function LegendWithGraph({ data, width, height, top, left, fontSize, gap }) {
   return (
-    <LegendWithGraphDiv top={top} left={left} width={`${width}px`} height={`${height}px`}>
+    <LegendWithGraphDiv top={top} left={left} width={width} height={height}>
       {/* <CircularDiv >
         <Circular width="300px" height="250px" data={data} />
       </CircularDiv> */}

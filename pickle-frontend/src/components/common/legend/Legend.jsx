@@ -5,6 +5,7 @@ import {
   LegendLeftContainer,
 } from "./legend.style";
 import { useState } from "react";
+import React from "react";
 
 export default function Legend({ category, activate, gap }) {
   const [isHovered, setIsHovered] = useState(false);

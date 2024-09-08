@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const StyeldWalletContainer = styled.div`
     width: ${(props) => props.width || '300px'};
-    height: ${(props) => props.width || '230px'};
+    height: ${(props) => props.width || '240px'};
     background: linear-gradient(
     140deg,
     #0B39DC 0%, 
