@@ -1,0 +1,59 @@
+.progress-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #eafcf4,
+    #ffffff
+  ); /* Light gradient background */
+}
+
+.logo {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.loading-container,
+.complete-container {
+  text-align: center;
+}
+
+.progress-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 200px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-left: 120px;
+  background-color: #f9f9f9;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.completion-logo {
+  width: 100px;
+  margin-bottom: 20px;
+}

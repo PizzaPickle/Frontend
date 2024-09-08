@@ -1,4 +1,4 @@
-/* 기본 범용 스타일 */
+/* 기본 범용 스타일
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 * {
     margin: 0;
@@ -9,6 +9,7 @@
 
   body {
     background-color: #F5F8FF;
+
     scroll-behavior: smooth;
   }
 
@@ -30,3 +31,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
