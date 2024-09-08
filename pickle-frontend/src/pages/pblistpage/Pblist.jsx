@@ -85,6 +85,14 @@ export default function Pblist() {
 
   const handleReqWrite = () => {
     if (tmpDate !== null && selectedPb !== null) {
+
+    const now = new Date();
+    
+    if (tmpDate !== null && tmpDate < now) {
+      alert('현재 시간 이후 시간대만 예약 가능합니다.');
+    }
+
+    else if (tmpDate !== null && selectedPb !== null) {
       dispatch(setDate(tmpDate.toISOString())); //선택 날짜 저장 (ISO문자열로 변환)
       navigate('/pblist/consultdata')
     }
