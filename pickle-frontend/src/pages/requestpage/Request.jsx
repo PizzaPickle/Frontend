@@ -10,6 +10,22 @@ import { StyledPbSection } from "../pblistpage/pblist.style";
 import { Modal } from "react-bootstrap";
 
 export default function Request() {
+  const navigate = useNavigate();
+  const [showNavModal, setShowNavModal] = useState(false);
+  const { token } = useSelector((state) => state.user); 
+
+  const handleNavigate = () => {
+    setShowNavModal(true);
+  }
+  const handleNavYes = () => {
+    navigate('/pblist');
+  }
+  const handleNavNo = () => {
+    setShowNavModal(false);
+  }
+
+
+
   //ISO 날짜 문자열 파싱
   function formatDate(isoString) {
     const date = new Date(isoString);
@@ -278,9 +294,37 @@ export default function Request() {
                 </StyledContentBlock>
             </StyledRequestBoxDiv>
             <section id="next-btn">
+              <div style={{display:"flex",gap:"20px"}}>
+            <Button 
+            onClick={handleNavigate}>돌아가기</Button>
             <Button 
             onClick={handleRequest}>다음으로</Button>
+            </div>
             </section>
+              <Modal
+                    id="custom-modal"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    show={showNavModal} onHide={handleNavNo}
+                    backdropClassName="custom-backdrop" 
+                    >
+                
+                <ModalBody
+                    style={{margin: "20px"}}
+                    >
+                  지금 취소하면 예약한 정보들이 사라집니다. 예약을 취소할까요?
+                </ModalBody>
+
+              <Modal.Footer id="modal-footer">
+                <Button className="modal-no" variant="light" onClick={handleNavNo}>
+                  No
+                </Button>
+                <Button className="modal-yes" variant="light" onClick={handleNavYes}>
+                  Yes
+                </Button>
+              </Modal.Footer>
+              </Modal>
+            
           </StyledRequestDiv>
           </>
   
@@ -310,6 +354,12 @@ export default function Request() {
                   </Form.Group>
                 </Form>
                 
+                <div style={{display:"flex",gap:"10px",justifyContent:"right"}}>
+                  <Button variant="primary" 
+                  onClick={handleBackRequest}
+                  style={{width:"100px",padding:"10px"}}>
+                    돌아가기
+                  </Button>
                   <Button variant="primary" type="submit"
                   onClick={handleClick}
                   style={{position:"absolute",right:"0",marginTop:"40px",width:"100px",padding:"10px"}}>
