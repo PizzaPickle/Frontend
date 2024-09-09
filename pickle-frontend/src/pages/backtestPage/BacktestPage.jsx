@@ -92,9 +92,9 @@ export default function BacktestPage() {
         <StyledConsultBox>
           <StyledConsultSide>
             {[
-              { text: "상담 요청서", link: "/consult/backtest" },
-              { text: "기존 전략", link: "/consult/backtest/portfolio" },
-              { text: "전략 생성", link: "/consult/backtest/strategy" },
+              { text: "전략 생성", link: "/consult/backtest" },
+              { text: "마이데이터", link: "/consult/backtest/mydata" },
+              // { text: "전략 생성", link: "/consult/backtest/strategy" },
             ].map((item, index) => (
               <LinkWrapper key={index} onClick={() => handleClick(index)}>
                 <HighlightBox visible={selectedIndex === index} />
