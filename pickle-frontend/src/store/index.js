@@ -5,12 +5,13 @@ import userReducer from "./reducers/user";
 import pbReducer from "./reducers/pbselect";
 import dateReducer from "./reducers/dateselect";
 import mydataURLReducer from './reducers/mydataurl';
-
+import stockPricesSlice from './reducers/currentprice';
 export const rootReducer = combineReducers({
     user: userReducer,
     pb: pbReducer,
     date: dateReducer,
     mydataURL: mydataURLReducer,
+    stockPrices: stockPricesSlice
 });
 
 const store = configureStore({
