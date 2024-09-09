@@ -49,101 +49,105 @@ export default function Order() {
 
     
     useEffect(() => {
-        setData([
-            {
-                "categoryName": "해외",
-                "categoryRatio": 0.4,
-                "productList": [
-                    {
-                        "code": "APPL",
-                        "name": "Apple Inc.",
-                        "ratio": 0.2,
-                        "myStrategyRatio": 0.0
-                    },
-                    {
-                        "code": "NBDA",
-                        "name": "NBIDA",
-                        "ratio": 0.8,
-                        "myStrategyRatio": 0.7
-                    },
-                    {
-                        "code": "AAPL",
-                        "name": "Apple Inc.",
-                        "ratio": 0.0,
-                        "myStrategyRatio": 0.3
-                    }
-                ]
-            },
-            {
-                "categoryName": "국내",
-                "categoryRatio": 0.5,
-                "productList": [
-                    {
-                        "code": "005930",
-                        "name": "삼성",
-                        "ratio": 0.7,
-                        "myStrategyRatio": 0.3
-                    },
-                    {
-                        "code": "006666",
-                        "name": "Washing Machine",
-                        "ratio":0.3,
-                        "myStrategyRatio": 0.0
-                    },
-                    {
-                        "code": "003230",
-                        "name": "삼양",
-                        "ratio": 0.0,
-                        "myStrategyRatio": 0.7
-                    }
-                ]
-            },
-            {
-                "categoryName": "채권",
-                "categoryRatio": 0.5,
-                "productList": [
-                    {
-                        "code": "code3",
-                        "name": "Refrigerator",
-                        "ratio": 0.5,
-                        "myStrategyRatio": 0.0
-                    },
-                    {
-                        "code": "code4",
-                        "name": "Washing Machine",
-                        "ratio": 0.5,
-                        "myStrategyRatio": 0.0
-                    }
-                ]
-            }
-        ]);
+        // setData([
+        //     {
+        //         "categoryName": "해외",
+        //         "categoryRatio": 0.4,
+        //         "productList": [
+        //             {
+        //                 "code": "APPL",
+        //                 "name": "Apple Inc.",
+        //                 "ratio": 0.2,
+        //                 "myStrategyRatio": 0.0
+        //             },
+        //             {
+        //                 "code": "NASTSLA",
+        //                 "name": "NBIDA",
+        //                 "ratio": 0.8,
+        //                 "myStrategyRatio": 0.7
+        //             },
+        //             {
+        //                 "code": "AAPL",
+        //                 "name": "Apple Inc.",
+        //                 "ratio": 0.0,
+        //                 "myStrategyRatio": 0.3
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "categoryName": "국내",
+        //         "categoryRatio": 0.5,
+        //         "productList": [
+        //             {
+        //                 "code": "005930",
+        //                 "name": "삼성",
+        //                 "ratio": 0.7,
+        //                 "myStrategyRatio": 0.3
+        //             },
+        //             {
+        //                 "code": "006666",
+        //                 "name": "Washing Machine",
+        //                 "ratio":0.3,
+        //                 "myStrategyRatio": 0.0
+        //             },
+        //             {
+        //                 "code": "003230",
+        //                 "name": "삼양",
+        //                 "ratio": 0.0,
+        //                 "myStrategyRatio": 0.7
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "categoryName": "채권",
+        //         "categoryRatio": 0.5,
+        //         "productList": [
+        //             {
+        //                 "code": "code3",
+        //                 "name": "Refrigerator",
+        //                 "ratio": 0.5,
+        //                 "myStrategyRatio": 0.0
+        //             },
+        //             {
+        //                 "code": "code4",
+        //                 "name": "Washing Machine",
+        //                 "ratio": 0.5,
+        //                 "myStrategyRatio": 0.0
+        //             }
+        //         ]
+        //     }
+        // ]);
 
 
         
 
-        // const fetchData = async () => {
-        //     try {
+        const fetchData = async () => {
+            try {
                 
-        //         const response = await fetch('http://localhost:8080/api/trade/products', {
-        //             method: 'GET', 
-        //             headers: {
-        //                 'Authorization': `Bearer ${token}`
-        //             },
-        //         });
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         const result = await response.json();
-        //         setData(result.data); 
-        //     } catch (error) {
-        //         setError(error); 
-        //     } finally {
-        //         setLoading(false); 
-        //     }
-        // };
+                const response = await fetch(`/api/pickle-customer/trade/products/1`, {
+                    method: 'GET', 
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.json();
+                console.log(result);
+                setData(result); 
+            } catch (error) {
+                setError(error); 
+            } finally {
+                setLoading(false); 
+            }
+        };
 
-        // fetchData(); 
-        },[]);
+        fetchData(); 
+    },[]);
+
+
+
     useEffect(()=>{
 
         if (data) {
@@ -166,7 +170,7 @@ export default function Order() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        inputValue: formattedInputValue,
+                        price: formattedInputValue,
                     }),
                 });
 
