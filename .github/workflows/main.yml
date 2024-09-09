@@ -26,9 +26,9 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: 22
         script: |
-          cd /home/ubuntu/react-app/Frontend
-          git fetch --all
-          git pull origin main
+          cd /home/ubuntu/Frontend
+          # git fetch --all
+          git pull origin deploy
           cd pickle-frontend
           npm install
           npm run build
