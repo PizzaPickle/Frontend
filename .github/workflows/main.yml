@@ -29,6 +29,7 @@ jobs:
           cd /home/ubuntu/Frontend
           # git fetch --all
           git pull origin deploy
+          echo "${{ secrets.ENV_FILE }}" > /home/ubuntu/Frontend/pickle-frontend/.env
           cd pickle-frontend
           npm install
           npm run build
