@@ -12,6 +12,7 @@ export const StyledMydataContainer = styled.div`
     margin-top:20px;
     background-color: #F5F8FF;
     border-radius: 20px;
+    height: 500px;
 `
 
 export const StyledCheckboxDiv = styled.div`

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { customerJoin, pbJoin } from "../../api/customerApi";
+import { customerJoin } from "../../api/customerApi";
 import "./join.css"; // 스타일 파일
 import { useNavigate } from "react-router-dom";
+import { pbJoin } from "../../api/PBApi";
 
 export default function JoinPage() {
   const [registerType, setRegisterType] = useState("customer");
@@ -124,7 +125,7 @@ export default function JoinPage() {
           );
         }
       } catch (error) {
-        showModalWindow("회원가입 실패", "회원가입 중 오류가 발생했습니다.");
+        showModalWindow("회원가입 실패", "양식에 맞게 입력해주세요.");
       }
     }
   };
@@ -286,6 +287,7 @@ export default function JoinPage() {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
+            {/* 우측 상단에 X 버튼 추가 */}
             <h2>{modalContent.title}</h2>
             <p>{modalContent.message}</p>
             {registerType === "customer" ? (

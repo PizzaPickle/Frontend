@@ -17,6 +17,10 @@ import Join from "./pages/LoginPage/join";
 import Mydatajoin from "./pages/mydatajoin/Mydatajoin";
 import TermsPage from "./pages/mydatajoin/Termspage";
 import ProgressPage from "./pages/mydatajoin/ProgressPage";
+';
+import Preset from './pages/pb/presetPage/Preset';
+import CustomerRequest from './pages/pb/customerRequestPage.jsx/CustomerRequest';
+import MyRequest from './pages/myrequest/MyRequest';
 
 export const routers = [
   {
@@ -64,59 +68,69 @@ export const routers = [
       },
     ],
   },
+  	{
+        path: "/myrequest",
+        children: [
+            {
+                index: true,
+                element: <MyRequest />,
+            },
+        ]
+    },
 
 
-	{
-		path: '/consult/backtest',
-		children: [
-			{
-				index: true,
-				element: <BacktestPage />,
-			},
-			{
-				path: 'portfolio',
-				element: <Portfolio />,
-			},
-			{
-				path: 'strategy',
-				element: <Strategy />,
-			},
-		],
-	},
-	{
-		path: '/consulting/realtime-consulting',
-		element: <RealTimeConsulting />,
-		// index: true
-	},
-	{
-		path: '/pb',
-		children: [
-			// {
-			// 	index: true,
-			// 	element: <Preset />,
-			// },
-			// {
-			// 	path: 'preset',
-			// 	element: <Preset />,
-			// }
-		],
-	},
-	
-	// {
-	//     path: "/머있지?",
-	//     element:
-	//     index: true,
-	//     children: [
-	//         {
-	//             path:
-	//             element:
-	//         }
-	//     ]
-	// }
-	{
-		path: '/allmoney',
-		element: <AllMoney />,
-	},
+  {
+    path: "/consult/backtest",
+    children: [
+      {
+        index: true,
+        element: <BacktestPage />,
+      },
+      {
+        path: "portfolio",
+        element: <Portfolio />,
+      },
+      {
+        path: "strategy",
+        element: <Strategy />,
+      },
+    ],
+  },
+  {
+    path: "/consulting/realtime-consulting",
+    element: <RealTimeConsulting />,
+    // index: true
+  },
+  // {
+  //     path: "/머있지?",
+  //     element:
+  //     index: true,
+  //     children: [
+  //         {
+  //             path:
+  //             element:
+  //         }
+  //     ]
+  // }
+
+  //   {
+  //     path: "/pb",
+  //     children: [
+  //       {
+  //         index: true,
+  //         element: <Preset />,
+  //       },
+  //       {
+  //         path: "preset",
+  //         element: <Preset />,
+  //       },
+  //     ],
+  //   },
+
+  {
+    path: "/allmoney",
+    element: <AllMoney />,
+  },
 
 ];
 

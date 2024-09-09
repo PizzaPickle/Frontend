@@ -87,3 +87,26 @@
 .signup-link:hover {
   text-decoration: underline;
 }
+
+.modal-close-btn2:hover {
+  color: red; /* 마우스 오버 시 색상 변경 */
+}
+
+/* 토스트 알림 스타일 */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  background-color: #f44336; /* 실패 알림 배경색 (빨간색) */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+  opacity: 1;
+}
