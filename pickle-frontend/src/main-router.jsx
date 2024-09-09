@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import TestPage from "./routes/test/TestPage";
+// import TestPage from "./routes/test/TestPage";
 import AllMoney from "./components/common/mydata/allmoney/AllMoney";
 import HomePage from "./pages/homepage/HomePage";
 import Mydata from "./pages/mydata/Mydata";
@@ -11,14 +11,14 @@ import RealTimeConsulting from "./pages/RealtimeConsulting/RealtimeConsulting";
 import Pblist from "./pages/pblistpage/Pblist";
 import Request from "./pages/requestpage/Request";
 import RequestMydata from "./pages/requestpage/RequestMydata";
-import React from "react";
+// import React from "react";
 import Login from "./pages/LoginPage/Login";
 import Join from "./pages/LoginPage/join";
 import Mydatajoin from "./pages/mydatajoin/Mydatajoin";
 import TermsPage from "./pages/mydatajoin/Termspage";
 import ProgressPage from "./pages/mydatajoin/ProgressPage";
-import Preset from "./pages/pb/presetPage/Preset";
-import CustomerRequest from "./pages/pb/customerRequestPage.jsx/CustomerRequest";
+// import Preset from "./pages/pb/presetPage/Preset";
+// import CustomerRequest from "./pages/pb/customerRequestPage.jsx/CustomerRequest";
 import MyRequest from "./pages/myrequest/MyRequest";
 
 export const routers = [
