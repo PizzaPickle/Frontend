@@ -8,14 +8,17 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
-    build: {
-      outDir: "build/dist",
-    },
     plugins: [
       react({
         jsxRuntime: "classic",
       }),
     ],
+    build: {
+        outDir: 'build/dist',
+        rollupOptions: {
+            input: 'index.html',
+        },
+    },
     define: {
       //   "process.env": process.env,
       "import.meta.env": {
