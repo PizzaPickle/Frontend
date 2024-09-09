@@ -68,16 +68,15 @@ export const routers = [
       },
     ],
   },
-  	{
-        path: "/myrequest",
-        children: [
-            {
-                index: true,
-                element: <MyRequest />,
-            },
-        ]
-    },
-
+  {
+    path: "/myrequest",
+    children: [
+      {
+        index: true,
+        element: <MyRequest />,
+      },
+    ],
+  },
 
   {
     path: "/consult/backtest",
@@ -140,7 +139,6 @@ export const routers = [
     path: "/allmoney",
     element: <AllMoney />,
   },
-
 ];
 
 const router = createBrowserRouter(routers);

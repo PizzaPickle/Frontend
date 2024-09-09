@@ -37,10 +37,34 @@ export default function ProgressPage() {
       {!isComplete ? (
         <div className="loading-container">
           <header className="logo">
-            <p>피클 로고</p>
+            <p
+              className="tag"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              피클 로고
+            </p>
           </header>
           <p>금융기관 및 기관의 상세정보를 연결하고 있습니다...</p>
-          <div className="progress-box">
+          <div
+            className="progress-box"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "150px",
+              height: "200px",
+              border: "1px solid #ddd",
+              borderRadius: "10px",
+              backgroundColor: "#f9f9f9",
+              margin: "0 auto" /* 수평 중앙 정렬 */,
+            }}
+          >
             <div className="spinner" />
             <p>{progress}%</p>
           </div>

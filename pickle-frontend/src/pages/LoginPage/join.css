@@ -1,6 +1,6 @@
 
 /* 배경과 레이아웃 설정 */
-.register-container {
+.register2-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@
   background: linear-gradient(to bottom, #e0f7fa, #ffffff);
 }
 
-.register-title {
+.register2-title {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #333;
@@ -41,7 +41,7 @@
 }
 
 /* 입력 폼 스타일 */
-.register-form {
+.register2-form {
   background: #fff;
   padding: 30px;
   border-radius: 10px;
@@ -50,12 +50,12 @@
   max-width: 400px;
 }
 
-.form-group {
+.form2-group {
   /* display: flex; */
   justify-content: space-between;
 }
 
-.register-input {
+.register2-input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -64,12 +64,12 @@
   box-sizing: border-box;
 }
 
-.register-input:focus {
+.register2-input:focus {
   outline: none;
   border-color: #6200ea;
 }
 
-.register-btn {
+.register2-btn {
   width: 100%;
   padding: 10px;
   background-color: #2962ff;
@@ -80,66 +80,8 @@
   font-size: 1rem;
 }
 
-.register-btn:hover {
+.register2-btn:hover {
   background-color: #0039cb;
-}
-/* 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  z-index: 1000 !important;
-}
-
-.modal-content {
-  background-color: white !important;
-  padding: 20px !important;
-  border-radius: 8px !important;
-  text-align: center !important;
-  width: 300px !important;
-}
-
-.modal-content h2 {
-  margin-bottom: 10px !important;
-}
-
-.modal-content p {
-  margin-bottom: 20px !important;
-} */
-
-/* .modal-content button {
-  padding: 10px 20px !important;
-  background-color: #007bff !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 5px !important;
-  cursor: pointer !important;
-  margin-top: 10px !important; 
-  display: block !important; 
-  width: 100%; 
-} */
-
-.modal-content button:hover {
-  background-color: #0056b3 !important;
 }
 .error-text {
   color: red;

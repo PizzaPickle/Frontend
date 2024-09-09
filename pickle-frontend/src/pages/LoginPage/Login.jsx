@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { customerToken } from "../../api/customerApi";
 import { pbToken } from "../../api/PBApi";
+import { Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const [loginType, setLoginType] = useState("customer");
@@ -17,6 +20,7 @@ export default function Login() {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({ title: "", message: "" });
 
+  const dispatch = useDispatch(); // Redux의 dispatch 함수 가져오기
   const handleJoinPageRedirect = () => {
     navigate("/joinpage"); // 'joinpage'로 이동
   };
@@ -30,7 +34,7 @@ export default function Login() {
     setLoginType(type);
     if (type === "customer") {
       setFormData({
-        userId: "",
+        userid: "",
         password: "",
       });
     } else if (type === "pb") {
@@ -50,7 +54,7 @@ export default function Login() {
     if (loginType === "customer") {
       console.log(formData)
       try {
-        const response = await customerToken(formData);
+        const response = await customerToken(formData, dispatch);
         if (response.success) {
           // 성공 시 모달 창 표시
           showModalWindow("로그인 성공", "로그인이 성공적으로 완료되었습니다.");
@@ -66,7 +70,7 @@ export default function Login() {
       }
     } else if (loginType === "pb") {
       try {
-        const response = await pbToken(formData);
+        const response = await customerToken(formData, dispatch);
         if (response.success) {
           // 성공 시 모달 창 표시
           showModalWindow("로그인 성공", "로그인이 성공적으로 완료되었습니다.");
@@ -82,6 +86,8 @@ export default function Login() {
       }
     }
   };
+
+  const handleClose = () => setShowModal(false); // 모달을 닫는 함수
 
   // 모달 창을 띄우는 함수
   const showModalWindow = (title, message) => {
@@ -121,8 +127,8 @@ export default function Login() {
             <input
               type="text"
               placeholder="아이디"
-              name="userId"
-              value={formData.userId}
+              name="userid"
+              value={formData.userid}
               onChange={handleInputChange}
               className="login-input"
             />
@@ -164,24 +170,26 @@ export default function Login() {
       </p>
 
       {/* 로그인 성공 시 모달 */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>{modalContent.title}</h2>
-            <p>{modalContent.message}</p>
-            {modalContent.title === "로그인 성공" &&
-              (loginType === "customer" ? (
-                <button onClick={handleHomePageRedirect}>
-                  피클 홈화면으로 가기
-                </button>
-              ) : (
-                <button onClick={handleJoinPageRedirect}>
-                  요청서 페이지로 이동
-                </button>
-              ))}
-          </div>
-        </div>
-      )}
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalContent.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{modalContent.message}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          {modalContent.title === "로그인 성공" &&
+            (loginType === "customer" ? (
+              <Button variant="primary" onClick={handleHomePageRedirect}>
+                피클 홈화면으로 가기
+              </Button>
+            ) : (
+              <Button variant="primary" onClick={handleJoinPageRedirect}>
+                요청서 페이지로 이동
+              </Button>
+            ))}
+        </Modal.Footer>
+      </Modal>
 
       {/* 로그인 실패 시 작은 알림 (토스트) */}
       {showToast && (

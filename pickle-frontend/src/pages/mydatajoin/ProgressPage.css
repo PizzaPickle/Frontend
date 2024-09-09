@@ -16,22 +16,31 @@
   font-size: 24px;
 }
 
-.loading-container,
-.complete-container {
+.loading-container .completion-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 컨테이너를 전체 화면 높이로 설정 */
   text-align: center;
 }
+
+/* .progress {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+} */
 
 .progress-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   width: 150px;
   height: 200px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  margin-top: 20px;
-  margin-left: 120px;
   background-color: #f9f9f9;
 }
 
