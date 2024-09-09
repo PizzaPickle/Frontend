@@ -25,7 +25,7 @@ export default function Sidebar() {
                 <Link to="/pblist" style={{ textDecoration: 'none' }}>
                 <section><img src="/assets/side-pb.svg" className="icon"></img><span style={{color: "#6F6C99"}}>PB 둘러보기</span></section>
                 </Link>
-                <section style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</section>
+                <Link to="/myrequest" style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</Link>
                 </StyledSideTextGroup>
                 <Link to="/" style={{ textDecoration: 'none' }}>
                 <StyledSideText><img src="/assets/side-room.svg" className="icon"></img><span>실시간 상담룸</span></StyledSideText>

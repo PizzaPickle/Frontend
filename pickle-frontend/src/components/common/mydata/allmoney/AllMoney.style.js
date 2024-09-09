@@ -8,27 +8,27 @@ export const Container = styled.div`
     padding-left: ${(props) => props.padding || '24px'}; 
     padding-right: ${(props) => props.padding || '24px'}; 
     border-radius: 16px;
+    gap: ${(props) => props.gap || '0px'};
     
     display: flex;
-    align-items: end;
+    flex-direction: column;
+    align-items: flex-start;
     padding-bottom: 40px;
 `;
 
-// export const BankInfo = styled.p`
-//     background-color:#F1F5FF;
-//     display:flex;
-//     gap:20px;
-//     padding: 10px;
-//     align-items: self-end;
-//     color: #020050;
-//     font-size: 14px;
-//     margin-bottom: 21px;
+export const BankInfo = styled.p`
+    visibility: ${(props) => props.infoVisible || 'visible'}; ;
+    display:flex;
+    gap:20px;
+    padding: 10px;
+    align-items: center;
+    color: #020050;
+    font-size: 14px;
     
-// `;
+`;
 
 export const BankTitle = styled.span`
-    background-color:#F1F5FF;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #020050;
     
@@ -36,7 +36,6 @@ export const BankTitle = styled.span`
 `;
 
 export const BankAmount = styled.span`
-    background-color:#F1F5FF;
 `;
 
 export const BalanceContainer = styled.div`
@@ -46,22 +45,17 @@ export const BalanceContainer = styled.div`
 `;
 
 export const BalanceRow = styled.div`
-   background-color:#F1F5FF;
    gap:10px;
    display: flex;
-
 
 `;
 
 export const Label = styled.span`
-   background-color:#F1F5FF;
 `;
 
 export const Amount = styled.span`
-   background-color:#F1F5FF;
 `;
 export const BodyContainer=styled.div`
-  background-color: #F1F5FF;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -72,8 +66,8 @@ export const BodyContainer=styled.div`
 
 `;
 export const SliderContainer = styled.div`
-  background-color: #F1F5FF;
   
+
   .slick-prev:hover:before,
   .slick-next:hover:before {
     color: #0032B7;
@@ -101,8 +95,28 @@ export const SliderContainer = styled.div`
   }
   .slick-list{
     width: ${(props) => props.listWidth|| '480px'}; 
-    background-color: #F1F5FF;
-  }  
+  }
+  
+  .slick-slide > div > div > div {
+  box-shadow: 0 0.4rem 1rem rgba(6, 47, 86, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); /* 자연스러운 움직임을 위한 커스텀 베지어 */
+}
+
+.slick-slide > div > div > div:hover {
+  transform: scale(1.05); /* scale 속성은 transform에서 사용해야 함 */
+  box-shadow: 0 0.5rem 1rem rgba(6, 47, 86, 0.09); /* 호버 시 box-shadow 효과 강화 */
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); /* 부드러운 확장 애니메이션 */
+}
+  .slick-list {
+  box-sizing: initial;
+  padding: 25px 0px;
+}
+.slick-prev::before,
+.slick-next::before {
+  content: '';           /* 기본 화살표를 숨김 */
+}
+
+  
 `;
 
 export const Slide = styled.div`
@@ -153,5 +167,6 @@ export const CurrentBalance = styled.div`
     background-color:#FFFFFF;
     font-size:  ${(props) => props.lastTextSize || '14px'};
     color: ${(props) => props.lastTextColor || '#202224'}; 
+    white-space: pre-wrap;
 `;
 

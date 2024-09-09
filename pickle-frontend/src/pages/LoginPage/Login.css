@@ -1,0 +1,112 @@
+/* 배경과 레이아웃 설정 */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+}
+
+.login-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* 탭 버튼 스타일 */
+.login-toggle {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #f0f0f0;
+  color: #555;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+}
+
+.toggle-btn.active {
+  background-color: #d7c1ff;
+  color: #000;
+}
+
+.toggle-btn:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* 입력 폼 스타일 */
+.login-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #6200ea;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2962ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.login-btn:hover {
+  background-color: #0039cb;
+}
+
+/* 회원가입 링크 */
+.signup-link {
+  margin-top: 20px;
+  color: #6200ea;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+.modal-close-btn2:hover {
+  color: red; /* 마우스 오버 시 색상 변경 */
+}
+
+/* 토스트 알림 스타일 */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  background-color: #f44336; /* 실패 알림 배경색 (빨간색) */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+  opacity: 1;
+}

@@ -6,8 +6,102 @@ import WalletCard from "../../components/common/wallet-card/WalletCard";
 import { AllMoneyTitle, StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard, StyledAllMoneyContainer } from "./HomePage.style";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, logoutUser } from "../../store/reducers/user";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function HomePage(){    
+    // 계좌에 든 게 없어서 .. ui 화면을 위해 초기값 넣어둘게요
+    const [walletData, setWalletData] = useState({
+        accountId: 123,
+	    accountNumber: "123-456789-01-001",
+	    balance: 49900, //예수금
+	    totalAmount: 23482000, //총매입금액
+});
+    const [productData, setProductData] = useState(
+        [
+            {
+                "accountId": 12341243,
+                "productName": "삼성전자",
+                "productCode": "005930",
+                "heldQuantity": 34, 
+                "purchaseAmount": 34,
+                "evaluationAmount": 78900, //평가금액
+                "profitAmount": 75600, //(평가)손익금액
+                "profitMargin": 0.35,
+                "categoryName": "국내주식", 
+                "themeName": "반도체"
+            },
+            {
+                "accountId": 1234513,
+                "productName": "Apple",
+                "productCode": "APPL",
+                "heldQuantity": 34,
+                "purchaseAmount": 34,
+                "evaluationAmount": 78900,
+                "profitAmount": 75600,
+                "profitMargin": 2.34,
+                "categoryName": "해외주식",
+                "themeName": "IT"
+            }
+        ]        
+    );
+
+    // TODO 투자여유금액 계산 API 요청
+    const possibleAmount = 23325234;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-asset', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+
+                const result = await response.json();
+
+                setWalletData(result.data);
+
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-products', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+    
+                const result = await response.json();
+                setProductData(result.data);
+    
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+    
+        fetchProductData();
+    }, []);
+
     
     //TODO
     const consultPB = "윤재욱";
@@ -16,6 +110,7 @@ export default function HomePage(){
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
     const userName = useSelector((state) => state.user.name);
+    const { token } = useSelector((state) => state.user); 
 
     const now = new Date();
     const consultDate = new Date(); //!! 상담일자로 변경해야 함
@@ -29,8 +124,8 @@ export default function HomePage(){
 
 
     //내 자산 지갑
-    const walletTexts = ["내 포트폴리오 자산", "총 자산", "투자 여유 금액"]
-    const walletAmounts = [7532220, 254032350, 12321200]
+    const walletTexts = ["내 잔액", "총 매입금액", "투자여유금액"]
+    const walletAmounts = [walletData.accountNumber,walletData.balance,walletData.totalAmount,possibleAmount]
 
     const slidesData = [
         {
@@ -51,7 +146,8 @@ export default function HomePage(){
     ];
 
     const balanceInfoData = [
-        
+        { label: "none ", amount: " none" },
+        { label: "none ", amount: " none" },
     ];
 
     return (
@@ -96,15 +192,17 @@ export default function HomePage(){
                      나의 투자 현황을 살펴보세요.
                     </StyledHead2Text>
                     
-                    <StyledContentFlex>
+                    <StyledContentFlex style={{alignItems:"center"}}>
                         <WalletCard texts={walletTexts} amounts={walletAmounts} />
                         <StyledAllMoneyContainer>
                             <AllMoneyTitle>내 포트폴리오 수익률
                                 <div>+5.1%</div>
                             </AllMoneyTitle>
                             <AllMoney 
+                            gap={"15px"}
+                            infoVisible={"hidden"}
                                 maxWidth={"1000px"}
-                                height={"230px"}
+                                height={"250px"}
                                 padding={"50px"}
                                 showNum={3}
                                 balanceInfo={balanceInfoData}
@@ -113,6 +211,7 @@ export default function HomePage(){
                                 cardWidth={"200px"}
                                 lastTextSize={"large"}
                                 lastTextColor={"#FF5C00"} /* TODO 데이터에 따라 수정 필요 */
+                                auto={"true"}
                             />
                         </StyledAllMoneyContainer>
                     </StyledContentFlex>
