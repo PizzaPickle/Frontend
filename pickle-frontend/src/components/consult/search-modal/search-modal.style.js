@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SearchContainer = styled.div`
   padding: 0 10%;
   position: relative;
-  height: 75vh;
+  height: 70vh;
   padding-top: ${({ padding }) => padding || "0"};
 `;
 

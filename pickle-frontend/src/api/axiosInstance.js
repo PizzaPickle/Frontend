@@ -8,5 +8,14 @@ const axiosDefault = () => {
     return instance;
 } 
 
+const axiosBacktest = () => {
+    const instance = axios.create({
+        baseURL: process.env.REACT_APP_BACKTEST_REQUEST_URL,
+        // withCredentials: true,
+    })
+    return instance;
+}
+
 
 export const defaultInstance = axiosDefault();
+export const backtestInstance = axiosBacktest();
