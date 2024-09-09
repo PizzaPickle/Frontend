@@ -1,4 +1,6 @@
 import { defaultInstance } from "./axiosInstance";
+import { useDispatch } from "react-redux"; // Redux 훅 import
+import { setPbToken, setPbUser } from "../store/reducers/pbuser"; // 액션 import
 
 export const pbJoin = async (formData) => {
   try {
@@ -13,7 +15,7 @@ export const pbJoin = async (formData) => {
   }
 };
 
-export const pbToken = async (formData) => {
+export const pbToken = async (formData, dispatch) => {
   try {
     const response = await defaultInstance.post(
       `/api/pickle-pb/token`,
@@ -25,6 +27,9 @@ export const pbToken = async (formData) => {
 
       localStorage.setItem("accessToken", token);
       console.log(localStorage);
+
+      // Redux 스토어에 토큰 저장
+      dispatch(setPbToken({ token })); // 또는 setUser로 유저 정보와 함께 저장 가능
 
       return { success: true, token };
     } else {

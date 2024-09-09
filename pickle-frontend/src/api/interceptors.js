@@ -9,7 +9,7 @@ defaultInstance.interceptors.request.use(
     console.log(accessToken + "22"); // 토큰 확인
 
     if (accessToken) {
-      config.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      config.headers.common["Authorization"] = `${accessToken}`;
     }
     return config;
   },
