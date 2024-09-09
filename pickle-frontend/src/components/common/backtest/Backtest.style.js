@@ -10,6 +10,7 @@ export const StyledGraphDiv = styled.div`
   border-radius: 7px;
   border: 1px solid rgba(201, 201, 201, 0.5);
   width: ${(props) => props.width || "800px"};
+  margin-bottom: 10px;
 
   section {
     display: flex;
