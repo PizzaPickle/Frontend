@@ -111,6 +111,8 @@ export default function JoinPage() {
       !errors.phoneNumber
     ) {
       try {
+        console.log(formData)
+
         if (registerType === "customer") {
           const response = await customerJoin(formData);
           showModalWindow(

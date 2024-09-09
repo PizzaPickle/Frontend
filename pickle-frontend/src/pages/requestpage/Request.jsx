@@ -11,6 +11,7 @@ import { Modal } from "react-bootstrap";
 import axios from 'axios';
 
 export default function Request() {
+
   const navigate = useNavigate();
   const [showNavModal, setShowNavModal] = useState(false);
   const { token } = useSelector((state) => state.user); 
@@ -61,6 +62,8 @@ export default function Request() {
 
   const selectedPb = useSelector((state) => state.pb.selectedPb);
   const selectedDate = useSelector((state) => state.date.selectedDate);
+  
+  const mydataURL = useSelector((state)=>state.mydataURL.mydataURL);
   const userName = useSelector((state) => state.user.name);
   const formatCurrency = (amount) => {
     return amount.toLocaleString() + '원';
@@ -106,7 +109,7 @@ export default function Request() {
 
   const handleGenderSelect = (index) => {
     setGender(index);
-    consultText.log("성별",index)
+    console.log("성별",index)
   }
 
   
@@ -218,16 +221,17 @@ export default function Request() {
         desiredInvestAmount: convertStringToInt(investPrice),
         monthlyIncome: parseInt(income),
         customerInfo: {
-          customerAge: age,
+          customerAge: parseInt(age),
           customerGender: gender,
           customerJob: job,
         },
         pbInfo: {
+          image: "pb-image",
           pbNumber: selectedPb.pbNumber,
           name: selectedPb.username,
           branchOffice: selectedPb.branchOffice
         },
-        referenceFileUrl: "S3 URL",
+        referenceFileUrl: mydataURL,
       };
       
       try {

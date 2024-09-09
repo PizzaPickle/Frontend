@@ -61,6 +61,7 @@ export const StyledContentBlock = styled.div`
 	color: ${({ theme }) => theme.colors.navy};
 	border-radius: 16px;
 	background-color: ${({ theme }) => theme.colors.background_deep};
+	margin-bottom:70px;
 `;
 
 export const StyledS1Text = styled.div`

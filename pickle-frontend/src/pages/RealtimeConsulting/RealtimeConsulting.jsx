@@ -20,7 +20,7 @@ import {
 } from './RealtimeConsulting.style';
 
 const SOCKET_SERVER_URL = 'http://localhost:3000';
-const API_BASE_URL = 'http://localhost:3000/api';
+// const API_BASE_URL = 'http://localhost:3000/api';
 
 const RealtimeConsultingRoom = () => {
 	const userId = useSelector((state) => state.user?.id) || 'soo';
@@ -91,7 +91,7 @@ const RealtimeConsultingRoom = () => {
 		// 동적으로 폼을 생성
 		const form = document.createElement('form');
 		form.method = 'POST';
-		form.action = `${API_BASE_URL}/consulting-room/${roomId}`;
+		form.action = `api/consulting-room/${roomId}`;
 		form.target = `consultingRoom_${roomId}`; // 새 창의 이름 설정
 
 		// roomId 필드 생성

@@ -40,12 +40,18 @@ export default defineConfig({
 			rewrite: (path) => path.replace(/^\/api\/mydata/, '/api/mydata'),
 			},
         "/api/pickle-customer": {
-        target: "http://localhost:8080",
+        target: "http://localhost:8081",
         changeOrigin: true,
         secure: false, // HTTPS일 경우에도 사용할 수 있음
         followRedirects: true, // 리디렉션 따르기
         rewrite: (path) =>
           path.replace(/^\/api\/pickle-customer/, "/api/pickle-customer"),
+      },
+	  "/api/consulting-room": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        secure: false, // HTTPS일 경우에도 사용할 수 있음
+        followRedirects: true, // 리디렉션 따르기
       },
 		},
 	},

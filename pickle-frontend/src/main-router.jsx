@@ -17,10 +17,10 @@ import Join from "./pages/LoginPage/join";
 import Mydatajoin from "./pages/mydatajoin/Mydatajoin";
 import TermsPage from "./pages/mydatajoin/Termspage";
 import ProgressPage from "./pages/mydatajoin/ProgressPage";
-';
 import Preset from './pages/pb/presetPage/Preset';
 import CustomerRequest from './pages/pb/customerRequestPage.jsx/CustomerRequest';
 import MyRequest from './pages/myrequest/MyRequest';
+import DetailRequest from "./pages/pb/customerRequestPage.jsx/DetailRequest";
 
 export const routers = [
   {
@@ -113,19 +113,28 @@ export const routers = [
   //     ]
   // }
 
-  //   {
-  //     path: "/pb",
-  //     children: [
-  //       {
-  //         index: true,
-  //         element: <Preset />,
-  //       },
-  //       {
-  //         path: "preset",
-  //         element: <Preset />,
-  //       },
-  //     ],
-  //   },
+    {
+      path: "/pb",
+      children: [
+        {
+          index: true,
+          element: <Preset />,
+        },
+        {
+          path: "customer-request",
+          children: [
+            {
+              index: true,
+              element: <CustomerRequest />,
+            },
+            {
+              path: ":id", // 동적 경로 세그먼트 추가
+              element: <DetailRequest />,
+            },
+          ],
+        },
+      ],
+    },
 
   {
     path: "/allmoney",

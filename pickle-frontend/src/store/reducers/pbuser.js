@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     id: null,
-    name: "윤재욱", // TODO 변경
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NyIsImlhdCI6MTcyNTUwNzE4MSwiZXhwIjoxNzI1NTEwNzgxfQ.4asZdVJV5Gv-rXo-3ctPBc5mCO5Myb47V_aiETIAGgY", 
+    name: "김가언", // TODO 변경
+    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsImlhdCI6MTcyNTg3MDA4NiwiZXhwIjoxNzI1ODczNjg2fQ.KPQLd2sY4CnYrOoBYI2Q5-OS96Xh8BncrJDUiijPa_U", 
 };
 
-const userSlice = createSlice({
+const pbuserSlice = createSlice({
     name: "pbuser",
     initialState: initialState,
     reducers: {
@@ -33,6 +33,6 @@ export const {
     setPbUser,
     logoutPbUser,
     setPbToken, 
-} = userSlice.actions;
+} = pbuserSlice.actions;
 
-export default userSlice.reducer;
+export default pbuserSlice.reducer;

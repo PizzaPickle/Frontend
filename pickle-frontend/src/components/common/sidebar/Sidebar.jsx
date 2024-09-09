@@ -7,17 +7,17 @@ export default function Sidebar() {
         <>
         <StyledSideDiv>
             <StyledSideContent>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/homepage" style={{ textDecoration: 'none' }}>
                 <StyledSideText><img src="/assets/side-home.svg" className="icon"></img><span>홈</span></StyledSideText>
                 </Link>
                 <Link to="/mydata" style={{ textDecoration: 'none' }}>
                 <StyledSideText><img src="/assets/side-mydata.svg" className="icon"></img><span>마이 자산데이터</span></StyledSideText>
                 </Link>
                 <StyledSideTextGroup>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/homepage" style={{ textDecoration: 'none' }}>
                 <section><img src="/assets/side-port.svg" className="icon"></img><span style={{color: "#6F6C99"}}>내 포트폴리오</span></section>
                 </Link>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/homepage" style={{ textDecoration: 'none' }}>
                 <section style={{"font-size": "small", "margin-left": "30px", color: "#6F6C99"}}>전략 관리</section>
                 </Link>
                 </StyledSideTextGroup>
@@ -27,7 +27,7 @@ export default function Sidebar() {
                 </Link>
                 <Link to="/myrequest" style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</Link>
                 </StyledSideTextGroup>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/homepage" style={{ textDecoration: 'none' }}>
                 <StyledSideText><img src="/assets/side-room.svg" className="icon"></img><span>실시간 상담룸</span></StyledSideText>
                 </Link>
 

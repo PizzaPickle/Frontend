@@ -8,8 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser, logoutUser } from "../../store/reducers/user";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function HomePage(){    
+    const [requestNum,setRequestNum] = useState(0);
+
     // 계좌에 든 게 없어서 .. ui 화면을 위해 초기값 넣어둘게요
     const [walletData, setWalletData] = useState({
         accountId: 123,
@@ -49,63 +52,9 @@ export default function HomePage(){
     // TODO 투자여유금액 계산 API 요청
     const possibleAmount = 23325234;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/pickle-customer/my-asset', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('네트워크 에러');
-                }
-
-                const result = await response.json();
-
-                setWalletData(result.data);
-
-            } catch (error) {
-                console.error("fetch 실패: ", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        const fetchProductData = async () => {
-            try {
-                const response = await fetch('/api/pickle-customer/my-products', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-    
-                if (!response.ok) {
-                    throw new Error('네트워크 에러');
-                }
-    
-                const result = await response.json();
-                setProductData(result.data);
-    
-            } catch (error) {
-                console.error("fetch 실패: ", error);
-            }
-        };
-    
-        fetchProductData();
-    }, []);
-
     
     //TODO
     const consultPB = "윤재욱";
-    const consultReqNum = 3;
 
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
@@ -150,6 +99,95 @@ export default function HomePage(){
         { label: "none ", amount: " none" },
     ];
 
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-asset', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+
+                const result = await response.json();
+
+                setWalletData(result.data);
+
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+
+        fetchData();
+    }, [token]);
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-products', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+    
+                const result = await response.json();
+                setProductData(result.data);
+    
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+    
+        fetchProductData();
+    }, [token]);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`/api/pickle-common/consulting/customer/request-letters?status=1`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.log(`네트워크 응답이 올바르지 않습니다: ${errorText}`);
+              setError("서버 응답 오류");
+              return;
+            }
+    
+            const result = await response.json();
+    
+            setRequestNum(result.data.length);
+            console.log(result.data.length);
+    
+    
+          } catch (error) {
+            console.log("데이터 요청 실패:", error.message);
+            setError(error.message);
+          }
+        };
+    
+        fetchData();
+    
+      }, [token]);
+
+
     return (
         <StyledHomeContainer>
             <Header />
@@ -179,8 +217,8 @@ export default function HomePage(){
                         <StyledContentBlock>
                             <StyledS1Text>
                                     <div>내가 보낸 요청</div>
-                                    <span><div>{consultReqNum}건</div></span>                               
-                                    <img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img>
+                                    <span><div>{requestNum}건</div></span>                               
+                                    <Link to="/myrequest"><img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img></Link>
                             </StyledS1Text>
                         </StyledContentBlock>
                         </article>
@@ -225,25 +263,31 @@ export default function HomePage(){
                         </StyledHead2Text>
                         <StyledContentFlex>                        
                             <StyledPbCard>
+                                <Link to={'/pblist'}>
                                 <div>
                                 ETF잘알<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb1.svg"></img>
+                                </Link>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#FFDF6F"}}>
+                                <Link to={'/pblist'}>
                                 <div>
                                 국장 전문<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb2.svg"></img>
+                                </Link>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#F8ADFF"}}>
+                                <Link to={'/pblist'}>
                                 <div>
                                 미장 전문<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb3.svg"></img>
+                                </Link>
                             </StyledPbCard>
                         </StyledContentFlex>
                     </StyledHomeSection>
