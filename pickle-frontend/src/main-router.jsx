@@ -98,19 +98,7 @@ export const routers = [
   {
     path: "/consulting/realtime-consulting",
     element: <RealTimeConsulting />,
-    // index: true
   },
-  // {
-  //     path: "/머있지?",
-  //     element:
-  //     index: true,
-  //     children: [
-  //         {
-  //             path:
-  //             element:
-  //         }
-  //     ]
-  // }
 
     {
       path: "/pb",
@@ -135,10 +123,6 @@ export const routers = [
       ],
     },
 
-  {
-    path: "/allmoney",
-    element: <AllMoney />,
-  },
 ];
 
 const router = createBrowserRouter(routers);

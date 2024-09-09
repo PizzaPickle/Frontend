@@ -25,14 +25,14 @@ export const customerToken = async (formData, dispatch) => {
 
     if (response.data && response.data.data) {
       const token = response.data.data;
-      console.log(token);
+      console.log("로컬",token);
 
       // 로컬 스토리지에 토큰 저장
       localStorage.setItem("accessToken", token);
 
       // Redux 스토어에 토큰 저장
       dispatch(setToken({ token })); // 또는 setUser로 유저 정보와 함께 저장 가능
-
+      console.log("디스패치 완료")
       return { success: true, token };
     } else {
       throw new Error("로그인 응답 데이터가 유효하지 않음");

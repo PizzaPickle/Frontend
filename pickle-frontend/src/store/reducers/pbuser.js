@@ -6,7 +6,7 @@ const initialState = {
   token: null,
 };
 
-const userSlice = createSlice({
+const pbuserSlice = createSlice({
   name: "pbuser",
   initialState: initialState,
   reducers: {
@@ -29,6 +29,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setPbUser, logoutPbUser, setPbToken } = userSlice.actions;
+export const { setPbUser, logoutPbUser, setPbToken } = pbuserSlice.actions;
 
 export default pbuserSlice.reducer;
