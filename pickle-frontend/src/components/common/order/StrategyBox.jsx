@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { BoxContainer, Header, Title, Content, Line, Body, Row, StockContent, StockContainer } from './StrategyBox.style';
 
 export default function StrategyBox(props) {
-  const { productList, stockIds, inputValue, categoryRatio } = props;
+  const { productList, stockIds, inputValue, categoryRatio, categoryName } = props;
   const [formattedProducts, setFormattedProducts] = useState([]); // useState 초기값으로 빈 배열 설정
   const [productPrices, setProductPrices] = useState({});
   const { token } = useSelector((state) => state.user); // token이 제대로 설정되었는지 확인
@@ -25,22 +25,22 @@ export default function StrategyBox(props) {
           let requestCode = product.code;
 
           // 카테고리별 API URL 설정
-          switch (product.categoryName) {
-            case '국내주식':
-              apiUrl = 'http://3.34.126.55:8081/api/stock/current-price';
+          switch (categoryName) {
+            case '국내':
+              apiUrl = '/api/stock/current-price';
               break;
-            case '해외주식':
-              apiUrl = 'http://3.34.126.55:8081/api/overseas-stock/current-price';
-              requestCode = `R${product.code}`;
+            case '해외':
+              apiUrl = '/api/overseas-stock/current-price';
+              // requestCode = `R${product.code}`;
               break;
             case '채권':
-              apiUrl = 'http://3.34.126.55:8081/api/bond/current-price';
+              apiUrl = '/api/bond/current-price';
               break;
             case 'ETF':
-              apiUrl = 'http://3.34.126.55:8081/api/ETF/current-price';
+              apiUrl = '/api/ETF/current-price';
               break;
             default:
-              apiUrl = 'http://3.34.126.55:8081/api/stock/current-price';
+              apiUrl = '/api/stock/current-price';
               break;
           }
 
@@ -59,7 +59,7 @@ export default function StrategyBox(props) {
             })
             .then(data => ({
               code: product.code,
-              price: data.currentPrice,
+              price: data,
             }));
         });
 
@@ -83,6 +83,7 @@ export default function StrategyBox(props) {
 
   // WebSocket 연결
   useEffect(() => {
+    console.log(stockIds);
     stockIds.forEach(id => {
       if (!wsConnections.current[id]) {
         const ws = new WebSocket('ws://3.34.126.55:8080');
@@ -132,47 +133,47 @@ export default function StrategyBox(props) {
   }, [inputValue, productList, categoryRatio]);
 
   // API 호출
-  useEffect(() => {
-    const sendHeldQuantities = async () => {
-      if (!formattedProducts || formattedProducts.length === 0) return;
-      const heldQuantities = formattedProducts.map(product => ({
-        productCode: product.code,
-        heldQuantity: parseFloat(product.formattedValue.replace(/,/g, '')),
-      }));
+  // useEffect(() => {
+  //   const sendHeldQuantities = async () => {
+  //     if (!formattedProducts || formattedProducts.length === 0) return;
+  //     const heldQuantities = formattedProducts.map(product => ({
+  //       productCode: product.code,
+  //       heldQuantity: parseFloat(product.formattedValue.replace(/,/g, '')),
+  //     }));
 
-      try {
-        const response = await fetch('/api/pickle-customer/trade/quantity', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(heldQuantities),
-        });
+  //     try {
+  //       const response = await fetch('/api/pickle-customer/trade/quantity', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(heldQuantities),
+  //       });
 
-        if (!response.ok) {
-          throw new Error('API 호출 실패');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('API 호출 실패');
+  //       }
 
-        const data = await response.json();
-        const additionalAmounts = data.reduce((acc, item) => {
-          acc[item.productCode] = item.heldAmount;
-          return acc;
-        }, {});
+  //       const data = await response.json();
+  //       const additionalAmounts = data.reduce((acc, item) => {
+  //         acc[item.productCode] = item.heldAmount;
+  //         return acc;
+  //       }, {});
 
-        const updatedProducts = formattedProducts.map(product => ({
-          ...product,
-          additionalAmount: additionalAmounts[product.code] || 0,
-        }));
+  //       const updatedProducts = formattedProducts.map(product => ({
+  //         ...product,
+  //         additionalAmount: additionalAmounts[product.code] || 0,
+  //       }));
 
-        setFormattedProducts(updatedProducts);
-      } catch (err) {
-        console.error('API 호출 에러:', err.message);
-      }
-    };
+  //       setFormattedProducts(updatedProducts);
+  //     } catch (err) {
+  //       console.error('API 호출 에러:', err.message);
+  //     }
+  //   };
 
-    sendHeldQuantities();
-  }, [productList, inputValue, formattedProducts, categoryRatio, token]);
+  //   sendHeldQuantities();
+  // }, [productList, inputValue, formattedProducts, categoryRatio, token]);
 
   const formatNumber = (value) => {
     const [integer, decimal] = value.split('.');
@@ -195,9 +196,11 @@ export default function StrategyBox(props) {
       <Line />
       <Body>
         {formattedProducts.map((product, index) => {
-          const currentPrice = productPrices[product.code] || 1;
-          const amount = (parseFloat(product.formattedValue.replace(/,/g, '')) / currentPrice).toFixed(2);
-          const additionalValue = (product.additionalAmount * currentPrice).toFixed(0);
+          const currentPrice = parseFloat(productPrices[product.code]) === 0 || isNaN(parseFloat(productPrices[product.code])) ? 1 : parseFloat(productPrices[product.code]);
+          console.log(currentPrice);
+          
+          const amount = (parseFloat(product.formattedValue.replace(/,/g, '')) / currentPrice).toFixed(1);
+          const additionalValue = (product.additionalAmount * currentPrice).toFixed(0)||1;
 
           return (
             <Row key={index}>
@@ -205,7 +208,7 @@ export default function StrategyBox(props) {
               <StockContainer><StockContent>{product.myStrategyRatio}%</StockContent></StockContainer>
               <StockContainer><StockContent>{product.ratio}%</StockContent></StockContainer>
               <StockContainer><StockContent>{product.formattedValue}원</StockContent></StockContainer>
-              <StockContainer><StockContent>{amount}주식</StockContent></StockContainer>
+              <StockContainer><StockContent>{amount}주</StockContent></StockContainer>
               <StockContainer><StockContent>{product.additionalAmount}주</StockContent></StockContainer>
               <StockContainer><StockContent>{additionalValue}원</StockContent></StockContainer>
             </Row>
