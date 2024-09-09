@@ -5,8 +5,6 @@ import HomePage from "./pages/homepage/HomePage";
 import Mydata from "./pages/mydata/Mydata";
 import BacktestPage from "./pages/backtestPage/BacktestPage";
 // import Dashboard from "./pages/PB-BacktestPage/Strategy";
-import Portfolio from "./pages/backtestPage/Portfolio";
-import Strategy from "./pages/backtestPage/Strategy";
 import RealTimeConsulting from "./pages/RealtimeConsulting/RealtimeConsulting";
 import Pblist from "./pages/pblistpage/Pblist";
 import Request from "./pages/requestpage/Request";
@@ -17,9 +15,10 @@ import Join from "./pages/LoginPage/join";
 import Mydatajoin from "./pages/mydatajoin/Mydatajoin";
 import TermsPage from "./pages/mydatajoin/Termspage";
 import ProgressPage from "./pages/mydatajoin/ProgressPage";
-import Preset from './pages/pb/presetPage/Preset';
-import CustomerRequest from './pages/pb/customerRequestPage.jsx/CustomerRequest';
-import MyRequest from './pages/myrequest/MyRequest';
+import Preset from "./pages/pb/presetPage/Preset";
+import CustomerRequest from "./pages/pb/customerRequestPage.jsx/CustomerRequest";
+import MyRequest from "./pages/myrequest/MyRequest";
+import CheckMyData from "./pages/backtestPage/Portfolio";
 
 export const routers = [
   {
@@ -67,17 +66,15 @@ export const routers = [
       },
     ],
   },
-  	{
-        path: "/myrequest",
-        children: [
-            {
-                index: true,
-                element: <MyRequest />,
-            },
-        ]
-    },
-
-
+  {
+    path: "/myrequest",
+    children: [
+      {
+        index: true,
+        element: <MyRequest />,
+      },
+    ],
+  },
   {
     path: "/consult/backtest",
     children: [
@@ -87,11 +84,7 @@ export const routers = [
       },
       {
         path: "mydata",
-        element: <Portfolio />,
-      },
-      {
-        path: "strategy",
-        element: <Strategy />,
+        element: <CheckMyData />,
       },
     ],
   },
@@ -100,18 +93,6 @@ export const routers = [
     element: <RealTimeConsulting />,
     // index: true
   },
-  // {
-  //     path: "/머있지?",
-  //     element:
-  //     index: true,
-  //     children: [
-  //         {
-  //             path:
-  //             element:
-  //         }
-  //     ]
-  // }
-
   //   {
   //     path: "/pb",
   //     children: [
@@ -125,12 +106,10 @@ export const routers = [
   //       },
   //     ],
   //   },
-
   {
     path: "/allmoney",
     element: <AllMoney />,
   },
-
 ];
 
 const router = createBrowserRouter(routers);
