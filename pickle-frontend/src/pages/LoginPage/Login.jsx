@@ -52,6 +52,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (loginType === "customer") {
+      console.log(formData)
       try {
         const response = await customerToken(formData, dispatch);
         if (response.success) {

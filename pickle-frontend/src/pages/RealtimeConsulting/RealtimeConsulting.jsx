@@ -20,6 +20,7 @@ import {
     StyledTabContent,
 } from './RealtimeConsulting.style';
 
+
 const API_BASE_URL = 'http://pickle.my/consulting-room';
 
 const RealtimeConsultingRoom = () => {
@@ -256,6 +257,7 @@ const RealtimeConsultingRoom = () => {
             </StyledConsultingMainContent>
         </StyledConsultingContainer>
     );
+
 };
 
 export default RealtimeConsultingRoom;

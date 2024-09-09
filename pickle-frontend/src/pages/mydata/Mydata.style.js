@@ -70,7 +70,7 @@ export const StyledMyBadgeBox = styled.div`
     background-color: white;
     z-index: 100;
     color: #636566;
-
+  }
 
     .badge-info {
         position: absolute;

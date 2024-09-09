@@ -31,4 +31,4 @@ const userSlice = createSlice({
 
 export const { setPbUser, logoutPbUser, setPbToken } = userSlice.actions;
 
-export default userSlice.reducer;
+export default pbuserSlice.reducer;

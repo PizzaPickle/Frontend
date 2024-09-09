@@ -3,9 +3,15 @@ import { StyledHead2Text, StyledHomeContainer, StyledHomeContent, StyledHomeMain
 import Sidebar from "../../../components/common/sidebar/Sidebar";
 import Header from "../../../components/common/header/Header";
 import { StyledRequestButton, StyledRequestListItem, StyledRequestList } from "./CustomerRequest.style";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerRequest() {
-    const [statusFilter, setStatusFilter] = useState("requested");
+    const { token } = useSelector((state) => state.pbuser); 
+    const pbName = useSelector((state)=>state.pb.name);
+    const navigate = useNavigate();
+
+    const [statusFilter, setStatusFilter] = useState(1);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false); 
 
@@ -14,56 +20,15 @@ export default function CustomerRequest() {
     const fetchData = async (status) => {
         setLoading(true); // 로딩중
         try {
-            // const response = await fetch(`/api/pickle-common/consulting/customer/request-letters?status=${status}`); // 서버로 요청
-            // const result = await response.json();
-
-            // TODO 현재 API 개발 전으로 예시 데이터
-            const result = {
-                code: 1,
-                message: "상담 요청 목록 조회 성공",
-                data: [
-                  {
-                    consultingHistoryId: 1234,
-                    requestLetterId: 2,
-                    customerId: "coldegg",
-                    customerName: "메롱",
-                    createdAt: "2024년 5월 9일 11:58",
-                    date: "2024년 9월 8일",
-                    startTime: "오전 10시 00분",
-                    branchOffice: "신한PWM강남센터",
-                    status: "requested",
-                    consultingRejectInfo: null,
-                  },
-                  {
-                    consultingHistoryId: 1234,
-                    requestLetterId: 2,
-                    customerId: "coldegg2",
-                    customerName: "찬란",
-                    createdAt: "2024년 5월 2일 13:58",
-                    date: "2024년 9월 10일",
-                    startTime: "오후 2시 00분",
-                    branchOffice: "신한PWM강남센터",
-                    status: "requested",
-                    consultingRejectInfo: null,
-                  },
-                  {
-                    consultingHistoryId: 1235,
-                    requestLetterId: 3,
-                    customerId: "jaewok",
-                    customerName: "김재욱",
-                    createdAt: "2024년 5월 19일 11:18",
-                    date: "2024년 11월 2일",
-                    startTime: "오후 5시 30분",
-                    branchOffice: "신한PWM강남센터",
-                    status: "rejected",
-                    consultingRejectInfo: {
-                      content: "죄송합니다. 일정이 불가능합니다. 다른 날짜로 예약해주세요.",
-                      createdAt: "생성일시",
-                    },
-                  },
-                ],
-
-            }
+            const response = await fetch(`/api/pickle-common/consulting/pb/request-letters?status=${status}`, {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }); // 서버로 요청
+              console.log(status)
+            const result = await response.json();
+            console.log(result.data)
             setData(result.data); 
         } catch (error) {
             console.error("데이터를 가져오는 중 오류가 발생했습니다.", error);
@@ -74,20 +39,76 @@ export default function CustomerRequest() {
 
     useEffect(() => {
         fetchData(statusFilter);
-    }, [statusFilter]); // statusFilter가 변경될 때마다 url에 requested or rejected를 담아 fetch 요청
+    }, [statusFilter, token]); // statusFilter가 변경될 때마다 url에 requested or rejected를 담아 fetch 요청
 
     const handleRequestedButton = (buttonIndex) => {
         setActiveButton(buttonIndex);
-        setStatusFilter("requested")
+        setStatusFilter(1)
         console.log(activeButton)
       };
 
     const handleRejectedButton = (buttonIndex) => {
     setActiveButton(buttonIndex);
-    setStatusFilter("rejected")
+    setStatusFilter(2)
     console.log(activeButton)
 
     }
+
+    
+    function formatDate(dateTimeString) {
+        const dateObj = new Date(dateTimeString);
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        return `${year}/${month}/${day}`;
+      }
+      
+      // 시간 범위 포맷 함수 (오전/오후 HH:MM - HH:MM 형식으로 반환)
+      function formatTimeRange(dateTimeString) {
+        const dateObj = new Date(dateTimeString);
+      
+        // 시간 포맷 함수 (오전/오후 형식)
+        const formatTime = (hours, minutes) => {
+          const period = hours < 12 ? '오전' : '오후';
+          const adjustedHours = hours % 12 || 12; // 0시를 12시로 변경
+          const formattedMinutes = String(minutes).padStart(2, '0');
+          return `${period} ${adjustedHours}:${formattedMinutes}`;
+        };
+      
+        // 시작 시간 (startTime)
+        const startHours = dateObj.getHours();
+        const startMinutes = dateObj.getMinutes();
+        const startTime = formatTime(startHours, startMinutes);
+      
+        // 30분 더한 종료 시간 (endTime)
+        const endDateObj = new Date(dateObj.getTime() + 30 * 60000); // 30분 추가
+        const endHours = endDateObj.getHours();
+        const endMinutes = endDateObj.getMinutes();
+        const endTime = formatTime(endHours, endMinutes);
+      
+        return `${startTime} - ${endTime}`;
+    }
+
+    const formatWholeDate = (dateString) => {
+        const date = new Date(dateString);
+        
+        // 연, 월, 일 추출
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+        const day = String(date.getDate()).padStart(2, '0');
+
+        // 시간과 분 추출
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}/${month}/${day} ${hours}:${minutes}`;
+        };
+
+
+    const handleReqNav = (id) => {
+        //요청서 상세조회 페이지로 이동
+        navigate(`${id}`);
+        };
 
     return (
         <>
@@ -111,23 +132,25 @@ export default function CustomerRequest() {
                         </button>
                     </StyledRequestButton>
 
-                    {loading && <p>데이터를 가져오는 중입니다...</p>}
+                    {loading && <p>Loading ..</p>}
 
                     <StyledRequestList>
-                        {data.length > 0 ? (
+                        {data? (
                             data.map(item => (
-                                <StyledRequestListItem key={item.consultingHistoryId} className="request-div"
+                                <StyledRequestListItem  id={item.requestLetterId}
+                                onClick={() => handleReqNav(item.requestLetterId)}
+                                key={item.consultingHistoryId} className="request-div"
                                 status={item.status}>
                                     <p id="cust-name"><img src="/assets/customer-reserve.svg"/>{item.customerName} 고객님의 요청 </p>
                                     <div className="detail-box">
-                                    <div className="consult-date"><span>상담요청일</span><p>{item.date}</p></div>
-                                    <div className="consult-time"><span>상담요청시간</span><p> {item.startTime}</p></div>
-                                    <div><span>신청일시</span><p>{item.createdAt}</p></div>
+                                    <div className="consult-date"><span>상담요청일</span><p>{formatDate(item.date)}</p></div>
+                                    <div className="consult-time"><span>상담요청시간</span><p> {formatTimeRange(item.date)}</p></div>
+                                    <div><span>신청일시</span><p>{formatWholeDate(item.createdAt)}</p></div>
                                     </div>
                                 </StyledRequestListItem>
                             ))
                         ) : (
-                            !loading && <p>해당 상태의 데이터가 없습니다.</p>
+                            !loading && <p> 예약을 보낸 고객이 없습니다.</p>
                         )}
                     </StyledRequestList>
                 </StyledHomeContent>
