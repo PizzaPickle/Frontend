@@ -32,7 +32,7 @@ export const StyledHomeMainContent = styled.div`
 export const StyledHomeContent = styled.div`
     width: 100vw;
     height: 100vh;
-    padding: 20px;
+    padding: 40px;
     overflow-y: auto;
 `
 

@@ -1,4 +1,5 @@
 import { BackgroundBar, GaugeBar, PercentText } from "./prgressBar.style";
+import React from "react";
 
 export default function ProgressBar({ ratio }) {
   // console.log(ratio*100);

@@ -4,6 +4,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
 import pbReducer from "./reducers/pbselect";
 import dateReducer from "./reducers/dateselect";
+import strategyReducer from "./reducers/strategy";
 import mydataURLReducer from './reducers/mydataurl';
 
 export const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
     pb: pbReducer,
     date: dateReducer,
     mydataURL: mydataURLReducer,
+    strategy: strategyReducer
 });
 
 const store = configureStore({

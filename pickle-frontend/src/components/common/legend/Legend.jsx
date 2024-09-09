@@ -10,7 +10,6 @@ import React from "react";
 export default function Legend({ category, activate, gap }) {
   const [isHovered, setIsHovered] = useState(false);
   
-
   return (
     <LegendDiv onMouseEnter={() => {
       setIsHovered(true);
