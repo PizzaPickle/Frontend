@@ -131,8 +131,8 @@ export default function BacktestPage() {
 
     await axios
       .post("/api/pickle-common/strategy", {
-        // pbId: userId,
-        pbId: 1,
+        pbId: userId,
+        // pbId: 1,
         customerId: 1,
         consultingHistoryId: 1,
         name: "상담기록 연결하고 테스트3",
