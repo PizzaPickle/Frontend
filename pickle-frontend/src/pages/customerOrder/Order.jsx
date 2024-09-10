@@ -158,12 +158,17 @@ export default function Order() {
           strategyId: 4,  
           totalAmount: parseFormattedNumber(inputValue),  
           productDTOList: data.flatMap(category => 
-            category.productList.map(product => ({
-                
-              productCode: product.code,
-              quantity: amounts[product.code], 
-              amount: stocksPrices[product.code] || 0,  
-            }))
+            category.productList.map(product => {
+              const baseAmount = stocksPrices[product.code] || 0;
+        
+              const amount = category.categoryName === '해외' ? baseAmount * 1350 : baseAmount;
+        
+              return {
+                productCode: product.code,
+                quantity: amounts[product.code],
+                amount: amount,
+              };
+            })
           ),
         };
       

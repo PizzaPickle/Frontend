@@ -19,8 +19,6 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
 
   const currentRatio =  (totalEvaluationAmount / totalEvaluationAmountAllCategories) * 100;
   const profitRatio = ((totalEvaluationAmount - category.totalPurchaseAmount) / category.totalPurchaseAmount) * 100;
-
-  
   function formatNumber(number) {
     const numStr = number.toString();
     const [integerPart, decimalPart] = numStr.split('.');
@@ -48,8 +46,8 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
           {isNaN(profitRatio) ? '0.00' : profitRatio.toFixed(2)}%
           </ProfitRatioText>
           
-          <LegendText>{formatNumber((category.totalPurchaseAmount).toFixed(0))}</LegendText>
-          <LegendText>{formatNumber(totalEvaluationAmount.toFixed(0))}</LegendText>
+          <LegendText>{formatNumber((category.totalPurchaseAmount).toFixed(0))}원</LegendText>
+          <LegendText>{formatNumber(totalEvaluationAmount.toFixed(0))}원</LegendText>
           <LegendText>{isNaN(currentRatio) ? '0.00' : currentRatio.toFixed(2)}%</LegendText>
           <LegendText>{(category.value * 100).toFixed(2)}%</LegendText>
           

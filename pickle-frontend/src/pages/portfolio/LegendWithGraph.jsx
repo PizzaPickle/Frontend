@@ -22,18 +22,24 @@ export default function LegendWithGraph({ data, width, height, top, left, fontSi
     const calculateTotalEvaluationAmount = () => {
       let total = 0;
       data.forEach((category) => {
+        
         let categoryTotal = 0;
         category.productDtos.forEach((product) => {
-          categoryTotal += (stockPrices[product.code] || 1) * product.quantity;
+          let baseTotal=(stockPrices[product.code] || 1) * product.quantity;
+          if (category.id==="해외"){
+            baseTotal=baseTotal*1350;
+          }
+          categoryTotal += baseTotal;
         
         });
         total += categoryTotal;
+       
       });
-      console.log("dd", total);
       return total;
     };
 
     const totalAmount = calculateTotalEvaluationAmount();
+    
     setTotalAllevaluationPrice(totalAmount);
   }, [data, stockPrices]);
  
