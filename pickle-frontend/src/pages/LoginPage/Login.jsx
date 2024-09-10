@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { customerToken } from '../../api/customerApi';
 import { pbToken } from '../../api/PBApi';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
 export default function Login() {
