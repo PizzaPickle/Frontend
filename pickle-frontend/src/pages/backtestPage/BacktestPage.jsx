@@ -22,7 +22,7 @@ import {
   ProductInputButton,
   CreateStrategyBtn,
 } from "./BacktestPage.style";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import profile from "/assets/backtest-profile.svg";
 import { Button, InputGroup, Form, Modal } from "react-bootstrap";
 import Circular from "../../components/common/circular-graph/Circular";
@@ -41,10 +41,13 @@ import { BsSearch } from "react-icons/bs";
 import SearchModal from "../../components/consult/search-modal/SearchModal";
 import { createStrategy, readThemeList } from "../../api/commonApi";
 import SubmitStrategyModal from "../../components/consult/submit-strategy-modal/SubmitStrategyModal";
+import axios from "axios";
 
 export default function BacktestPage() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [activeSearchModal, setActiveSearchModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const data = useSelector((state) => state.strategy.data);
 
@@ -93,18 +96,60 @@ export default function BacktestPage() {
     const fetchThemeList = async () => {
       const response = await readThemeList();
       console.log(response.data.categories);
-      dispatch(setThemeList({categories : response.data.categories}));
+      dispatch(setThemeList({ categories: response.data.categories }));
     };
-    
+
     fetchThemeList();
-  
-    return () => {
-    };
+
+    return () => {};
   }, []);
 
-  const submitStrategy = () => {
-    createStrategy
-  }
+  const userId = useSelector((state) => state.pbuser.id);
+  const token = useSelector(state => state.pbuser.token);
+  const submitStrategy = async () => {
+    // console.log(data);
+    const categoryList = data
+      .filter((category) => {
+        console.log();
+        return 0 < Number(category.value);
+      })
+      .map((category) => {
+        const productList = category.productList.map((product) => {
+          return {
+            ...product,
+            ratio: Number(product.ratio) / 100,
+          };
+        });
+        return {
+          category: category.id,
+          categoryRatio: Number(category.value) / 100,
+          productList: productList,
+        };
+      });
+
+    console.log(categoryList);
+
+    await axios
+      .post("/api/pickle-common/strategy", {
+        pbId: userId,
+        // pbId: 1,
+        customerId: 1,
+        consultingHistoryId: 1,
+        name: "상담기록 연결하고 테스트3",
+        categoryList: categoryList,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        alert("전략 생성에 성공하였습니다!");
+        navigate("/homepage");
+      })
+      .catch((e) => {
+        alert("한번 더 시도해 주십시오");
+      });
+  };
 
   return (
     <>
@@ -197,8 +242,15 @@ export default function BacktestPage() {
                 />
               </StockTableContainer>
               <section className="Bottom"></section>
-              <section className="footer" style={{position: "relative"}}>
-                <CreateStrategyBtn onClick={submitStrategy}>전략 확정</CreateStrategyBtn>
+              <section className="footer" style={{ position: "relative" }}>
+                <CreateStrategyBtn
+                  onClick={() => {
+                    console.log("전략확정!");
+                    submitStrategy();
+                  }}
+                >
+                  전략 확정
+                </CreateStrategyBtn>
               </section>
             </StyledLeftDiv>
           </StyledLeftContent>

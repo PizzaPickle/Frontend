@@ -7,7 +7,6 @@ export default function Preset() {
     
 
     return (
-
         <StyledHomeContainer>
             <Header/>
             <StyledHomeMainContent>                
