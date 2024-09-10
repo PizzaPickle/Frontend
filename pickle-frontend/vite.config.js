@@ -11,21 +11,21 @@ export default defineConfig(({ mode }) => {
             }),
         ],
         build: {
-            chunkSizeWarningLimit: 1000,
             outDir: 'build/dist',
+            chunkSizeWarningLimit: 4096,
             rollupOptions: {
                 output: {
-                    manualChunks(id) {
-                        if (id.includes('node_modules')) {
-                            if (id.includes('react')) {
-                                return 'react-vendor';
-                            }
-                            if (id.includes('lodash')) {
-                                return 'lodash-vendor';
-                            }
-                            return 'vendor';
-                        }
-                    },
+                    // manualChunks(id) {
+                    //     if (id.includes('node_modules')) {
+                    //         if (id.includes('react')) {
+                    //             return 'react-vendor';
+                    //         }
+                    //         if (id.includes('lodash')) {
+                    //             return 'lodash-vendor';
+                    //         }
+                    //         return 'vendor';
+                    //     }
+                    // },
                 },
             },
         },
