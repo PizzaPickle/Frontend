@@ -21,6 +21,7 @@ import Preset from './pages/pb/presetPage/Preset';
 import CustomerRequest from './pages/pb/customerRequestPage/CustomerRequest';
 import MyRequest from './pages/myrequest/MyRequest';
 import DetailRequest from './pages/pb/customerRequestPage/DetailRequest';
+import CheckMyData from './pages/backtestPage/Portfolio';
 
 export const routers = [
     {
@@ -86,13 +87,13 @@ export const routers = [
                 element: <BacktestPage />,
             },
             {
-                path: 'portfolio',
-                element: <Portfolio />,
+                path: 'mydata',
+                element: <CheckMyData />,
             },
-            {
-                path: 'strategy',
-                element: <Strategy />,
-            },
+            // {
+            //     path: 'strategy',
+            //     element: <Strategy />,
+            // },
         ],
     },
     {
