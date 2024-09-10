@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import Header from "../../components/common/header/Header";
-import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHomeSection, StyledHead2Text, StyledContentFlex, StyledContentBlock } from "../homepage/HomePage.style";
+import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHomeSection, StyledHead2Text, StyledContentFlex, StyledContentBlock } from "../homePage/HomePage.style";
 import StrategyList from "../../components/common/strategy/list/StrategyList";
 import StrategyBox from "../../components/common/strategy/box/StrategyBox";
 
