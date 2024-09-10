@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../../components/common/header/Header";
 import Sidebar from "../../../components/common/sidebar/Sidebar";
-import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledContentBlock } from "../../Homepage/HomePage.style";
+import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledContentBlock } from "../../homePage/HomePage.style";
 
 export default function Preset() {
     

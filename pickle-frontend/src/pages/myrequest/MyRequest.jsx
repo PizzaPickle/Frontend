@@ -4,7 +4,7 @@ import {
     StyledHomeContainer,
     StyledHomeContent,
     StyledHomeMainContent,
-} from '../homepage/HomePage.style';
+} from '../homePage/HomePage.style';
 import Header from '../../components/common/header/Header';
 import Sidebar from '../../components/common/sidebar/Sidebar';
 import RequestList from '../../components/common/customer-requset-list/RequestList';

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyledContentBlock, StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../Homepage/HomePage.style";
+import { StyledContentBlock, StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../homePage/HomePage.style";
 import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import html2canvas from "html2canvas";

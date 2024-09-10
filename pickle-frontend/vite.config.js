@@ -9,6 +9,24 @@ export default defineConfig({
 			jsxRuntime: 'classic',
 		}),
 	],
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'react-vendor';
+            }
+            if (id.includes('lodash')) {
+              return 'lodash-vendor';
+            }
+            return 'vendor';
+          }
+        }
+      }
+    }
+  },
 	define: {
 		'process.env': process.env,
 	},
@@ -23,14 +41,19 @@ export default defineConfig({
 			},
 
 			'/api/pickle-customer': {
-				target: 'http://localhost:8080',
+				target: 'http://localhost:8081',
 				changeOrigin: true,
 				secure: false, // HTTPS일 경우에도 사용할 수 있음
 				followRedirects: true, // 리디렉션 따르기
 				rewrite: (path) => path.replace(/^\/pickle-customer/, '/pickle-customer'),
             },
-			
-
+			'/api/pickle-common': {
+				target: 'http://localhost:8081',
+				changeOrigin: true,
+				secure: false, // HTTPS일 경우에도 사용할 수 있음
+				followRedirects: true, // 리디렉션 따르기
+				rewrite: (path) => path.replace(/^\/pickle-customer/, '/pickle-customer'),
+            },
 			'/api/pickle-pb': {
 			target: 'http://localhost:8081',
 			changeOrigin: true,

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/common/header/Header";
-import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledContentBlock } from "../Homepage/HomePage.style";
+import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledContentBlock } from "../homePage/HomePage.style";
 import Sidebar from "../../components/common/sidebar/Sidebar";
-import { StyledHeadText } from "../Homepage/HomePage.style";
+import { StyledHeadText } from "../homePage/HomePage.style";
 import { StyledDateButton, StyledPbSection, StyledPbCard, StyledPbontainer, StyledReserveContainer, StyledPbSelectContainer, StyledFilterImg, StyledFilterResult } from "./pblist.style";
 import { Modal, Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useSelector } from "react-redux";

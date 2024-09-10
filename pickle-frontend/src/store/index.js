@@ -14,7 +14,7 @@ export const rootReducer = combineReducers({
     pb: pbReducer,
     date: dateReducer,
     mydataURL: mydataURLReducer,
-    stockPrices: stockPricesSlice
+    stockPrices: stockPricesSlice,
     strategy: strategyReducer,
     pbuser: pbuserReducer,
 });
