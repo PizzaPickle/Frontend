@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
-import { StyledHomeContainer, StyledContentBlock, StyledHomeMainContent, StyledHeadText, StyledHomeContent, StyledPbCard } from "../Homepage/HomePage.style";
+import { StyledHomeContainer, StyledContentBlock, StyledHomeMainContent, StyledHeadText, StyledHomeContent, StyledPbCard } from "../homePage/HomePage.style";
 import { StyledOptionSelect, StyledRequestBoxDiv, StyledRequestDiv } from "./Request.style";
 import { Button, Form, ModalBody, ModalFooter } from "react-bootstrap";
 import { StyledPbSection } from "../pblistpage/pblist.style";

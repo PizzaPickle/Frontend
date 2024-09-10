@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyledHead2Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent } from "../../Homepage/HomePage.style";
+import { StyledHead2Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent } from "../../homePage/HomePage.style";
 import Sidebar from "../../../components/common/sidebar/Sidebar";
 import Header from "../../../components/common/header/Header";
 import { StyledRequestButton, StyledRequestListItem, StyledRequestList } from "./CustomerRequest.style";
