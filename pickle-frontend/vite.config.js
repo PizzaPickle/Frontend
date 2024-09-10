@@ -12,9 +12,9 @@ export default defineConfig(({ mode }) => {
         ],
         build: {
             outDir: 'build/dist',
+            chunkSizeWarningLimit: 4096,
             rollupOptions: {
                 output: {
-                    chunkSizeWarningLimit: 4096,
                     // manualChunks(id) {
                     //     if (id.includes('node_modules')) {
                     //         if (id.includes('react')) {
