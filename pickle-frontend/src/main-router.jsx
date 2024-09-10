@@ -96,7 +96,7 @@ export const routers = [
         ],
     },
     {
-        path: '/consulting/realtime-consulting',
+        path: '/consulting',
         element: <RealTimeConsulting />,
     },
 
@@ -122,8 +122,8 @@ export const routers = [
             },
             {
                 path: 'create',
-                element: <CreatePresetPage />
-            }
+                element: <CreatePresetPage />,
+            },
         ],
     },
 ];
