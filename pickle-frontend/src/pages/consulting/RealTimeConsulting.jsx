@@ -98,7 +98,7 @@ const RealTimeConsultingRoom = () => {
     useEffect(() => {
         if (activeTab === 'waiting') {
             fetchWaitingRooms();
-            const intervalId = setInterval(fetchWaitingRooms, 30000); // 30초마다 업데이트
+            const intervalId = setInterval(fetchWaitingRooms, 30000);
             return () => clearInterval(intervalId);
         } else if (activeTab === 'history') {
             fetchConsultingHistory();
@@ -106,6 +106,8 @@ const RealTimeConsultingRoom = () => {
     }, [activeTab, fetchWaitingRooms]);
 
     const joinConsultingRoom = (roomId, userName, userId) => {
+        const newWindow = window.open('', `consultingRoom_${roomId}`);
+
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `${API_BASE_URL}/${roomId}`;
@@ -125,9 +127,9 @@ const RealTimeConsultingRoom = () => {
             form.appendChild(input);
         });
 
-        document.body.appendChild(form);
+        newWindow.document.body.appendChild(form);
+
         form.submit();
-        document.body.removeChild(form);
     };
 
     const formatDate = (dateString) => {
