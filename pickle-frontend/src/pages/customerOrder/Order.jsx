@@ -22,6 +22,7 @@ import {StyledHomeMainContent,
         } from "./Order.style";
 import { StyledHomeContainer } from '../homePage/HomePage.style'
 import StrategyBox from '../../components/common/order/StrategyBox';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Order() {
@@ -202,6 +203,8 @@ export default function Order() {
         }
     };
 
+    const navigate = useNavigate();
+
     return (
         <StyledHomeContainer>
             <Header />
@@ -209,7 +212,7 @@ export default function Order() {
                 <Sidebar />
                 <StyledHomeContent>
                 <SecondHeader>
-                    <Previous>
+                    <Previous onClick={() => navigate(-1)}>
                     <ArrowIcon />
                     <StrategyName>중위험 전략</StrategyName>
                     </Previous>
