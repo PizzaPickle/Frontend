@@ -23,7 +23,7 @@ export default function CheckMyData() {
           <StyledConsultSide>
             {[
               { text: "전략 생성", link: "/consult/backtest" },
-              { text: "마이데이터", link: "/consult/backtest/portfolio" },
+              { text: "마이데이터", link: "/consult/backtest/mydata" },
             ].map((item, index) => (
               <LinkWrapper key={index} onClick={() => handleClick(index)}>
                 <HighlightBox visible={selectedIndex === index} />

@@ -32,7 +32,7 @@ export const PercentInput = styled.input`
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 20%;
+  width: 22%;
   font-size: x-small;
   margin: 0;
   color: gray;

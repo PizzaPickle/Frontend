@@ -34,10 +34,13 @@ import {
   addProductInSelectedCategory,
   clearData,
   selectCategory,
+  setThemeList,
 } from "../../store/reducers/strategy";
 import EditableStockTable from "../../components/common/editable-stock-table/EditableStockTable";
 import { BsSearch } from "react-icons/bs";
 import SearchModal from "../../components/consult/search-modal/SearchModal";
+import { createStrategy, readThemeList } from "../../api/commonApi";
+import SubmitStrategyModal from "../../components/consult/submit-strategy-modal/SubmitStrategyModal";
 
 export default function BacktestPage() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -85,6 +88,23 @@ export default function BacktestPage() {
       dispatch(clearData());
     }
   }, [location, dispatch]);
+
+  useEffect(() => {
+    const fetchThemeList = async () => {
+      const response = await readThemeList();
+      console.log(response.data.categories);
+      dispatch(setThemeList({categories : response.data.categories}));
+    };
+    
+    fetchThemeList();
+  
+    return () => {
+    };
+  }, []);
+
+  const submitStrategy = () => {
+    createStrategy
+  }
 
   return (
     <>
@@ -161,7 +181,7 @@ export default function BacktestPage() {
                   </CategoryInfoContainer>
                   {/* 예시용 input임 */}
                   <div onClick={() => setActiveSearchModal(true)}>
-                    <ProductInput placeholder="종목명 혹은 종목코드 입력" />
+                    <ProductInput placeholder="종목명 입력" />
                     <ProductInputButton>
                       <BsSearch
                         color="white"
@@ -178,7 +198,7 @@ export default function BacktestPage() {
               </StockTableContainer>
               <section className="Bottom"></section>
               <section className="footer" style={{position: "relative"}}>
-                <CreateStrategyBtn>전략 확정</CreateStrategyBtn>
+                <CreateStrategyBtn onClick={submitStrategy}>전략 확정</CreateStrategyBtn>
               </section>
             </StyledLeftDiv>
           </StyledLeftContent>
@@ -193,6 +213,7 @@ export default function BacktestPage() {
           setActiveSearchModal={setActiveSearchModal}
         />
       )}
+      <SubmitStrategyModal />
     </>
   );
 }

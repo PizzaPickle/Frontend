@@ -31,7 +31,7 @@ import { defaultInstance } from "./axiosInstance";
 export const pbJoin = async (formData) => {
   try {
     const response = await defaultInstance.post(
-      `/api/pickle-pb/join`,
+      `/pickle-pb/join`,
       formData
     );
     console.log(response);
@@ -44,7 +44,7 @@ export const pbJoin = async (formData) => {
 export const pbToken = async (formData) => {
   try {
     const response = await defaultInstance.post(
-      `/api/pickle-pb/token`,
+      `/pickle-pb/token`,
       formData
     );
     if (response.data && response.data.data) {

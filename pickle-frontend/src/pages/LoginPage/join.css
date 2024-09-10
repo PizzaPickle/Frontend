@@ -138,7 +138,7 @@
 } */
 
 .modal-content button:hover {
-  background-color: #0056b3 !important;
+  background-color: #0056b3;
 }
 .error-text {
   color: red;
