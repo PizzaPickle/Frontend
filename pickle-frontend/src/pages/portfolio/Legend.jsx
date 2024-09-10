@@ -21,7 +21,12 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
   const profitRatio = ((totalEvaluationAmount - category.totalPurchaseAmount) / category.totalPurchaseAmount) * 100;
 
   
-
+  function formatNumber(number) {
+    const numStr = number.toString();
+    const [integerPart, decimalPart] = numStr.split('.');
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+}
   return (
     <>
       <LegendDiv
@@ -43,8 +48,8 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
             {profitRatio.toFixed(2)}%
           </ProfitRatioText>
           
-          <LegendText>{category.totalPurchaseAmount}</LegendText>
-          <LegendText>{totalEvaluationAmount}</LegendText>
+          <LegendText>{formatNumber((category.totalPurchaseAmount).toFixed(0))}</LegendText>
+          <LegendText>{formatNumber(totalEvaluationAmount.toFixed(0))}</LegendText>
           <LegendText>{currentRatio.toFixed(2)}%</LegendText>
           <LegendText>{(category.value * 100).toFixed(2)}%</LegendText>
           
@@ -54,11 +59,11 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
       </LegendDiv>
       <Table>
         {isHovered && (
-          <div style={{ position: "absolute", top: "100%", left: 0, zIndex: 10 }}>
+          <div style={{ position: "absolute", top: "100%", left: 7, zIndex: 10 }}>
             <StockTable
               productList={category.productDtos}
               categoryName={category.id}
-              width="300px"
+              width="400px"
               onTotalEvaluationChange={(newTotal) => {
                 setTotalEvaluationAmount(newTotal);
               }}
