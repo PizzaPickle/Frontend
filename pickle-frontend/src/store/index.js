@@ -1,9 +1,20 @@
+import { composeWithDevTools } from '@redux-devtools/extension';
 import { combineReducers } from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./reducers/user";
+import pbReducer from "./reducers/pbselect";
+import dateReducer from "./reducers/dateselect";
+import strategyReducer from "./reducers/strategy";
+import mydataURLReducer from './reducers/mydataurl';
+import pbuserReducer from "./reducers/pbuser"
 
 export const rootReducer = combineReducers({
     user: userReducer,
+    pb: pbReducer,
+    date: dateReducer,
+    mydataURL: mydataURLReducer,
+    strategy: strategyReducer,
+    pbuser: pbuserReducer,
 });
 
 const store = configureStore({

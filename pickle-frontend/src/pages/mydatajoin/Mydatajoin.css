@@ -1,0 +1,110 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background: #eafcf4;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.logo {
+  margin-bottom: 40px;
+  font-size: 1em;
+  font-weight: normal;
+  color: #333;
+}
+
+.content-container2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 70vw;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.text-content {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 1.5em;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: normal;
+}
+
+.description span {
+  color: #00b894;
+  font-weight: bold;
+}
+
+.sub-description {
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.start-button,
+.later-button {
+  padding: 12px 20px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-button {
+  background-color: #c5f0c9;
+  color: #333;
+}
+
+.start-button:hover {
+  background-color: #4caf50;
+}
+
+.later-button {
+  background-color: #f1f8f4;
+  color: black;
+}
+
+.later-button:hover {
+  background-color: #d8ede7;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 360px;
+  height: auto;
+}

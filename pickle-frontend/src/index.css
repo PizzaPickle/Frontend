@@ -1,7 +1,33 @@
-/* 기본 범용 스타일 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: #F5F8FF;
+    box-sizing: border-box;  
+    font-family: 'Noto Sans KR', sans-serif;
   }
+
+  body {
+    background-color: #F5F8FF;
+
+    scroll-behavior: smooth;
+  }
+
+  /* 웹킷 브라우저용 */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
