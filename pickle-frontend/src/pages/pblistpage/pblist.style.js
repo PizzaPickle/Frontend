@@ -10,9 +10,8 @@ export const StyledPbontainer = styled.div`
     
     
     .pb-card:hover {
-    box-shadow: 0 .2rem 2rem rgba(2, 83, 216, 0.09);
+    box-shadow: 0 .9rem 1rem rgba(0, 0, 90, 0.05);
     transition: all 0.1s ease-in;
-
     }
     
 `
@@ -234,6 +233,62 @@ export const StyledFilterResult = styled.div`
         border-radius: 20px;
     }
 `
+
+export const ReserveListContainer = styled.div`
+  background-color: white; /* 부드러운 노란색 배경 */
+  border-radius: 10px;
+  padding: 0px 10px 10px 10px;
+  width: 330px;
+  margin: 20px auto;
+  align-items: center;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ReserveItem = styled.div`
+width: 100%;
+  font-size: 16px;
+  color:${({ theme }) => theme.colors.deep_gray};
+
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  
+  &:last-child {
+    border-bottom: none; /* 마지막 항목에는 구분선 없음 */
+    padding: 0px 10px 10px 10px;
+  }
+`;
+
+export const ReserveDate = styled.div`
+    text-align: left;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.deep_gray};
+  background-color: #F7F8FA;
+  width: 100%;
+  border-radius: 20px;
+  padding: 20px;
+
+`;
+
+export const NextButton = styled.button`
+  background-color: #ffd700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ffc700;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+`;
 
 export const StyledDateButton = styled.div`
     display: flex;

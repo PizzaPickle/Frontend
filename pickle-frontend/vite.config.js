@@ -1,53 +1,67 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-	plugins: [
-		react({
-			jsxRuntime: 'classic',
-		}),
-	],
-	define: {
-		'process.env': process.env,
-	},
-	server: {
-		proxy: {
-			'/backtest': {
-				target: 'http://43.202.241.180',
-				changeOrigin: true,
-				secure: false, // HTTPS일 경우에도 사용할 수 있음
-				followRedirects: true, // 리디렉션 따르기
-				rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
-			},
-			'/api/pickle-pb': {
-			target: 'http://localhost:8081',
-			changeOrigin: true,
-			secure: false, // HTTPS일 경우에도 사용할 수 있음
-			followRedirects: true, // 리디렉션 따르기
-			},
-			'/api/pickle-common': {
-			target: 'http://localhost:8081',
-			changeOrigin: true,
-			secure: false, // HTTPS일 경우에도 사용할 수 있음
-			followRedirects: true, // 리디렉션 따르기
-			},
-			'/api/mydata': {
-			target: 'http://localhost:8080',
-			changeOrigin: true,
-			secure: false, // HTTPS일 경우에도 사용할 수 있음
-			followRedirects: true, // 리디렉션 따르기
-			rewrite: (path) => path.replace(/^\/api\/mydata/, '/api/mydata'),
-			},
-        "/api/pickle-customer": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-        secure: false, // HTTPS일 경우에도 사용할 수 있음
-        followRedirects: true, // 리디렉션 따르기
-        rewrite: (path) =>
-          path.replace(/^\/api\/pickle-customer/, "/api/pickle-customer"),
-      },
-		},
-	},
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd());
 
+    return {
+        plugins: [
+            react({
+                jsxRuntime: 'classic',
+            }),
+        ],
+        build: {
+            chunkSizeWarningLimit: 1000,
+            outDir: 'build/dist',
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes('node_modules')) {
+                            if (id.includes('react')) {
+                                return 'react-vendor';
+                            }
+                            if (id.includes('lodash')) {
+                                return 'lodash-vendor';
+                            }
+                            return 'vendor';
+                        }
+                    },
+                },
+            },
+        },
+        define: {
+            'import.meta.env': env,
+        },
+        server: {
+            proxy: {
+                '/backtest': {
+                    target: env.VITE_PICKLE_BACKTEST_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
+                },
+                '/api': {
+                    target: env.VITE_PICKLE_MAIN_SERVER_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/api/, '/api'),
+                },
+                '/mydata': {
+                    target: env.VITE_PICKLE_MYDATA_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/mydata/, '/mydata'),
+                },
+                '/consulting-room': {
+                    target: env.VITE_PICKLE_REALTIME_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                },
+            },
+        },
+    };
 });

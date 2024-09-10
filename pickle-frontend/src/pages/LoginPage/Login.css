@@ -1,3 +1,4 @@
+
 /* 배경과 레이아웃 설정 */
 .login-container {
   display: flex;
@@ -88,11 +89,6 @@
   text-decoration: underline;
 }
 
-.modal-close-btn2:hover {
-  color: red; /* 마우스 오버 시 색상 변경 */
-}
-
-/* 토스트 알림 스타일 */
 .toast {
   position: fixed;
   top: 20px;

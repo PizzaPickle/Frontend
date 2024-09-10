@@ -1,4 +1,6 @@
 import { defaultInstance } from "./axiosInstance";
+import { useDispatch } from "react-redux"; // Redux 훅 import
+import { setToken, setUser } from "../store/reducers/user"; // 액션 import
 
 export const customerJoin = async (formData) => {
   try {
@@ -13,28 +15,32 @@ export const customerJoin = async (formData) => {
   }
 };
 
-export const customerToken = async (formData) => {
+// Redux에서 dispatch를 인자로 받아 처리
+export const customerToken = async (formData, dispatch) => {
   try {
     const response = await defaultInstance.post(
       `/pickle-customer/token`,
       formData
     );
 
-    // 성공적인 응답이 있는지 확인
     if (response.data && response.data.data) {
       const token = response.data.data;
-      console.log(token);
+      console.log(response)
+      console.log("로컬",token);
 
-      localStorage.setItem("accessToken", token); // 토큰을 로컬 스토리지에 저장
-      console.log(localStorage);
+      // 로컬 스토리지에 토큰 저장
+      localStorage.setItem("accessToken", token);
 
-      return { success: true, token }; // 성공 시 반환 객체
+      // Redux 스토어에 토큰 저장
+      dispatch(setToken({ token })); // 또는 setUser로 유저 정보와 함께 저장 가능
+      console.log("디스패치 완료")
+      return { success: true, token };
     } else {
       throw new Error("로그인 응답 데이터가 유효하지 않음");
     }
   } catch (error) {
     console.error("고객 로그인 실패", error);
-    return { success: false, message: "고객 로그인 실패", error }; // 실패 시 반환 객체
+    return { success: false, message: "고객 로그인 실패", error };
   }
 };
 

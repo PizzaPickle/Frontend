@@ -3,20 +3,21 @@ import { useNavigate } from "react-router-dom";
 import "./Termspage.css";
 
 // Modal 컴포넌트 정의
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
+// function Modal({ isOpen, onClose, children }) {
+//   if (!isOpen) return null;
 
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-tent" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-button" onClick={onClose}>
-          &times;
-        </button>
-        <div className="modal-body">{children}</div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="modal-overlay" onClick={onClose}>
+//       <div className="modal-tent" onClick={(e) => e.stopPropagation()}>
+//         <button className="modal-close-button" onClick={onClose}>
+//           &times;
+//         </button>
+//         <div className="modal-body">{children}</div>
+//       </div>
+//     </div>
+//   );
+// }
+
 
 export default function TermsPage() {
   const navigate = useNavigate(); // useNavigate 훅 사용
@@ -91,7 +92,7 @@ export default function TermsPage() {
           className="terms-header"
           onClick={() => setIsExpanded1(!isExpanded1)} // 토글 기능
         >
-          <input type="checkbox" checked={checkbox2.firstAgreed} readOnly />
+          {/* <input type="checkbox" checked={checkbox2.firstAgreed} readOnly /> */}
           <label className="main-label">
             마이데이터 서비스 가입 관련 전체 동의
           </label>
@@ -126,7 +127,7 @@ export default function TermsPage() {
           className="terms-header"
           onClick={() => setIsExpanded2(!isExpanded2)} // 토글 기능
         >
-          <input type="checkbox" checked={checkbox.allAgreed} readOnly />
+          {/* <input type="checkbox" checked={checkbox.allAgreed} readOnly /> */}
           <label className="main-label">금융사 정보 조회 관련 전체 동의</label>
           <span className={`arrow ${isExpanded2 ? "open" : ""}`}></span>
         </div>
@@ -187,7 +188,7 @@ export default function TermsPage() {
       </div>
 
       {/* 모달 컴포넌트 */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal id="custom-modal" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h3>[개인정보 취급 위탁에 대한 동의]</h3>
         <p>
           본인 확인 서비스 제공을 위해 개인정보 취급 위탁 동의를 받고자 합니다.

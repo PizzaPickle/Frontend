@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyledContentBlock, StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../Homepage/HomePage.style";
+import { StyledContentBlock, StyledHomeContainer, StyledHomeMainContent, StyledHomeContent, StyledHead2Text, StyledHeadText } from "../homePage/HomePage.style";
 import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import html2canvas from "html2canvas";
@@ -12,9 +12,11 @@ import MydataScreen from "./MydataScreen";
 import { Form } from 'react-bootstrap';
 import { StyledCheckboxDiv, StyledMydataContainer, StyledMydataReqContainer } from "./RequestMydata.style";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function RequestMydata() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onClickPrev = () => {
         navigate('/pblist')
@@ -227,7 +229,8 @@ export default function RequestMydata() {
         setShowModal(true);
     };
 
-    //url->Blob->FormData변환
+
+    //1. url->Blob->FormData변환
     const getImageBlob = async () => {
 
     const target = document.getElementById("mydata-screenshot");
@@ -239,7 +242,7 @@ export default function RequestMydata() {
 
     const canvas = await html2canvas(target, {
         scale: 4, // 해상도 저하 이슈 해결
-        backgroundColor: '#f6f7fa' // 이미지 배경색 설정
+        backgroundColor: 'transparent' // 이미지 배경색 설정
     });
 
         return new Promise((resolve, reject) => {
@@ -248,7 +251,6 @@ export default function RequestMydata() {
                     return reject("Blob 생성 실패");
                 }
                 const dataURL = canvas.toDataURL("image/png");
-
                 // 이미지 확인을 위한 로컬 다운로드
                 const link = document.createElement('a');
                 link.href = dataURL;
@@ -258,7 +260,8 @@ export default function RequestMydata() {
                 document.body.removeChild(link);
                     
                 const formData = new FormData();
-                formData.append('file', blob, 'screenshot.png'); 
+                formData.append('image', blob, 'screenshot.png'); 
+                console.log("1. blob 객체로 formData에 추가")
                 
                 
                 for (let [key, value] of formData.entries()) {
@@ -281,18 +284,55 @@ export default function RequestMydata() {
     };
 
 
+    //2. 서버에 이미지파일 전송
+    const uploadImage = async (formData) => {
+                        
+        // for (let [key, value] of formData.entries()) {
+        //     if (value instanceof File) {
+        //     // 속성 확인
+        //         console.log(`${key}: ${value.name}, ${value.size} bytes, ${value.type}`);
+        //     } else {
+        //         console.log(`${key}: ${value}`);
+        //     }
+        // }
+
+        try {
+          const response = await axios.post('/api/pickle-common/consulting/image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data', // FormData 전송을 위한 Content-Type 설정
+              Authorization: `Bearer ${token}` // 필요한 경우 인증 토큰 추가
+            },
+          });
+      
+          console.log('파일 업로드 성공:', response.data);
+          console.log(response.data.data)
+          return response.data.data;
+        } catch (error) {
+          console.error('파일 업로드 실패:', error);
+          throw error;
+        }
+      };
+
+
 
       // Modal 관리
       const [showModal, setShowModal] = useState(false);
-      const handleYesClick = () => {
-        const target = document.getElementById("mydata-screenshot");
+      const handleYesClick = async() => {
 
+        try {
         // TODO 마이데이터 파일 url저장 API POST 추가
-        getImageBlob();
+        const formData = await getImageBlob();
+        const myDataURL = await uploadImage(formData);
+        console.log("마이데이터 업로드: ",myDataURL)
+        dispatch(setmydataURL(myDataURL));
         navigate("/pblist/request");
-        setShowModal(false); // 모달 닫기
+        setShowModal(false); 
 
-      };
+      } catch (error) {
+        console.error("업로드 에러: ",error)
+      }
+    };
+
     
       const handleNoClick = () => {
         setShowModal(false);

@@ -3,11 +3,13 @@ import { customerJoin } from "../../api/customerApi";
 import "./join.css"; // 스타일 파일
 import { useNavigate } from "react-router-dom";
 import { pbJoin } from "../../api/PBApi";
+import { Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export default function JoinPage() {
   const [registerType, setRegisterType] = useState("customer");
   const [formData, setFormData] = useState({
-    userId: "",
+    userid: "",
     password: "",
     username: "",
     phoneNumber: "",
@@ -28,7 +30,7 @@ export default function JoinPage() {
   const handleRegisterTypeChange = (type) => {
     setRegisterType(type);
     setFormData({
-      userId: "",
+      userid: "",
       password: "",
       username: "",
       phoneNumber: "",
@@ -42,6 +44,8 @@ export default function JoinPage() {
       phoneNumber: "",
     });
   };
+
+  const handleClose = () => setShowModal(false); // 모달을 닫는 함수
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -111,6 +115,8 @@ export default function JoinPage() {
       !errors.phoneNumber
     ) {
       try {
+        console.log(formData)
+
         if (registerType === "customer") {
           const response = await customerJoin(formData);
           showModalWindow(
@@ -151,10 +157,10 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="register-container">
-      <h1 className="register-title">피클 로고</h1>
+    <div className="register2-container">
+      <h1 className="register2-title">피클 로고</h1>
 
-      <div className="register-toggle">
+      <div className="register2-toggle">
         <button
           className={`toggle-btn ${
             registerType === "customer" ? "active" : ""
@@ -171,17 +177,17 @@ export default function JoinPage() {
         </button>
       </div>
 
-      <div className="register-form">
+      <div className="register2-form">
         {registerType === "customer" ? (
           <>
-            <div className="form-group">
+            <div className="form2-group">
               <input
                 type="text"
                 placeholder="아이디"
-                name="userId"
-                value={formData.userId}
+                name="userid"
+                value={formData.userid}
                 onChange={handleInputChange}
-                className="register-input"
+                className="register2-input"
               />
               <input
                 type="password"
@@ -189,7 +195,7 @@ export default function JoinPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="register-input"
+                className="register2-input"
               />
               {errors.password && (
                 <p className="error-text">{errors.password}</p>
@@ -201,7 +207,7 @@ export default function JoinPage() {
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
             {errors.username && <p className="error-text">{errors.username}</p>}
             <input
@@ -210,7 +216,7 @@ export default function JoinPage() {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
             {errors.phoneNumber && (
               <p className="error-text">{errors.phoneNumber}</p>
@@ -221,20 +227,20 @@ export default function JoinPage() {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
             {errors.email && <p className="error-text">{errors.email}</p>}
           </>
         ) : (
           <>
-            <div className="form-group">
+            <div className="form2-group">
               <input
                 type="text"
                 placeholder="사번"
                 name="pbNumber"
                 value={formData.pbNumber}
                 onChange={handleInputChange}
-                className="register-input"
+                className="register2-input"
               />
               <input
                 type="password"
@@ -242,7 +248,7 @@ export default function JoinPage() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="register-input"
+                className="register2-input"
               />
               {errors.password && (
                 <p className="error-text">{errors.password}</p>
@@ -254,7 +260,7 @@ export default function JoinPage() {
               name="username"
               value={formData.username}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
             {errors.username && <p className="error-text">{errors.username}</p>}
             <input
@@ -263,7 +269,7 @@ export default function JoinPage() {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
             {errors.phoneNumber && (
               <p className="error-text">{errors.phoneNumber}</p>
@@ -274,30 +280,37 @@ export default function JoinPage() {
               name="branchOffice"
               value={formData.branchOffice}
               onChange={handleInputChange}
-              className="register-input"
+              className="register2-input"
             />
           </>
         )}
-        <button className="register-btn" onClick={handleRegister}>
+        <button className="register2-btn" onClick={handleRegister}>
           회원가입
         </button>
-      </div>
-
-      {/* 모달 창 */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            {/* 우측 상단에 X 버튼 추가 */}
-            <h2>{modalContent.title}</h2>
-            <p>{modalContent.message}</p>
-            {registerType === "customer" ? (
-              <button onClick={goToMyDataPage}>마이데이터 가입하러 가기</button>
-            ) : (
-              <button onClick={goToLoginPage}>로그인 페이지로 이동</button>
-            )}
-          </div>
         </div>
-      )}
+        <p className="signup-link" onClick={goToLoginPage}>
+        피클 홈페이지에서 로그인
+      </p>
+
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalContent.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{modalContent.message}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          {registerType === "customer" ? (
+            <Button variant="primary" onClick={goToMyDataPage}>
+              마이데이터 가입하러 가기
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={goToLoginPage}>
+              로그인 페이지로 이동
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

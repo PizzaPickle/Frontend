@@ -10,12 +10,12 @@ export default function Mydatajoin() {
   };
 
   return (
-    <div className="container">
+    <div className="container2">
       <header className="logo">
         <p>피클 로고</p>
       </header>
 
-      <main className="content-container">
+      <main className="content-container2">
         <div className="text-content">
           <h1 className="title">피클(PICKLE)은</h1>
           <p className="description">

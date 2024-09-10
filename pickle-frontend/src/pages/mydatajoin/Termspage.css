@@ -105,12 +105,13 @@ body {
 /* 모달 콘텐츠 */
 .modal-tent {
   background-color: white;
-  padding: 20px;
+  padding: 50px;
   border-radius: 8px;
   width: 90%; /* 넓이를 화면의 90%로 설정 */
   max-width: 900px; /* 최대 넓이를 900px로 설정 */
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 모달에 그림자 추가 */
+  line-height: 2;
 }
 
 /* 모달 닫기 버튼 */
