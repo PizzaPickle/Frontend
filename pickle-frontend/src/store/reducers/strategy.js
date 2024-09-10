@@ -21,7 +21,7 @@ const initialState = {
         //   name: "삼성전자",
         // },
       ],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: true,
       themeList: [],
     },

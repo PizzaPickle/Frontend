@@ -25,7 +25,7 @@ export default function EditableStockTable({ category, productList, width }) {
   function removeProduct(product) {
     // console.log(product);
     setRemoveModal(true);
-    setSelectedProduct(product)
+    setSelectedProduct(product);
   }
 
   return (
@@ -50,13 +50,13 @@ export default function EditableStockTable({ category, productList, width }) {
         {/* <Horizon /> */}
         <Tbody>
           {productList?.map((product) => (
-            <Tr key={product.code}>
-              <IoMdRemoveCircle
-                style={{ position: "absolute", top: "20px" }}
+            <Tr key={product.code} onDoubleClick={() => removeProduct(product)}>
+              {/* <IoMdRemoveCircle
+                style={{ position: "absolute", top: "10%" }}
                 onMouseOver={({ target }) => (target.style.color = "red")}
                 onMouseOut={({ target }) => (target.style.color = "black")}
-                onClick={()=>removeProduct(product)}
-              />
+                onClick={() => removeProduct(product)}
+              /> */}
               {keysOrder.map((value) => (
                 <Td key={value}>
                   {value === "ratio" ? (
