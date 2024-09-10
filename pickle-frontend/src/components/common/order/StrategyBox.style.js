@@ -62,3 +62,10 @@ export const StockContainer = styled.span`
   flex: 1;
   flex-wrap: wrap;
 `;
+
+export const Stock_Content = styled.span`
+  font-size: 15px;
+  color: ${(props) => (props.applyClicked ? "#5a5a5a" : "#d3d3d3")};
+  flex: 1;
+  text-align: center;
+`;

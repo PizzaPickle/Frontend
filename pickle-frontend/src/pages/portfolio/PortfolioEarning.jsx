@@ -31,8 +31,6 @@ export default function PortfolioEarning() {
         const result = await response.json();
         const transformedData = transformData(result);
         setData(transformedData);
-
-        // Use transformedData instead of data to ensure it's updated
         dispatch(fetchStockPrices(transformedData.categoryDTOs.flatMap(category => category.productDtos)));
       } catch (error) {
         console.error('Failed to fetch portfolio:', error);
