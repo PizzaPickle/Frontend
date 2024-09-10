@@ -21,6 +21,9 @@ export default function StockTable({ productList, width, categoryName, onTotalEv
   const calculateEvaluationAmount = (product) => {
     const currentPrice = parseFloat(stockPrices[product.code]) === 0 || isNaN(parseFloat(stockPrices[product.code])) ? 1 : parseFloat(stockPrices[product.code]);
     console.log(currentPrice);
+    if(categoryName==="해외"){
+      return (product.quantity * currentPrice)*1350;
+    }
     return (product.quantity * currentPrice);
   };
   function formatNumber(number) {
@@ -92,14 +95,14 @@ export default function StockTable({ productList, width, categoryName, onTotalEv
                 <Td>{product.code}</Td>
                 <Td>{product.themeName}</Td>
                 <Td>
-                  <ProgressBar ratio={(holdingRatio * 100).toFixed(2)} /> {/* 보유비율을 ProgressBar로 표시 */}
+                  <ProgressBar ratio={(holdingRatio * 100).toFixed(2)} /> 
                 </Td>
                 <Td>
-                  {product.ratio && <ProgressBar ratio={product.ratio * 100} />} {/* 기존비율을 ProgressBar로 표시 */}
+                  {product.ratio && <ProgressBar ratio={product.ratio * 100} />}
                 </Td>
-                <Td>{product.quantity}</Td>
-                <Td>{formatNumber((product.purchaseAmount).toFixed(0))}</Td>
-                <Td>{formatNumber(evaluationAmount.toFixed(0))}</Td>
+                <Td>{product.quantity}주</Td>
+                <Td>{formatNumber((product.purchaseAmount).toFixed(0))}원</Td>
+                <Td>{formatNumber(evaluationAmount.toFixed(0))}원</Td>
               </tr>
             );
           })}

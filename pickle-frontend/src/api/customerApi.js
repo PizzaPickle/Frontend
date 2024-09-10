@@ -1,13 +1,10 @@
 import { defaultInstance } from "./axiosInstance";
 import { useDispatch } from "react-redux"; // Redux 훅 import
 import { setToken, setUser } from "../store/reducers/user"; // 액션 import
-
+import axios from "axios";
 export const customerJoin = async (formData) => {
   try {
-    const response = await defaultInstance.post(
-      `/pickle-customer/join`,
-      formData
-    );
+    const response = await axios.post(`/api/pickle-customer/join`, formData);
     console.log(response);
     return response;
   } catch (error) {
@@ -18,23 +15,28 @@ export const customerJoin = async (formData) => {
 // Redux에서 dispatch를 인자로 받아 처리
 export const customerToken = async (formData, dispatch) => {
   try {
-    const response = await defaultInstance.post(
-      `/pickle-customer/token`,
-      formData
-    );
+    const response = await axios.post(`/api/pickle-customer/token`, formData);
 
     if (response.data && response.data.data) {
-      const token = response.data.data;
-      console.log(response)
-      console.log("로컬",token);
+      const userData = response.data.data;
+      console.log(response);
 
       // 로컬 스토리지에 토큰 저장
-      localStorage.setItem("accessToken", token);
+      localStorage.setItem("accessToken", userData.token);
 
       // Redux 스토어에 토큰 저장
-      dispatch(setToken({ token })); // 또는 setUser로 유저 정보와 함께 저장 가능
-      console.log("디스패치 완료")
-      return { success: true, token };
+      // Redux 스토어에 유저 정보와 토큰 저장
+      dispatch(
+        setUser({
+          user: {
+            id: userData.userId,
+            name: userData.name,
+          },
+          token: userData.token,
+        })
+      );
+      console.log("디스패치 완료");
+      return { success: true, token: userData.token };
     } else {
       throw new Error("로그인 응답 데이터가 유효하지 않음");
     }

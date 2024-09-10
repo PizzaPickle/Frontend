@@ -80,7 +80,7 @@ export default function Mydata(){
     useEffect(() => {
       const fetchData = async () => {
           try {
-              const response = await fetch("/api/mydata", {
+              const response = await fetch("/mydata", {
                   method: "GET",
                   headers: {
                       Authorization: `Bearer ${token}`,

@@ -22,34 +22,26 @@ export default function LegendWithGraph({ data, width, height, top, left, fontSi
     const calculateTotalEvaluationAmount = () => {
       let total = 0;
       data.forEach((category) => {
+        
         let categoryTotal = 0;
         category.productDtos.forEach((product) => {
-          categoryTotal += (stockPrices[product.code] || 1) * product.quantity;
+          let baseTotal=(stockPrices[product.code] || 1) * product.quantity;
+          if (category.id==="해외"){
+            baseTotal=baseTotal*1350;
+          }
+          categoryTotal += baseTotal;
         
         });
         total += categoryTotal;
+       
       });
-      console.log("dd", total);
       return total;
     };
 
     const totalAmount = calculateTotalEvaluationAmount();
+    
     setTotalAllevaluationPrice(totalAmount);
   }, [data, stockPrices]);
-
-
-  // const calculateTotalEvaluationAmount = () => {
-  //   let total = 0;
-  //   categories.forEach((category) => {
-  //     category.productDtos.forEach((product) => {
-  //       // 각 종목의 평가금액을 계산하여 더합니다 (실시간 데이터 사용하지 않고 이미 계산된 값 사용)
-  //       total += (stockPrices[product.code] || 0) * product.quantity;
-  //     });
-  //   });
-  
-  //   return total;
-  // };
-  // const totalEvaluationAmountAllCategories = calculateTotalEvaluationAmount();
  
 
   return (
