@@ -25,6 +25,7 @@ export const customerToken = async (formData, dispatch) => {
 
     if (response.data && response.data.data) {
       const token = response.data.data;
+      console.log(response)
       console.log("로컬",token);
 
       // 로컬 스토리지에 토큰 저장

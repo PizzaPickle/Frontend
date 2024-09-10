@@ -8,7 +8,7 @@ import ConsultingRoom from '../../components/common/customer-consulting-room/Con
 import ConsultingRoomHistory from '../../components/common/customer-consulting-room/ConsultingRoomHistory';
 import { fetchConsultingHistories } from '../../api/customerApi';
 import {
-    StyledHead2Text,
+    StyledHeadText,
     StyledContentBlock,
     StyledConsultingContainer,
     StyledConsultingContent,
@@ -208,9 +208,9 @@ const RealtimeConsultingRoom = () => {
             <StyledConsultingMainContent>
                 <Sidebar />
                 <StyledConsultingContent>
-                    <StyledHead2Text>
+                    <StyledHeadText>
                         {userName.slice(1)}님의 실시간 상담
-                    </StyledHead2Text>
+                    </StyledHeadText>
                     <StyledTabs>
                         <StyledTab
                             $active={activeTab === 'waiting'}

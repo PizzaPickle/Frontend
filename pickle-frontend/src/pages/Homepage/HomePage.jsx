@@ -9,6 +9,7 @@ import { setUser, logoutUser } from "../../store/reducers/user";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function HomePage(){    
     const [requestNum,setRequestNum] = useState(0);
@@ -187,6 +188,43 @@ export default function HomePage(){
     
       }, [token]);
 
+    // 애니메이션 효과 적용
+    const pageAnimation = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 2 } },
+        exit: { opacity: 0, y: -50, transition: { duration: 0.5 } },
+    };
+
+    const delayedTextAnimation = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { 
+          opacity: 1, 
+          y: 0, 
+          transition: { duration: 1.2, delay: 1.9 }  // Added delay of 0.5 seconds
+        },
+        exit: { opacity: 0, y: -50, transition: { duration: 1.2 } },
+      };
+
+    const delayedTextAnimation2 = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { duration: 1.2, delay: 3.2 }  // Added delay of 0.5 seconds
+    },
+    exit: { opacity: 0, y: -50, transition: { duration: 1.2 } },
+    };
+
+    const bellShakeAnimation = {
+        hidden: { rotate: 0 },
+        visible: {
+          rotate: [0,-10, 10, -10, 7, -7, 5, -5, 0], // 종이 좌우로 흔들리는 각도
+          transition: {
+            duration: 2.5, // 애니메이션 지속 시간
+            ease: 'easeInOut', // 애니메이션의 가속도 설정
+          },
+        },
+      };
 
     return (
         <StyledHomeContainer>
@@ -197,13 +235,28 @@ export default function HomePage(){
 
                     {/* section 1 */}
                     <StyledHomeSection> 
+                    <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={pageAnimation}
+                >
                     <StyledHeadText>
                         {userName.slice(1)}님, 환영합니다.
                     </StyledHeadText>
+
+                    </motion.div>
                         <article>
                         <StyledContentBlock>
                             <StyledS1Text>
-                                <img src="/assets/home-bell.svg"></img>
+                            <motion.img
+                                src="/assets/home-bell.svg" // 종 이미지 경로
+                                alt="bell"
+                                initial="hidden"
+                                animate="visible"
+                                variants={bellShakeAnimation}
+                                style={{ width: "50px", height: "50px" }} // 이미지 크기 설정
+                                />
                                 <span><div style={{marginBottom: "0px"}}>예정된 상담 일정</div><hr></hr></span>
                                 <div style={{marginBottom: "0px", fontWeight: "700"}}>D-{Dday}</div>
                                 <section>
@@ -226,9 +279,16 @@ export default function HomePage(){
 
                     {/* section 2 */}
                     <StyledHomeSection>
+                    <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={delayedTextAnimation}
+                    >
                     <StyledHead2Text>
                      나의 투자 현황을 살펴보세요.
                     </StyledHead2Text>
+                    </motion.div>
                     
                     <StyledContentFlex style={{alignItems:"center"}}>
                         <WalletCard texts={walletTexts} amounts={walletAmounts} />
@@ -258,9 +318,16 @@ export default function HomePage(){
                     
                     {/* section 3 */}
                     <StyledHomeSection> 
+                        <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={delayedTextAnimation2}
+                        >
                         <StyledHead2Text>
                         믿을 수 있는 PB를 만나보세요.
                         </StyledHead2Text>
+                        </motion.div>
                         <StyledContentFlex>                        
                             <StyledPbCard>
                                 <Link to={'/pblist'}>
