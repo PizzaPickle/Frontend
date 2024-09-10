@@ -16,7 +16,7 @@ import Login from './pages/loginPage/Login';
 import Join from './pages/loginPage/join';
 import Mydatajoin from './pages/mydatajoin/Mydatajoin';
 import TermsPage from './pages/mydatajoin/Termspage';
-import ProgressPage from './pages/mydataJoin/ProgressPage';
+import ProgressPage from './pages/mydatajoin/ProgressPage';
 import Preset from './pages/pb/presetPage/Preset';
 import CustomerRequest from './pages/pb/customerRequestPage/CustomerRequest';
 import MyRequest from './pages/myrequest/MyRequest';
