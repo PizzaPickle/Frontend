@@ -1,6 +1,11 @@
-import React from "react";
-import { StyledSideContent, StyledSideDiv, StyledSideText, StyledSideTextGroup } from "./Sidebar.style";
-import { Link } from "react-router-dom";
+import React from 'react';
+import {
+    StyledSideContent,
+    StyledSideDiv,
+    StyledSideText,
+    StyledSideTextGroup,
+} from './Sidebar.style';
+import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
     return (
@@ -27,12 +32,12 @@ export default function Sidebar() {
                 </Link>
                 <Link to="/myrequest" style={{"font-size": "small", "margin-left": "30px"}}>요청 목록</Link>
                 </StyledSideTextGroup>
-                <Link to="/consulting/realtime-consulting" style={{ textDecoration: 'none' }}>
+                <Link to="/consulting" style={{ textDecoration: 'none' }}>
                 <StyledSideText><img src="/assets/side-room.svg" className="icon"></img><span>실시간 상담룸</span></StyledSideText>
                 </Link>
 
             </StyledSideContent>
         </StyledSideDiv>
         </>
-    )
-};
+    );
+}
