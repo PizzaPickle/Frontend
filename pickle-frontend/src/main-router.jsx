@@ -21,6 +21,8 @@ import Preset from './pages/pb/presetPage/Preset';
 import CustomerRequest from './pages/pb/customerRequestPage/CustomerRequest';
 import MyRequest from './pages/myrequest/MyRequest';
 import DetailRequest from './pages/pb/customerRequestPage/DetailRequest';
+import Order from './pages/customerOrder/Order';
+import PortfolioEarning from './pages/portfolio/PortfolioEarning';
 
 export const routers = [
     {
@@ -50,6 +52,14 @@ export const routers = [
     {
         path: '/mydata',
         element: <Mydata />,
+    },
+    {
+        path: '/order',
+        element: <Order />,
+    },
+    {
+        path: '/portfolio',
+        element: <PortfolioEarning />,
     },
     {
         path: '/pblist',
@@ -122,6 +132,7 @@ export const routers = [
             },
         ],
     },
+    
 ];
 
 const router = createBrowserRouter(routers);
