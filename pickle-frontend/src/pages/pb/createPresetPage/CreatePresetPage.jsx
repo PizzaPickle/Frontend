@@ -33,10 +33,17 @@ import SearchModal from "../../../components/preset/search-modal/SearchModal";
 import BacktestChart from "../../../components/preset/backtest-chart/BacktestChart";
 import { Button } from "react-bootstrap";
 import EditableStockTable from "../../../components/preset/editable-stock-table/EditableStockTable";
+import {
+  BalanceInput,
+  StyledButton,
+  StyledFormControl,
+  StyledInputGroup,
+} from "./create-preset.style";
 
 export default function CreatePresetPage() {
   const dispatch = useDispatch();
   const [activeSearchModal, setActiveSearchModal] = useState(false);
+  const [inputValue, setInputValue] = useState(0);
 
   const data = useSelector((state) => state.preset.data);
   const isValidCategoryRatio = useSelector(
@@ -61,15 +68,61 @@ export default function CreatePresetPage() {
     return curCategory;
   });
 
+  const handleChange = (e) => {
+    // console.log(e.target.value);
+    const rawValue = e.target.value.replace(/,/g, "");
+    setInputValue(formatNumber(rawValue));
+  };
+
+  function formatNumber(number) {
+    const numStr = number.toString();
+    const [integerPart, decimalPart] = numStr.split(".");
+    const formattedIntegerPart = integerPart.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+    return decimalPart
+      ? `${formattedIntegerPart}.${decimalPart}`
+      : formattedIntegerPart;
+  }
+
+  const parseFormattedNumber = (value) => {
+    // 쉼표를 제거하고 숫자로 변환
+    if (value) {
+      return parseInt(value.replace(/,/g, ""), 10);
+    } else {
+      return;
+    }
+  };
+
+  const applyBalance = () => {
+    //
+  };
+
   return (
     <StyledHomeContainer>
       <Header />
       <StyledHomeMainContent>
         <Sidebar />
         <StyledHomeContent style={{ padding: "40px" }}>
-          <div style={{display: "flex", gap: "20px"}}>
-            <StyledHead2Text>프리셋 생성하기</StyledHead2Text>
-            <Button>프리셋 저장</Button>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <StyledHead2Text>프리셋 생성하기</StyledHead2Text>
+              <Button>프리셋 저장</Button>
+            </div>
+            <StyledInputGroup>
+              <StyledFormControl
+                value={inputValue}
+                onChange={(e) => handleChange(e)}
+              />
+              <StyledButton
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={applyBalance}
+              >
+                Apply
+              </StyledButton>
+            </StyledInputGroup>
           </div>
           <div style={{ height: "10px", width: "100%" }}></div>
           <StyledContentBlock>
@@ -133,7 +186,10 @@ export default function CreatePresetPage() {
                 />
               </StockTableContainer>
             </LeftContainer>
-            <BacktestChart width={"100%"} />
+            <BacktestChart
+              balance={parseFormattedNumber(inputValue)}
+              width={"100%"}
+            />
           </StyledContentBlock>
         </StyledHomeContent>
       </StyledHomeMainContent>
