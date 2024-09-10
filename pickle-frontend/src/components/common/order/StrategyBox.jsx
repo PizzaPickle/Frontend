@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'; // 훅을 제대로 가져왔는지 확인
+import React, { useEffect, useState, useRef } from 'react'; 
 import { useSelector } from 'react-redux';
 import { BoxContainer, Header, Title, Content, Line, Body, Row, StockContent, StockContainer } from './StrategyBox.style';
 
 export default function StrategyBox(props) {
-  const { productList, stockIds, inputValue, categoryRatio, categoryName } = props;
-  const [formattedProducts, setFormattedProducts] = useState([]); // useState 초기값으로 빈 배열 설정
+  const { productList, stockIds, inputValue, categoryRatio, categoryName, triggerHeldQuantities, onPriceChange, onAmountChange } = props;
+  const [formattedProducts, setFormattedProducts] = useState([]); 
   const [productPrices, setProductPrices] = useState({});
-  const { token } = useSelector((state) => state.user); // token이 제대로 설정되었는지 확인
+  const { token } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const wsConnections = useRef({}); // WebSocket 연결을 저장할 ref
-
+  const wsConnections = useRef({}); 
+  
   // 최초 가격 가져오기
   useEffect(() => {
     const fetchInitialPrices = async () => {
@@ -31,7 +31,6 @@ export default function StrategyBox(props) {
               break;
             case '해외':
               apiUrl = '/api/overseas-stock/current-price';
-              // requestCode = `R${product.code}`;
               break;
             case '채권':
               apiUrl = '/api/bond/current-price';
@@ -65,12 +64,12 @@ export default function StrategyBox(props) {
 
         const prices = await Promise.all(requests);
         const pricesMap = prices.reduce((acc, { code, price }) => {
-          acc[code] = price;
+          acc[code] = parseFloat(price);
           return acc;
         }, {});
 
         setProductPrices(pricesMap);
-
+        onPriceChange(pricesMap);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -79,9 +78,9 @@ export default function StrategyBox(props) {
     };
 
     fetchInitialPrices();
-  }, [productList]);
+  }, [productList, categoryName]);
 
-  // WebSocket 연결
+  // WebSocket 연결 (주석 처리된 코드)
   useEffect(() => {
     console.log(stockIds);
     stockIds.forEach(id => {
@@ -122,58 +121,71 @@ export default function StrategyBox(props) {
   useEffect(() => {
     const validInputValue = isNaN(parseInt(inputValue, 10)) ? 0 : parseInt(inputValue, 10);
 
-
     if (productList.length && validInputValue && categoryRatio) {
-      const updatedProducts = productList.map(product => ({
-        ...product,
-        formattedValue: formatNumber((validInputValue * categoryRatio * product.ratio).toFixed(0)),
-      }));
+      const updatedProducts = productList.map(product => {
+        const currentPrice = parseFloat(productPrices[product.code]) || 1;
+        const formattedValue = (validInputValue * categoryRatio * product.ratio).toFixed(0);
+        const amount = (parseFloat(formattedValue.replace(/,/g, '')) / currentPrice).toFixed(1);
+
+        return {
+          ...product,
+          formattedValue: formatNumber(formattedValue),
+          amount,
+        };
+      });
+
       setFormattedProducts(updatedProducts);
+      const amounts = updatedProducts.reduce((acc, product) => {
+        acc[product.code] = parseFloat(product.amount); // product.code를 키로 사용
+        return acc;
+      }, {});
+      onAmountChange(amounts);
     }
-  }, [inputValue, productList, categoryRatio]);
+  }, [inputValue, productList, categoryRatio, productPrices]);
 
   // API 호출
-  // useEffect(() => {
-  //   const sendHeldQuantities = async () => {
-  //     if (!formattedProducts || formattedProducts.length === 0) return;
-  //     const heldQuantities = formattedProducts.map(product => ({
-  //       productCode: product.code,
-  //       heldQuantity: parseFloat(product.formattedValue.replace(/,/g, '')),
-  //     }));
+  const sendHeldQuantities = async () => {
+    if (!formattedProducts || formattedProducts.length === 0) return;
 
-  //     try {
-  //       const response = await fetch('/api/pickle-customer/trade/quantity', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Authorization': `Bearer ${token}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify(heldQuantities),
-  //       });
+    const heldQuantities = formattedProducts.map(product => ({
+      productCode: product.code,
+      heldQuantity: product.amount || 0,  // Use default value if amount is undefined
+    }));
 
-  //       if (!response.ok) {
-  //         throw new Error('API 호출 실패');
-  //       }
+    try {
+      const response = await fetch('/api/pickle-customer/trade/quantity', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(heldQuantities),
+      });
 
-  //       const data = await response.json();
-  //       const additionalAmounts = data.reduce((acc, item) => {
-  //         acc[item.productCode] = item.heldAmount;
-  //         return acc;
-  //       }, {});
+      if (!response.ok) {
+        throw new Error('API 호출 실패');
+      }
 
-  //       const updatedProducts = formattedProducts.map(product => ({
-  //         ...product,
-  //         additionalAmount: additionalAmounts[product.code] || 0,
-  //       }));
+      const data = await response.json();
+      const additionalAmounts = data.reduce((acc, item) => {
+        acc[item.productCode] = (item.heldAmount).toFixed(1);
+        return acc;
+      }, {});
 
-  //       setFormattedProducts(updatedProducts);
-  //     } catch (err) {
-  //       console.error('API 호출 에러:', err.message);
-  //     }
-  //   };
+      const updatedProducts = formattedProducts.map(product => ({
+        ...product,
+        additionalAmount: additionalAmounts[product.code] || 0,
+      }));
 
-  //   sendHeldQuantities();
-  // }, [productList, inputValue, formattedProducts, categoryRatio, token]);
+      setFormattedProducts(updatedProducts);
+    } catch (err) {
+      console.error('API 호출 에러:', err.message);
+    }
+  };
+
+  useEffect(() => {
+    sendHeldQuantities();
+  }, [triggerHeldQuantities]);
 
   const formatNumber = (value) => {
     const [integer, decimal] = value.split('.');
@@ -196,21 +208,19 @@ export default function StrategyBox(props) {
       <Line />
       <Body>
         {formattedProducts.map((product, index) => {
-          const currentPrice = parseFloat(productPrices[product.code]) === 0 || isNaN(parseFloat(productPrices[product.code])) ? 1 : parseFloat(productPrices[product.code]);
-          console.log(currentPrice);
-          
+          const currentPrice = parseFloat(productPrices[product.code]) || 1;
           const amount = (parseFloat(product.formattedValue.replace(/,/g, '')) / currentPrice).toFixed(1);
-          const additionalValue = (product.additionalAmount * currentPrice).toFixed(0)||1;
+          const additionalValue = (product.additionalAmount * currentPrice).toFixed(0) || 1;
 
           return (
             <Row key={index}>
               <StockContainer><StockContent>{product.name}({product.code})</StockContent></StockContainer>
               <StockContainer><StockContent>{product.myStrategyRatio}%</StockContent></StockContainer>
               <StockContainer><StockContent>{product.ratio}%</StockContent></StockContainer>
-              <StockContainer><StockContent>{product.formattedValue}원</StockContent></StockContainer>
+              <StockContainer><StockContent>{product.formattedValue}</StockContent></StockContainer>
               <StockContainer><StockContent>{amount}주</StockContent></StockContainer>
-              <StockContainer><StockContent>{product.additionalAmount}주</StockContent></StockContainer>
-              <StockContainer><StockContent>{additionalValue}원</StockContent></StockContainer>
+              <StockContainer><StockContent>{(product.additionalAmount)}주</StockContent></StockContainer>
+              <StockContainer><StockContent>{formatNumber(additionalValue)}</StockContent></StockContainer>
             </Row>
           );
         })}
