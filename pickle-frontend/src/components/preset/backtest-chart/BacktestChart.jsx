@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { backtest, integratedBacktest } from "../../../api/PBApi";
 
 const BacktestChart = (props) => {
-  const categoryList = useSelector((state) => state.strategy.data);
+  const categoryList = useSelector((state) => state.preset.data);
   const [activeCategoryFitler, setActiveCategoryFitler] = useState(false);
 
   const handleCategoryChange = (e) => {
@@ -372,27 +372,6 @@ const BacktestChart = (props) => {
             `;
       };
 
-      // const updateLegend = (param) => {
-      //   const validCrosshairPoint = !(
-      //     param === undefined ||
-      //     param.time === undefined ||
-      //     param.point.x < 0 ||
-      //     param.point.y < 0
-      //   );
-      //   const bar = validCrosshairPoint
-      //     ? param.seriesData.get(areaSeries)
-      //     : getLastBar(areaSeries);
-      //   const time = bar.time;
-      //   const price = bar.value !== undefined ? bar.value : bar.close;
-      //   const formattedPrice = formatPrice(price);
-      //   setTooltipHtml(symbolName, time, formattedPrice);
-      // };
-
-      // chart.subscribeCrosshairMove(updateLegend);
-
-      // Initial update
-      // updateLegend(undefined);
-
       const toolTipWidth = 80;
       const toolTipHeight = 80;
       const toolTipMargin = 15;
@@ -411,7 +390,10 @@ const BacktestChart = (props) => {
   }, [integratedBacktestResult]);
 
   return (
-    <>
+    <div style={{
+      display: "flex",
+      flexDirection: "column"
+    }}>
       <div style={{ position: "relative" }}>
         <RunBacktestButton
           onClickIntegrated={handleIntegratedBacktest}
@@ -429,7 +411,6 @@ const BacktestChart = (props) => {
                       name="category"
                       value={category.id}
                       onChange={handleCategoryChange}
-                      // checked={selectedCategory === category.id}
                     />
                     {category.id}
                   </RadioLabel>
@@ -447,11 +428,6 @@ const BacktestChart = (props) => {
             ref={chartContainerRef}
             style={{ width: "100%", height: "300px" }} // div 스타일 설정
           ></div>
-          {/* {colors.map((i,elem)=> (
-        <StyledColorLegend color={elem}>
-          <section></section>
-        </StyledColorLegend>
-        ))} */}
           <section>
             <p>샤프 비율</p> {backtestResult.sharpe_ratio}
             <p> 수익률 표준편차</p> {backtestResult.standard_deviation}
@@ -478,7 +454,7 @@ const BacktestChart = (props) => {
           </section>
         </StyledGraphDiv>
       )}
-    </>
+    </div>
   );
 };
 
