@@ -6,8 +6,7 @@ export const StyledHeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
-  margin-top: 10px;
+  height: 39px;
   background-color: ${({ theme }) => theme.colors.background};
   border-bottom: 1px solid ${({ theme }) => theme.colors.line_gray};
 `;
@@ -20,7 +19,24 @@ export const StyledHeaderContent = styled.div`
     margin: 50px;
     gap: 20px;
 
+    section {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      div {
+        display: flex;
+        gap:10px;
+      }
+    }
+    
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
     img {
-      margin-bottom: 10px;
     }
 `

@@ -29,9 +29,14 @@ export default function Login() {
     navigate("/homepage");
   };
 
+  const handlePbPageRedirect = () => {
+    navigate("/pb");
+  };
+
   // 회원가입 타입에 따라 formData 초기화
   const handleLoginTypeChange = (type) => {
     setLoginType(type);
+    console.log("로그인 타입:",type)
     if (type === "customer") {
       setFormData({
         userid: "",
@@ -51,13 +56,13 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
+    console.log("로그인 타입 저장된 것 ",loginType)
     if (loginType === "customer") {
       console.log(formData)
       try {
         const response = await customerToken(formData, dispatch);
         if (response.success) {
-          // 성공 시 모달 창 표시
-          showModalWindow("로그인 성공", "로그인이 성공적으로 완료되었습니다.");
+          handleHomePageRedirect();
         } else {
           // 실패 시 토스트 알림 표시
           showToastMessage(
@@ -69,11 +74,11 @@ export default function Login() {
         showToastMessage("로그인이 실패했습니다. 다시 시도해주세요.");
       }
     } else if (loginType === "pb") {
+      console.log("pb로그인 시도")
       try {
-        const response = await customerToken(formData, dispatch);
+        const response = await pbToken(formData, dispatch);
         if (response.success) {
-          // 성공 시 모달 창 표시
-          showModalWindow("로그인 성공", "로그인이 성공적으로 완료되었습니다.");
+          handlePbPageRedirect();
         } else {
           // 실패 시 토스트 알림 표시
           showToastMessage(
@@ -178,7 +183,7 @@ export default function Login() {
           <p>{modalContent.message}</p>
         </Modal.Body>
         <Modal.Footer>
-          {modalContent.title === "로그인 성공" &&
+          {/* {modalContent.title === "로그인 성공" &&
             (loginType === "customer" ? (
               <Button variant="primary" onClick={handleHomePageRedirect}>
                 피클 홈화면으로 가기
@@ -188,6 +193,16 @@ export default function Login() {
                 요청서 페이지로 이동
               </Button>
             ))}
+          {modalContent.title === "로그인 성공" &&
+          (loginType === "pb" ? (
+            <Button variant="primary" onClick={handlePbPageRedirect}>
+              피클 홈화면으로 가기
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={handleJoinPageRedirect}>
+              요청서 페이지로 이동
+            </Button>
+          ))} */}
         </Modal.Footer>
       </Modal>
 
