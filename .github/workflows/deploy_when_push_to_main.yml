@@ -26,8 +26,10 @@ jobs:
         port: 22
         script: |
           cd /home/ubuntu/Frontend
-          # git fetch --all
-          git pull origin main
+          git stash
+          git checkout main
+          git fetch --all
+          git reset --hard origin/main
           echo "${{ secrets.ENV_FILE }}" > /home/ubuntu/Frontend/pickle-frontend/.env
           cd pickle-frontend
           npm install
