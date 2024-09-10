@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import TestPage from './routes/test/TestPage';
 import AllMoney from './components/common/mydata/allmoney/AllMoney';
-import HomePage from './pages/homepage/HomePage';
+import HomePage from './pages/homePage/HomePage';
 import Mydata from './pages/mydata/Mydata';
 import BacktestPage from './pages/backtestPage/BacktestPage';
 // import Dashboard from "./pages/PB-BacktestPage/Strategy";
