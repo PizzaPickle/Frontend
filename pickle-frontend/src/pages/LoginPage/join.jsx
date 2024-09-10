@@ -12,7 +12,7 @@ export default function JoinPage() {
     userid: "",
     password: "",
     username: "",
-    phonenumber: "",
+    phoneNumber: "",
     email: "",
     branchOffice: "",
   });
@@ -33,7 +33,7 @@ export default function JoinPage() {
       userid: "",
       password: "",
       username: "",
-      phonenumber: "",
+      phoneNumber: "",
       email: "",
       branchOffice: "",
     });
@@ -213,8 +213,8 @@ export default function JoinPage() {
             <input
               type="text"
               placeholder="전화번호"
-              name="phonenumber"
-              value={formData.phonenumber}
+              name="phoneNumber"
+              value={formData.phoneNumber}
               onChange={handleInputChange}
               className="register2-input"
             />
@@ -266,13 +266,13 @@ export default function JoinPage() {
             <input
               type="text"
               placeholder="전화번호"
-              name="phonenumber"
-              value={formData.phonenumber}
+              name="phoneNumber"
+              value={formData.phoneNumber}
               onChange={handleInputChange}
               className="register2-input"
             />
             {errors.phoneNumber && (
-              <p className="error-text">{errors.phonenumber}</p>
+              <p className="error-text">{errors.phoneNumber}</p>
             )}
             <input
               type="text"
@@ -287,7 +287,10 @@ export default function JoinPage() {
         <button className="register2-btn" onClick={handleRegister}>
           회원가입
         </button>
-      </div>
+        </div>
+        <p className="signup-link" onClick={goToLoginPage}>
+        피클 홈페이지에서 로그인
+      </p>
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
