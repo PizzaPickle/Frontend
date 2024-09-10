@@ -20,7 +20,7 @@ import {
     StyledTabContent,
 } from './RealtimeConsulting.style';
 
-const API_BASE_URL = 'http://pickle.my/consulting-room';
+const API_BASE_URL = 'https://pickle.my/consulting-room';
 
 const RealTimeConsultingRoom = () => {
     const userId = useSelector((state) => state.user?.id) || 'soo';
