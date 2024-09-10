@@ -45,12 +45,12 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
             <LegendText>{category.id}</LegendText>
           </LengendTextGroup>
           <ProfitRatioText isPositive={profitRatio > 0}>
-            {profitRatio.toFixed(2)}%
+          {isNaN(profitRatio) ? '0.00' : profitRatio.toFixed(2)}%
           </ProfitRatioText>
           
           <LegendText>{formatNumber((category.totalPurchaseAmount).toFixed(0))}</LegendText>
           <LegendText>{formatNumber(totalEvaluationAmount.toFixed(0))}</LegendText>
-          <LegendText>{currentRatio.toFixed(2)}%</LegendText>
+          <LegendText>{isNaN(currentRatio) ? '0.00' : currentRatio.toFixed(2)}%</LegendText>
           <LegendText>{(category.value * 100).toFixed(2)}%</LegendText>
           
   
@@ -59,7 +59,17 @@ export default function Legend({ category, activate, gap, totalEvaluationAmountA
       </LegendDiv>
       <Table>
         {isHovered && (
-          <div style={{ position: "absolute", top: "100%", left: 7, zIndex: 10 }}>
+          <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 7,
+            zIndex: 10,
+            opacity: isHovered ? 1 : 0,
+            transform: isHovered ? "translateY(0)" : "translateY(-10px)",
+            transition: "opacity 0.5s ease, transform 0.7s ease",
+          }}
+        >
             <StockTable
               productList={category.productDtos}
               categoryName={category.id}

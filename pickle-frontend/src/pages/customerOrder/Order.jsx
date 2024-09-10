@@ -20,10 +20,9 @@ import {StyledHomeMainContent,
 
 
         } from "./Order.style";
-import { StyledHomeContainer, StyledHomeContent } from '../homePage/HomePage.style'
+import { StyledHomeContainer } from '../homePage/HomePage.style'
 import StrategyBox from '../../components/common/order/StrategyBox';
-import { Database } from 'lucide-react';
-import { MdSouth } from 'react-icons/md';
+
 
 export default function Order() {
     
@@ -50,21 +49,14 @@ export default function Order() {
         setAmounts(prevAmounts => ({
             ...prevAmounts,
             ...updatedAmounts
-        })); // 업데이트된 amounts를 저장
+        })); 
     };
-
-    // const formatNumber = (value) => {
-    //     if (!value) return '';
-    //     const [integer, decimal] = value.split('.');
-    //     return integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (decimal ? '.' + decimal : '');
-    // };
 
     const handleChange = (e) => {
         const rawValue = e.target.value.replace(/,/g, ''); 
         setInputValue(formatNumber(rawValue));
     };
     const parseFormattedNumber = (value) => {
-        // 쉼표를 제거하고 숫자로 변환
         return parseInt(value.replace(/,/g, ''), 10);
       };
 
@@ -80,7 +72,7 @@ export default function Order() {
         const fetchData = async () => {
             try {
                 
-                const response = await fetch(`/api/pickle-customer/trade/products/1`, {
+                const response = await fetch(`/api/pickle-customer/trade/products/4`, {
                     method: 'GET', 
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -117,7 +109,7 @@ export default function Order() {
     const handleButtonClick = () => {
         setApplyClicked(true);
         handleClose();
-        setTriggerHeldQuantities(prev => prev + 1); // triggerHeldQuantities 값을 증가시켜 변화를 감지
+        setTriggerHeldQuantities(prev => prev + 1); 
     };
 
     useEffect(() => {
@@ -182,11 +174,12 @@ export default function Order() {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(payload),  // Send the payload as JSON
+            body: JSON.stringify(payload),  
           });
       
           if (!response.ok) {
-            throw new Error('API 요청 실패');
+            const errorMessage = await response.text();
+            throw new Error(errorMessage)
           }
       
           const result = await response.json();
@@ -196,6 +189,7 @@ export default function Order() {
         } catch (error) {
           console.error('체결 요청 에러:', error.message);
           alert("주문이 실패하였습니다.")
+      
         }
       };
     
@@ -224,18 +218,17 @@ export default function Order() {
                 </SecondHeader>
                 <StyledContent>
                 {data && data.map((category, index) => {
-                        if (category.categoryName === "국내" || category.categoryName === "해외") {
-                            const categoryStockIds = category.productList.map(product => product.code);
-
+                        if (category.categoryName === "국내" ) {
                             return (
                                 <Category key={index}>
                                     <CategoryName>{category.categoryName}</CategoryName>
-                                    <StrategyBox productList={category.productList} stockIds={categoryStockIds} inputValue={parseFormattedNumber(inputValue)} 
+                                    <StrategyBox productList={category.productList} stockIds={stockIds} inputValue={parseFormattedNumber(inputValue)} 
                                     categoryRatio={category.categoryRatio}
                                     categoryName={category.categoryName}
                                     triggerHeldQuantities={triggerHeldQuantities}
                                     onPriceChange={handlePriceChange}
                                     onAmountChange={handleAmountChange}
+                                    applyClicked={applyClicked}
                                     
                                     />
                                 </Category>
@@ -254,6 +247,7 @@ export default function Order() {
                                     triggerHeldQuantities={triggerHeldQuantities}
                                     onPriceChange={handlePriceChange}
                                     onAmountChange={handleAmountChange}
+                                    applyClicked={applyClicked}
                                     
                                 />
                             </Category>
