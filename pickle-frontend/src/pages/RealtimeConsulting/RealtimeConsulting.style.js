@@ -33,8 +33,9 @@ export const StyledConsultingMainContent = styled.div`
 export const StyledConsultingContent = styled.div`
     width: 100vw;
     height: 100vh;
-    padding: 20px;
+    padding: 50px;
     overflow-y: auto;
+    
 `;
 
 export const StyledHeadText = styled.div`
@@ -48,7 +49,7 @@ export const StyledConsultingSection = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 10px;
-    marginbottom: 25px;
+    margin-bottom: 25px;
 
     article {
         display: flex;
