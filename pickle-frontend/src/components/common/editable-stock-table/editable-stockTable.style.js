@@ -28,9 +28,9 @@ export const Th = styled.th`
 `;
 
 export const Td = styled.td`
-  max-width: 40px;
+  max-width: 15px;
   min-width: 25px;
-  padding: 1rem 0 0.5rem 0;
+  padding: 1rem 0 1rem 0;
 `;
 
 export const Horizon = styled.hr`
@@ -54,4 +54,23 @@ export const AlertContainer = styled.div`
   padding: 0.5rem 1rem;
   transition: opacity 0.3s ease-in-out;
   color: #ff000080;
+`;
+
+export const Tbody = styled.tbody`
+  display: block;
+  max-height: 205px;
+  overflow-y: scroll;
+  min-height: 200px;
+`;
+
+export const Tr = styled.tr`
+  display: table;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    background-color: #d3d3d363;
+    border-radius: 10px;
+  }
+  margin-bottom: 5px;
 `;

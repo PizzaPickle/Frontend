@@ -34,10 +34,13 @@ import {
   addProductInSelectedCategory,
   clearData,
   selectCategory,
+  setThemeList,
 } from "../../store/reducers/strategy";
 import EditableStockTable from "../../components/common/editable-stock-table/EditableStockTable";
 import { BsSearch } from "react-icons/bs";
 import SearchModal from "../../components/consult/search-modal/SearchModal";
+import { createStrategy, readThemeList } from "../../api/commonApi";
+import SubmitStrategyModal from "../../components/consult/submit-strategy-modal/SubmitStrategyModal";
 
 export default function BacktestPage() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -86,15 +89,32 @@ export default function BacktestPage() {
     }
   }, [location, dispatch]);
 
+  useEffect(() => {
+    const fetchThemeList = async () => {
+      const response = await readThemeList();
+      console.log(response.data.categories);
+      dispatch(setThemeList({categories : response.data.categories}));
+    };
+    
+    fetchThemeList();
+  
+    return () => {
+    };
+  }, []);
+
+  const submitStrategy = () => {
+    createStrategy
+  }
+
   return (
     <>
       <StyledConsultContainer>
         <StyledConsultBox>
           <StyledConsultSide>
             {[
-              { text: "상담 요청서", link: "/consult/backtest" },
-              { text: "기존 전략", link: "/consult/backtest/portfolio" },
-              { text: "전략 생성", link: "/consult/backtest/strategy" },
+              { text: "전략 생성", link: "/consult/backtest" },
+              { text: "마이데이터", link: "/consult/backtest/mydata" },
+              // { text: "전략 생성", link: "/consult/backtest/strategy" },
             ].map((item, index) => (
               <LinkWrapper key={index} onClick={() => handleClick(index)}>
                 <HighlightBox visible={selectedIndex === index} />
@@ -161,7 +181,7 @@ export default function BacktestPage() {
                   </CategoryInfoContainer>
                   {/* 예시용 input임 */}
                   <div onClick={() => setActiveSearchModal(true)}>
-                    <ProductInput placeholder="종목명 혹은 종목코드 입력" />
+                    <ProductInput placeholder="종목명 입력" />
                     <ProductInputButton>
                       <BsSearch
                         color="white"
@@ -178,7 +198,7 @@ export default function BacktestPage() {
               </StockTableContainer>
               <section className="Bottom"></section>
               <section className="footer" style={{position: "relative"}}>
-                <CreateStrategyBtn>전략 확정</CreateStrategyBtn>
+                <CreateStrategyBtn onClick={submitStrategy}>전략 확정</CreateStrategyBtn>
               </section>
             </StyledLeftDiv>
           </StyledLeftContent>
@@ -193,6 +213,7 @@ export default function BacktestPage() {
           setActiveSearchModal={setActiveSearchModal}
         />
       )}
+      <SubmitStrategyModal />
     </>
   );
 }
