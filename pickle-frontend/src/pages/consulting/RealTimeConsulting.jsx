@@ -106,30 +106,33 @@ const RealTimeConsultingRoom = () => {
     }, [activeTab, fetchWaitingRooms]);
 
     const joinConsultingRoom = (roomId, userName, userId) => {
-        const newWindow = window.open('', `consultingRoom_${roomId}`);
+        window.open(
+            `https://pickle.my/consulting-room/${roomId}?userId=${userId}&userName=${userName}`
+        );
+        // const newWindow = window.open('', `consultingRoom_${roomId}`);
 
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `${API_BASE_URL}/${roomId}`;
-        form.target = `consultingRoom_${roomId}`;
+        // const form = document.createElement('form');
+        // form.method = 'POST';
+        // form.action = `${API_BASE_URL}/${roomId}`;
+        // form.target = `consultingRoom_${roomId}`;
 
-        const fields = [
-            { name: 'roomId', value: roomId },
-            { name: 'userName', value: userName },
-            { name: 'userId', value: userId },
-        ];
+        // const fields = [
+        //     { name: 'roomId', value: roomId },
+        //     { name: 'userName', value: userName },
+        //     { name: 'userId', value: userId },
+        // ];
 
-        fields.forEach((field) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = field.name;
-            input.value = field.value;
-            form.appendChild(input);
-        });
+        // fields.forEach((field) => {
+        //     const input = document.createElement('input');
+        //     input.type = 'hidden';
+        //     input.name = field.name;
+        //     input.value = field.value;
+        //     form.appendChild(input);
+        // });
 
-        newWindow.document.body.appendChild(form);
+        // newWindow.document.body.appendChild(form);
 
-        form.submit();
+        // form.submit();
     };
 
     const formatDate = (dateString) => {
