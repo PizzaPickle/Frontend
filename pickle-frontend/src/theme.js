@@ -8,7 +8,8 @@ export const theme = {
       sidebar: "#6F6C99",
       stockRed: "#FF5C00",
       deep_gray: "#636566",
-      dashboard_gray: "#F9F9F9"
+      dashboard_gray: "#F9F9F9",
+      purple:"#4B4FFF"
     },
     boxShadow: {
         default: "6px 6px 54px rgba(0, 0, 0, 0.03)"

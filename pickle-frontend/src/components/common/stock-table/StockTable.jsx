@@ -8,6 +8,7 @@ import {
   Thead,
   Th,
 } from "./stockTable.style";
+import React from "react";
 
 export default function StockTable({ productList, width }) {
   const keysOrder = ["name", "code", "themeName", "ratio"];
@@ -33,7 +34,7 @@ export default function StockTable({ productList, width }) {
         </Thead>
         {/* <Horizon /> */}
         <tbody>
-          {productList.map((product) => (
+          {productList?.map((product) => (
             <tr key={product.code}>
               {keysOrder.map((value) => (
                 <Td key={value}>

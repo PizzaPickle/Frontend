@@ -6,16 +6,60 @@ import WalletCard from "../../components/common/wallet-card/WalletCard";
 import { AllMoneyTitle, StyledContentFlex, StyledS1Text, StyledHomeContainer, StyledHomeContent, StyledHomeMainContent, StyledHeadText, StyledHomeSection, StyledContentBlock, StyledHead2Text, StyledPbCard, StyledAllMoneyContainer } from "./HomePage.style";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, logoutUser } from "../../store/reducers/user";
+import { useState } from "react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function HomePage(){    
+    const [requestNum,setRequestNum] = useState(0);
+
+    // 계좌에 든 게 없어서 .. ui 화면을 위해 초기값 넣어둘게요
+    const [walletData, setWalletData] = useState({
+        accountId: 123,
+	    accountNumber: "123-456789-01-001",
+	    balance: 49900, //예수금
+	    totalAmount: 23482000, //총매입금액
+});
+    const [productData, setProductData] = useState(
+        [
+            {
+                "accountId": 12341243,
+                "productName": "삼성전자",
+                "productCode": "005930",
+                "heldQuantity": 34, 
+                "purchaseAmount": 34,
+                "evaluationAmount": 78900, //평가금액
+                "profitAmount": 75600, //(평가)손익금액
+                "profitMargin": 0.35,
+                "categoryName": "국내주식", 
+                "themeName": "반도체"
+            },
+            {
+                "accountId": 1234513,
+                "productName": "Apple",
+                "productCode": "APPL",
+                "heldQuantity": 34,
+                "purchaseAmount": 34,
+                "evaluationAmount": 78900,
+                "profitAmount": 75600,
+                "profitMargin": 2.34,
+                "categoryName": "해외주식",
+                "themeName": "IT"
+            }
+        ]        
+    );
+
+    // TODO 투자여유금액 계산 API 요청
+    const possibleAmount = 23325234;
+
     
     //TODO
     const consultPB = "윤재욱";
-    const consultReqNum = 3;
 
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
     const userName = useSelector((state) => state.user.name);
+    const { token } = useSelector((state) => state.user); 
 
     const now = new Date();
     const consultDate = new Date(); //!! 상담일자로 변경해야 함
@@ -29,8 +73,8 @@ export default function HomePage(){
 
 
     //내 자산 지갑
-    const walletTexts = ["내 포트폴리오 자산", "총 자산", "투자 여유 금액"]
-    const walletAmounts = [7532220, 254032350, 12321200]
+    const walletTexts = ["내 잔액", "총 매입금액", "투자여유금액"]
+    const walletAmounts = [walletData.accountNumber,walletData.balance,walletData.totalAmount,possibleAmount]
 
     const slidesData = [
         {
@@ -54,6 +98,95 @@ export default function HomePage(){
         { label: "none ", amount: " none" },
         { label: "none ", amount: " none" },
     ];
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-asset', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+
+                const result = await response.json();
+
+                setWalletData(result.data);
+
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+
+        fetchData();
+    }, [token]);
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                const response = await fetch('/api/pickle-customer/my-products', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error('네트워크 에러');
+                }
+    
+                const result = await response.json();
+                setProductData(result.data);
+    
+            } catch (error) {
+                console.error("fetch 실패: ", error);
+            }
+        };
+    
+        fetchProductData();
+    }, [token]);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`/api/pickle-common/consulting/customer/request-letters?status=1`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.log(`네트워크 응답이 올바르지 않습니다: ${errorText}`);
+              setError("서버 응답 오류");
+              return;
+            }
+    
+            const result = await response.json();
+    
+            setRequestNum(result.data.length);
+            console.log(result.data.length);
+    
+    
+          } catch (error) {
+            console.log("데이터 요청 실패:", error.message);
+            setError(error.message);
+          }
+        };
+    
+        fetchData();
+    
+      }, [token]);
+
 
     return (
         <StyledHomeContainer>
@@ -84,8 +217,8 @@ export default function HomePage(){
                         <StyledContentBlock>
                             <StyledS1Text>
                                     <div>내가 보낸 요청</div>
-                                    <span><div>{consultReqNum}건</div></span>                               
-                                    <img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img>
+                                    <span><div>{requestNum}건</div></span>                               
+                                    <Link to="/myrequest"><img src="/assets/home-next.svg" style={{marginLeft:"8px"}}></img></Link>
                             </StyledS1Text>
                         </StyledContentBlock>
                         </article>
@@ -130,25 +263,31 @@ export default function HomePage(){
                         </StyledHead2Text>
                         <StyledContentFlex>                        
                             <StyledPbCard>
+                                <Link to={'/pblist'}>
                                 <div>
                                 ETF잘알<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb1.svg"></img>
+                                </Link>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#FFDF6F"}}>
+                                <Link to={'/pblist'}>
                                 <div>
                                 국장 전문<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb2.svg"></img>
+                                </Link>
                             </StyledPbCard>
                             <StyledPbCard style={{backgroundColor: "#F8ADFF"}}>
+                                <Link to={'/pblist'}>
                                 <div>
                                 미장 전문<br/>
                                 PB
                                 </div>
                                 <img src="/assets/home-pb3.svg"></img>
+                                </Link>
                             </StyledPbCard>
                         </StyledContentFlex>
                     </StyledHomeSection>

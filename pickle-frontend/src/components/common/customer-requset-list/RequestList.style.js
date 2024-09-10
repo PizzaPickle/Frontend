@@ -5,16 +5,15 @@ export const Container=styled.div`
     background-color: ${({ theme }) => theme.colors.background_deep};
     display: flex;
     position: relative;
-    padding: 20px;
+    padding: 30px 10px 30px 10px;
     border-radius: 20px;
     align-items: center;
+
     
 `
 export const CardContainer=styled.div`
    display: flex;
    gap: 20px;
-    
-
 `
 export const PBImg=styled.img`
     width: 78px;
@@ -29,7 +28,7 @@ export const PBInfo=styled.div`
 export const InfoHeader=styled.div`
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
 `
 export const PBName=styled.div`
     font-size: 21px;
@@ -108,15 +107,17 @@ export const ReRequest=styled.button`
     cursor: pointer;
 `
 export const ConsultingStatus=styled.div`
-    width: 80px;
+    width: 70px;
     height: 28px;
-    background-color:#919399;
-    border-radius: 12px;
+    background-color:  ${({ theme }) => theme.colors.purple};
+    border-radius: 20px;
     color: white;
     align-items: center;
     display: flex;
     justify-content: center;
-    font-size: 14px;
+    font-size: 0.7rem;
     font-weight: 300;
+    margin-left: 10px;
+
 
 `
