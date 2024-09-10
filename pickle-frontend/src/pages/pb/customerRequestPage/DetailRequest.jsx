@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent } from "../../homepage/HomePage.style";
+import { StyledHomeContainer, StyledHomeMainContent, StyledHomeContent } from "../../homePage/HomePage.style";
 import Sidebar from "../../../components/common/sidebar/Sidebar";
 import Header from "../../../components/common/header/Header";
 import { StyledContentBlock, StyledHeadText } from "../../RealtimeConsulting/RealtimeConsulting.style";

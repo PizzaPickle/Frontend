@@ -18,7 +18,7 @@ import {StyledHomeMainContent,
 
 
         } from "./Order.style";
-import { StyledHomeContainer, StyledHomeContent } from '../Homepage/HomePage.style'
+import { StyledHomeContainer, StyledHomeContent } from '../homePage/HomePage.style'
 import StrategyBox from '../../components/common/order/StrategyBox';
 import { Database } from 'lucide-react';
 import { MdSouth } from 'react-icons/md';
