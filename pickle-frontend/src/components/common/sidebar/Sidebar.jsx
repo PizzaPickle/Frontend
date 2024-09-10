@@ -14,7 +14,7 @@ export default function Sidebar() {
                 <StyledSideText><img src="/assets/side-mydata.svg" className="icon"></img><span>마이 자산데이터</span></StyledSideText>
                 </Link>
                 <StyledSideTextGroup>
-                <Link to="/homepage" style={{ textDecoration: 'none' }}>
+                <Link to="/portfolio" style={{ textDecoration: 'none' }}>
                 <section><img src="/assets/side-port.svg" className="icon"></img><span style={{color: "#6F6C99"}}>내 포트폴리오</span></section>
                 </Link>
                 <Link to="/homepage" style={{ textDecoration: 'none' }}>

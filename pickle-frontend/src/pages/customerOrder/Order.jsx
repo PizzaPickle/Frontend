@@ -190,6 +190,7 @@ export default function Order() {
           const result = await response.json();
           console.log('체결 성공:', result);
           alert("주문이 완료되었습니다.")
+          window.location.href = '/portfolio';
 
         } catch (error) {
           console.error('체결 요청 에러:', error.message);
