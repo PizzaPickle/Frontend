@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SearchContainer = styled.div`
   padding: 0 10%;
   position: relative;
-  height: 70vh;
+  height: ${({ height }) => height || "70vh"};
   padding-top: ${({ padding }) => padding || "0"};
 `;
 
@@ -74,4 +74,82 @@ export const RadioLabel = styled.label`
 
 export const RadioInput = styled.input`
   /* margin-right: 10px; */
+`;
+
+export const ThemeListContainer = styled.div`
+  width: 90%;
+  height: 55%;
+  margin: 0 auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`;
+
+export const ThemeTag = styled.div`
+  background-color: rgba(2, 32, 71, 0.05);
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 11px;
+  cursor: pointer;
+  max-height: 24px;
+  &:hover {
+    background-color: rgba(0, 27, 55, 0.1);
+  }
+`;
+
+export const ThemeClear = styled.button`
+  position: absolute;
+  border: none;
+  top: 12px;
+  right: 15px;
+  border-radius: 9px;
+  &:hover {
+    background-color: #ffb6b6;
+  }
+`;
+
+export const ItemsContainer = styled.div`
+  height: 80%;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-top: 10px;
+  padding: 0 5px;
+`;
+
+export const ProductContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  &:hover{
+    background-color: #d3d3d363;
+    border-radius: 10px;
+  }
+`;
+
+export const ProductImg = styled.img`
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+`;
+
+export const ProdcutText = styled.p`
+  color: gray;
+  font-size: small;
+`;
+
+export const ProdcutTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ProdcutTextContainerRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;

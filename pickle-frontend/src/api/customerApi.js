@@ -5,7 +5,7 @@ import { setToken, setUser } from "../store/reducers/user"; // 액션 import
 export const customerJoin = async (formData) => {
   try {
     const response = await defaultInstance.post(
-      `/api/pickle-customer/join`,
+      `/pickle-customer/join`,
       formData
     );
     console.log(response);
@@ -19,7 +19,7 @@ export const customerJoin = async (formData) => {
 export const customerToken = async (formData, dispatch) => {
   try {
     const response = await defaultInstance.post(
-      `/api/pickle-customer/token`,
+      `/pickle-customer/token`,
       formData
     );
 
@@ -59,7 +59,7 @@ export const customerToken = async (formData, dispatch) => {
 export const fetchConsultingHistories = async () => {
   try {
     const response = await defaultInstance.get(
-      `/pickle-common/api/consulting/customer/histories`
+      `/pickle-common/consulting/customer/histories`
     );
     return response.data;
   } catch (error) {
@@ -76,7 +76,7 @@ export const fetchConsultingHistories = async () => {
 export const fetchStrategyResult = async (strategyId) => {
   try {
     const response = await defaultInstance.get(
-      `/pickle-common/api/strategy/result/${strategyId}`
+      `/pickle-common/strategy/result/${strategyId}`
     );
     return response.data;
   } catch (error) {
