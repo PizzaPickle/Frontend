@@ -36,20 +36,6 @@ export default function LegendWithGraph({ data, width, height, top, left, fontSi
     const totalAmount = calculateTotalEvaluationAmount();
     setTotalAllevaluationPrice(totalAmount);
   }, [data, stockPrices]);
-
-
-  // const calculateTotalEvaluationAmount = () => {
-  //   let total = 0;
-  //   categories.forEach((category) => {
-  //     category.productDtos.forEach((product) => {
-  //       // 각 종목의 평가금액을 계산하여 더합니다 (실시간 데이터 사용하지 않고 이미 계산된 값 사용)
-  //       total += (stockPrices[product.code] || 0) * product.quantity;
-  //     });
-  //   });
-  
-  //   return total;
-  // };
-  // const totalEvaluationAmountAllCategories = calculateTotalEvaluationAmount();
  
 
   return (
