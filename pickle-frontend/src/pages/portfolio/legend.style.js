@@ -40,36 +40,36 @@ export const ColorCircle = styled.div`
 `;
 
 export const LegendLeftContainer = styled.div`
-  width: 630px;
+  width: 680px;
   display: flex;
   align-items: center;
-  /* gap:  ${(props) => props.gap || '20px'}; */
   background: none;
   justify-content: space-around;
-  gap: 70px;
-
+  /* gap: 50px; */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+  justify-items: center;
 `;
 
 export const LegendAlert = styled.div`
   background-color: white;
-`
-export const LengendTextGroup=styled.div`
+`;
+export const LengendTextGroup = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 3px;
+  gap: 5px;
   justify-content: center;
   align-items: center;
-`
+`;
 
-export const Table=styled.div`
+export const Table = styled.div`
   position: absolute;
-  left: -35%;
-  top:150%;
-  
-`
+  left: -30%;
+  top: 170%;
+`;
 export const ProfitRatioText = styled.span`
-  color: ${({ isPositive }) => (isPositive ? 'red' : 'blue')};
+  color: ${({ isPositive }) => (isPositive ? "red" : "blue")};
   margin: 0;
   background: none;
-  
 `;
