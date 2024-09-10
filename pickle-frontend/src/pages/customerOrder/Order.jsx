@@ -195,6 +195,7 @@ export default function Order() {
 
         } catch (error) {
           console.error('체결 요청 에러:', error.message);
+          alert("주문이 실패하였습니다.")
         }
       };
     

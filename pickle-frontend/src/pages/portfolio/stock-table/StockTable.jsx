@@ -21,8 +21,14 @@ export default function StockTable({ productList, width, categoryName, onTotalEv
   const calculateEvaluationAmount = (product) => {
     const currentPrice = parseFloat(stockPrices[product.code]) === 0 || isNaN(parseFloat(stockPrices[product.code])) ? 1 : parseFloat(stockPrices[product.code]);
     console.log(currentPrice);
-    return product.quantity * currentPrice;
+    return (product.quantity * currentPrice);
   };
+  function formatNumber(number) {
+    const numStr = number.toString();
+    const [integerPart, decimalPart] = numStr.split('.');
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+}
 
 
 
@@ -92,8 +98,8 @@ export default function StockTable({ productList, width, categoryName, onTotalEv
                   {product.ratio && <ProgressBar ratio={product.ratio * 100} />} {/* 기존비율을 ProgressBar로 표시 */}
                 </Td>
                 <Td>{product.quantity}</Td>
-                <Td>{product.purchaseAmount}</Td>
-                <Td>{evaluationAmount.toFixed(1)}</Td>
+                <Td>{formatNumber((product.purchaseAmount).toFixed(0))}</Td>
+                <Td>{formatNumber(evaluationAmount.toFixed(0))}</Td>
               </tr>
             );
           })}
