@@ -25,7 +25,7 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { readThemeList, searchProduct } from "../../../api/commonApi";
-import { addProductInSelectedCategory } from "../../../store/reducers/strategy";
+import { addProductInSelectedCategory } from "../../../store/reducers/preset";
 
 export default function SearchModal({
   activeSearchModal,

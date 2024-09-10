@@ -20,10 +20,9 @@ import {
     StyledTabContent,
 } from './RealtimeConsulting.style';
 
+const API_BASE_URL = 'https://pickle.my/consulting-room';
 
-const API_BASE_URL = 'http://pickle.my/consulting-room';
-
-const RealtimeConsultingRoom = () => {
+const RealTimeConsultingRoom = () => {
     const userId = useSelector((state) => state.user?.id) || 'soo';
     const userName = useSelector((state) => state.user?.name) || 'soo';
     const [waitingRooms, setWaitingRooms] = useState([]);
@@ -99,7 +98,7 @@ const RealtimeConsultingRoom = () => {
     useEffect(() => {
         if (activeTab === 'waiting') {
             fetchWaitingRooms();
-            const intervalId = setInterval(fetchWaitingRooms, 30000); // 30초마다 업데이트
+            const intervalId = setInterval(fetchWaitingRooms, 30000);
             return () => clearInterval(intervalId);
         } else if (activeTab === 'history') {
             fetchConsultingHistory();
@@ -107,28 +106,33 @@ const RealtimeConsultingRoom = () => {
     }, [activeTab, fetchWaitingRooms]);
 
     const joinConsultingRoom = (roomId, userName, userId) => {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `${API_BASE_URL}/${roomId}`;
-        form.target = `consultingRoom_${roomId}`;
+        window.open(
+            `https://pickle.my/consulting-room/${roomId}?userId=${userId}&userName=${userName}`
+        );
+        // const newWindow = window.open('', `consultingRoom_${roomId}`);
 
-        const fields = [
-            { name: 'roomId', value: roomId },
-            { name: 'userName', value: userName },
-            { name: 'userId', value: userId },
-        ];
+        // const form = document.createElement('form');
+        // form.method = 'POST';
+        // form.action = `${API_BASE_URL}/${roomId}`;
+        // form.target = `consultingRoom_${roomId}`;
 
-        fields.forEach((field) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = field.name;
-            input.value = field.value;
-            form.appendChild(input);
-        });
+        // const fields = [
+        //     { name: 'roomId', value: roomId },
+        //     { name: 'userName', value: userName },
+        //     { name: 'userId', value: userId },
+        // ];
 
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
+        // fields.forEach((field) => {
+        //     const input = document.createElement('input');
+        //     input.type = 'hidden';
+        //     input.name = field.name;
+        //     input.value = field.value;
+        //     form.appendChild(input);
+        // });
+
+        // newWindow.document.body.appendChild(form);
+
+        // form.submit();
     };
 
     const formatDate = (dateString) => {
@@ -257,7 +261,6 @@ const RealtimeConsultingRoom = () => {
             </StyledConsultingMainContent>
         </StyledConsultingContainer>
     );
-
 };
 
-export default RealtimeConsultingRoom;
+export default RealTimeConsultingRoom;

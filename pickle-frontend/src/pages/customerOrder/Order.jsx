@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../components/common/header/Header';
 import { Modal, Button } from 'react-bootstrap';
 import Sidebar from '../../components/common/sidebar/Sidebar';
@@ -25,49 +25,47 @@ import StrategyBox from '../../components/common/order/StrategyBox';
 
 
 export default function Order() {
-    
     const dispatch = useDispatch();
     const { prices: stockPrices } = useSelector((state) => state.stockPrices);
     const [show, setShow] = useState(false);
     const [orderShow, setOrderShow] = useState(false);
-    const [data, setData] = useState([]); 
+    const [data, setData] = useState([]);
     const [stocksPrices, setsStockPrices] = useState({});
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [inputValue, setInputValue]=useState('10,000,000');
+    const [inputValue, setInputValue] = useState('10,000,000');
     const { token } = useSelector((state) => state.user);
-    const [triggerHeldQuantities, setTriggerHeldQuantities]=useState(0);
+    const [triggerHeldQuantities, setTriggerHeldQuantities] = useState(0);
     const [stockIds, setStockIds] = useState({});
     const [orderResult, setOrderResult] = useState(0);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleOrderClose = () => setOrderShow(false);
     const handleOrderShow = () => setOrderShow(true);
-    const [amounts, setAmounts]=useState([]);
+    const [amounts, setAmounts] = useState([]);
     const [applyClicked, setApplyClicked] = useState(false);
     const handleAmountChange = (updatedAmounts) => {
-        setAmounts(prevAmounts => ({
+        setAmounts((prevAmounts) => ({
             ...prevAmounts,
             ...updatedAmounts
         })); 
     };
 
     const handleChange = (e) => {
-        const rawValue = e.target.value.replace(/,/g, ''); 
+        const rawValue = e.target.value.replace(/,/g, '');
         setInputValue(formatNumber(rawValue));
     };
     const parseFormattedNumber = (value) => {
         return parseInt(value.replace(/,/g, ''), 10);
-      };
-
-    const handlePriceChange = (newPrices) => {
-    setsStockPrices(prevPrices => ({
-        ...prevPrices,
-        ...newPrices
-    }));
     };
 
-    
+    const handlePriceChange = (newPrices) => {
+        setsStockPrices((prevPrices) => ({
+            ...prevPrices,
+            ...newPrices,
+        }));
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -83,28 +81,24 @@ export default function Order() {
                 }
                 const result = await response.json();
                 console.log(result);
-                setData(result); 
+                setData(result);
             } catch (error) {
-                setError(error); 
+                setError(error);
             } finally {
-                setLoading(false); 
+                setLoading(false);
             }
         };
 
-        fetchData(); 
-    },[]);
+        fetchData();
+    }, []);
 
-
-
-    useEffect(()=>{
-
+    useEffect(() => {
         if (data) {
-            const codes = data.flatMap(category => 
-                category.productList.map(product => product.code)
+            const codes = data.flatMap((category) =>
+                category.productList.map((product) => product.code)
             );
             setStockIds(codes);
         }
-       
     }, [data]);
     const handleButtonClick = () => {
         setApplyClicked(true);
@@ -116,27 +110,29 @@ export default function Order() {
         const fetchOrderResult = async () => {
             const formattedInputValue = parseFormattedNumber(inputValue);
             try {
-                const response = await fetch('api/pickle-customer/trade/price', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        price: formattedInputValue,
-                    }),
-                });
+                const response = await fetch(
+                    'api/pickle-customer/trade/price',
+                    {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            price: formattedInputValue,
+                        }),
+                    }
+                );
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
 
                 const result = await response.json();
-                
+
                 setOrderResult(result.price);
             } catch (error) {
                 throw new Error('fail');
-                
             }
         };
 
@@ -147,12 +143,19 @@ export default function Order() {
     function formatNumber(number) {
         const numStr = number.toString();
         const [integerPart, decimalPart] = numStr.split('.');
-        const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        return decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ','
+        );
+        return decimalPart
+            ? `${formattedIntegerPart}.${decimalPart}`
+            : formattedIntegerPart;
     }
     const handleOrderButtonClick = async () => {
         handleOrderClose();
-        dispatch(fetchStockPrices(data.flatMap(category => category.productList)));
+        dispatch(
+            fetchStockPrices(data.flatMap((category) => category.productList))
+        );
         if (!data || data.length === 0) return;
         const payload = {
           strategyId: 4,  
@@ -171,7 +174,7 @@ export default function Order() {
             })
           ),
         };
-      
+
         try {
           const response = await fetch('/api/pickle-customer/trade', {
             method: 'POST',
@@ -197,8 +200,7 @@ export default function Order() {
           alert("주문이 실패하였습니다.")
       
         }
-      };
-    
+    };
 
     return (
         <StyledHomeContainer>
@@ -268,33 +270,37 @@ export default function Order() {
             
             </StyledHomeMainContent>
             <Modal show={show} onHide={handleClose} animation={false} size="lg">
-        <Modal.Header closeButton>
-          
-        </Modal.Header>
-        <Modal.Body>{inputValue}원으로 투자할 경우, 추가 매수/매도 정보를 계산하시겠습니까?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            취소
-          </Button>
-          <Button variant="primary" onClick={handleButtonClick}>
-            확인
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={orderShow} onHide={handleOrderClose} animation={false} size="lg">
-        <Modal.Header closeButton>
-          
-        </Modal.Header>
-        <Modal.Body>정말 주문하시겠습니까?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleOrderClose}>
-            취소
-          </Button>
-          <Button variant="primary" onClick={handleOrderButtonClick} >
-            확인
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                    {inputValue}원으로 투자할 경우, 추가 매수/매도 정보를
+                    계산하시겠습니까?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        취소
+                    </Button>
+                    <Button variant="primary" onClick={handleButtonClick}>
+                        확인
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal
+                show={orderShow}
+                onHide={handleOrderClose}
+                animation={false}
+                size="lg"
+            >
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>정말 주문하시겠습니까?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleOrderClose}>
+                        취소
+                    </Button>
+                    <Button variant="primary" onClick={handleOrderButtonClick}>
+                        확인
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </StyledHomeContainer>
     );
 }

@@ -7,20 +7,7 @@ const initialState = {
       label: 1,
       value: 20,
       color: "#FF6767",
-      productList: [
-        // {
-        //   code: "000660",
-        //   ratio: 50,
-        //   themeName: "반도체",
-        //   name: "하이닉스",
-        // },
-        // {
-        //   code: "005930",
-        //   ratio: 50,
-        //   themeName: "반도체",
-        //   name: "삼성전자",
-        // },
-      ],
+      productList: [],
       isValidProductRatio: false,
       selected: true,
       themeList: [],
@@ -69,8 +56,8 @@ const initialState = {
   isValidCategoryRatio: true,
 };
 
-const strategySlice = createSlice({
-  name: "strategy",
+const presetSlice = createSlice({
+  name: "preset",
   initialState: initialState,
   reducers: {
     setData: (state, action) => {
@@ -210,6 +197,6 @@ export const {
   clearData,
   updateProductRatio,
   setThemeList,
-} = strategySlice.actions;
+} = presetSlice.actions;
 
-export default strategySlice.reducer;
+export default presetSlice.reducer;

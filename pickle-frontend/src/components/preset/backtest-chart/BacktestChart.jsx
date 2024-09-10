@@ -12,16 +12,11 @@ import {
 } from "../../consult/search-modal/search-modal.style";
 import { useSelector } from "react-redux";
 import { backtest, integratedBacktest } from "../../../api/PBApi";
-import {
-  StyledButton,
-  StyledFormControl,
-  StyledInputGroup,
-} from "../../../pages/pb/createPresetPage/create-preset.style";
 
 const BacktestChart = (props) => {
-  const categoryList = useSelector((state) => state.strategy.data);
+  console.log(props);
+  const categoryList = useSelector((state) => state.preset.data);
   const [activeCategoryFitler, setActiveCategoryFitler] = useState(false);
-
 
   const handleCategoryChange = (e) => {
     setActiveCategoryFitler(false);
@@ -49,6 +44,11 @@ const BacktestChart = (props) => {
   };
 
   const handleIntegratedBacktest = async () => {
+    if (Number(props.balance()) < 1000000) {
+      alert("백테스트할 금액이 1,000,000 이상이어야 합니다");
+      return;
+    }
+
     const validCategoryList = categoryList.filter(
       (category) => category.isValidProductRatio
     );
@@ -68,7 +68,7 @@ const BacktestChart = (props) => {
         start_from_latest_stock: "false",
         portfolio: {
           stock_list: request_stock_list,
-          balance: parseFormattedNumber(inputValue) || 1000000,
+          balance: Number(props.balance),
           interval_month: 1,
           start_date: "20100101",
           end_date: "20221231",
@@ -130,18 +130,17 @@ const BacktestChart = (props) => {
   const handleBacktest = async (request_stock_list) => {
     const url = "/backtest";
 
+    if (Number(props.balance) < 100000) {
+      alert("백테스트할 금액이 100,000 이상이어야 합니다");
+      return;
+    }
+
     //요청할 포트폴리오 데이터 형식
     const portData = {
       start_from_latest_stock: "false",
       portfolio: {
-        stock_list:
-          // [
-          //   ["AAPL", "Apple", 0.25, "true"],
-          //   ["TSLA", "테슬라", 0.25, "true"],
-          //   ["005930", "삼성전자", 0.5, "false"],
-          // ]
-          request_stock_list,
-        balance: parseFormattedNumber(inputValue) || 1000000,
+        stock_list: request_stock_list,
+        balance: Number(props.balance),
         interval_month: 1,
         start_date: "20100101",
         end_date: "20221231",
@@ -379,27 +378,6 @@ const BacktestChart = (props) => {
             `;
       };
 
-      // const updateLegend = (param) => {
-      //   const validCrosshairPoint = !(
-      //     param === undefined ||
-      //     param.time === undefined ||
-      //     param.point.x < 0 ||
-      //     param.point.y < 0
-      //   );
-      //   const bar = validCrosshairPoint
-      //     ? param.seriesData.get(areaSeries)
-      //     : getLastBar(areaSeries);
-      //   const time = bar.time;
-      //   const price = bar.value !== undefined ? bar.value : bar.close;
-      //   const formattedPrice = formatPrice(price);
-      //   setTooltipHtml(symbolName, time, formattedPrice);
-      // };
-
-      // chart.subscribeCrosshairMove(updateLegend);
-
-      // Initial update
-      // updateLegend(undefined);
-
       const toolTipWidth = 80;
       const toolTipHeight = 80;
       const toolTipMargin = 15;
@@ -417,52 +395,18 @@ const BacktestChart = (props) => {
     }
   }, [integratedBacktestResult]);
 
-  const [inputValue, setInputValue] = useState(null);
-
-  const handleChange = (e) => {
-    const rawValue = e.target.value.replace(/,/g, "");
-    setInputValue(formatNumber(rawValue));
-  };
-
-  function formatNumber(number) {
-    const numStr = number.toString();
-    const [integerPart, decimalPart] = numStr.split(".");
-    const formattedIntegerPart = integerPart.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ","
-    );
-    return decimalPart
-      ? `${formattedIntegerPart}.${decimalPart}`
-      : formattedIntegerPart;
-  }
-
-  const parseFormattedNumber = (value) => {
-    // 쉼표를 제거하고 숫자로 변환
-    return parseInt(value.replace(/,/g, ""), 10);
-  };
-
   return (
-    <>
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ position: "relative" }}>
         <RunBacktestButton
           onClickIntegrated={handleIntegratedBacktest}
           onClick={() => setActiveCategoryFitler((prev) => !prev)}
         ></RunBacktestButton>
-        <StyledInputGroup>
-          <StyledFormControl
-            value={inputValue}
-            onChange={(e) => handleChange(e)}
-          />
-          <StyledButton variant="outline-secondary" id="button-addon2">
-            Apply
-          </StyledButton>
-        </StyledInputGroup>
         {activeCategoryFitler && (
           <DropDownContainer>
             <SearchContainer padding="10px">
@@ -475,7 +419,6 @@ const BacktestChart = (props) => {
                       name="category"
                       value={category.id}
                       onChange={handleCategoryChange}
-                      // checked={selectedCategory === category.id}
                     />
                     {category.id}
                   </RadioLabel>
@@ -493,11 +436,6 @@ const BacktestChart = (props) => {
             ref={chartContainerRef}
             style={{ width: "100%", height: "300px" }} // div 스타일 설정
           ></div>
-          {/* {colors.map((i,elem)=> (
-        <StyledColorLegend color={elem}>
-          <section></section>
-        </StyledColorLegend>
-        ))} */}
           <section>
             <p>샤프 비율</p> {backtestResult.sharpe_ratio.toFixed(3)}
             <p> 수익률 표준편차</p>{" "}
@@ -528,13 +466,13 @@ const BacktestChart = (props) => {
             {integratedBacktestResult.integrated_portfolio.annual_return.toFixed(
               3
             )}
-            {/* <p> 총 잔고</p> {integratedBacktestResult.integrated_portfolio.total_balance} */}
+            <p> 총 잔고</p> {integratedBacktestResult.integrated_portfolio.total_balance.toFixed(3)}
             <p> 최대 낙폭</p>{" "}
             {integratedBacktestResult.integrated_portfolio.mdd.toFixed(3)}
           </section>
         </StyledGraphDiv>
       )}
-    </>
+    </div>
   );
 };
 
