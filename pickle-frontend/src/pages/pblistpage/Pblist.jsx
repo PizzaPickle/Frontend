@@ -14,6 +14,8 @@ import { setPb } from "../../store/reducers/pbselect";
 import { setDate } from "../../store/reducers/dateselect";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { motion } from "framer-motion";
+import { ReserveListContainer, ReserveItem, ReserveDate, NextButton } from "./pblist.style";
 
 export default function Pblist() {
   const dispatch = useDispatch();
@@ -167,6 +169,13 @@ export default function Pblist() {
     return `${hours}시 ${minutes}분` 
   }
 
+    // 카드 hover 시 애니메이션 정의
+  const hoverEffect = {
+    hidden: { y: 0, scale: 1 },
+    hover: { y: -5, scale: 1 }, // 살짝 위로 올라가고 약간 확대됨
+  };
+
+
   return (
     <StyledHomeContainer>
       <Header />
@@ -314,16 +323,19 @@ export default function Pblist() {
                             pointerEvents: tmpDate ? 'auto' : 'none' // 클릭 방지를 위해
                           }}
                         >
-                          <ListGroup id="reserve-list">
-                            <ListGroupItem id="reserve-date" className="reserve-item">예약 날짜</ListGroupItem>
-                            <ListGroupItem className="reserve-item">
-                              {formatDate(tmpDate)+" "}
-                              {formatTime(tmpDate)}
-                              <Button id="date-next-btn" onClick={handleReqWrite}>
-                                <img src="/assets/next.svg" alt="Next" />
-                              </Button>
-                            </ListGroupItem>
-                          </ListGroup>
+                  <ReserveListContainer id="listcontainer"
+                  style={{alignItems:"flex-start",gap:"10px"}}>
+                        <ReserveItem>
+                          <ReserveDate>예약 날짜</ReserveDate>
+                        </ReserveItem>
+                        <ReserveItem>
+                          {formatDate(tmpDate) + " "}
+                          {formatTime(tmpDate)}
+                          <NextButton onClick={handleReqWrite}>
+                            <img src="/assets/next.svg" alt="Next" />
+                          </NextButton>
+                        </ReserveItem>
+                      </ReserveListContainer>
                         </StyledDateButton>
                     </StyledReserveContainer>
 
@@ -333,6 +345,17 @@ export default function Pblist() {
                 filteredData.length > 0 &&
                 !showSelectedPb &&
                filteredData.map((pb, i) => (
+                <motion.div
+                  initial="hidden"
+                  whileHover="hover" // hover 시 효과 적용
+                  variants={hoverEffect} // 애니메이션 적용
+                  style={{
+                    display: 'inline-block',
+                    borderRadius: '10px',
+                    boxShadow: '0px 0px 8px rgba(0, 0, 90, 0.01)',
+                    backgroundColor: '#fff',
+                  }}
+                >
                   <StyledPbCard className="pb-card" key={i}>
                     {pb.img && <img src={pb.img} alt={`${pb.username} 이미지`} />}
                     <section className="self-introduce">
@@ -404,6 +427,7 @@ export default function Pblist() {
                     </Modal>
                     </section>
                   </StyledPbCard>
+                  </motion.div>
                 ))              
                 )}
             </StyledPbontainer>
