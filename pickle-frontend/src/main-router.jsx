@@ -7,7 +7,7 @@ import BacktestPage from './pages/backtestPage/BacktestPage';
 // import Dashboard from "./pages/PB-BacktestPage/Strategy";
 import Portfolio from './pages/backtestPage/Portfolio';
 import Strategy from './pages/backtestPage/Strategy';
-import RealTimeConsulting from './pages/realtimeConsulting/RealtimeConsulting';
+import RealTimeConsulting from './pages/consulting/RealTimeConsulting';
 import Pblist from './pages/pblistpage/Pblist';
 import Request from './pages/requestpage/Request';
 import RequestMydata from './pages/requestpage/RequestMydata';

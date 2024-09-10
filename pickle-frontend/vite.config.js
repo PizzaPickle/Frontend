@@ -1,81 +1,67 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd());
 
-	plugins: [
-		react({
-			jsxRuntime: 'classic',
-		}),
-	],
-  build: {
-    chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) {
-              return 'react-vendor';
-            }
-            if (id.includes('lodash')) {
-              return 'lodash-vendor';
-            }
-            return 'vendor';
-          }
-        }
-      }
-    }
-  },
-	define: {
-		'process.env': process.env,
-	},
-	server: {
-		proxy: {
-			'/backtest': {
-				target: 'http://43.202.241.180',
-				changeOrigin: true,
-				secure: false, // HTTPS일 경우에도 사용할 수 있음
-				followRedirects: true, // 리디렉션 따르기
-				rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
-			},
-
-			'/api/pickle-customer': {
-				target: 'http://localhost:8081',
-				changeOrigin: true,
-				secure: false, // HTTPS일 경우에도 사용할 수 있음
-				followRedirects: true, // 리디렉션 따르기
-				rewrite: (path) => path.replace(/^\/pickle-customer/, '/pickle-customer'),
+    return {
+        plugins: [
+            react({
+                jsxRuntime: 'classic',
+            }),
+        ],
+        build: {
+            chunkSizeWarningLimit: 1000,
+            outDir: 'build/dist',
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes('node_modules')) {
+                            if (id.includes('react')) {
+                                return 'react-vendor';
+                            }
+                            if (id.includes('lodash')) {
+                                return 'lodash-vendor';
+                            }
+                            return 'vendor';
+                        }
+                    },
+                },
             },
-			'/api/pickle-common': {
-				target: 'http://localhost:8081',
-				changeOrigin: true,
-				secure: false, // HTTPS일 경우에도 사용할 수 있음
-				followRedirects: true, // 리디렉션 따르기
-				rewrite: (path) => path.replace(/^\/pickle-customer/, '/pickle-customer'),
+        },
+        define: {
+            'import.meta.env': env,
+        },
+        server: {
+            proxy: {
+                '/backtest': {
+                    target: env.VITE_PICKLE_BACKTEST_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/backtest/, '/backtest'),
+                },
+                '/api': {
+                    target: env.VITE_PICKLE_MAIN_SERVER_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/api/, '/api'),
+                },
+                '/mydata': {
+                    target: env.VITE_PICKLE_MYDATA_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                    rewrite: (path) => path.replace(/^\/mydata/, '/mydata'),
+                },
+                '/consulting-room': {
+                    target: env.VITE_PICKLE_REALTIME_URL,
+                    changeOrigin: true,
+                    secure: false,
+                    followRedirects: true,
+                },
             },
-			'/api/pickle-pb': {
-			target: 'http://localhost:8081',
-			changeOrigin: true,
-			secure: false, // HTTPS일 경우에도 사용할 수 있음
-			followRedirects: true, // 리디렉션 따르기
-			rewrite: (path) => path.replace(/^\/pickle-pb/, '/pickle-pb'),
-			},
-			'/api/mydata': {
-			target: 'http://localhost:8080',
-			changeOrigin: true,
-			secure: false, // HTTPS일 경우에도 사용할 수 있음
-			followRedirects: true, // 리디렉션 따르기
-			rewrite: (path) => path.replace(/^\/api\/mydata/, '/api/mydata'),
-			},
-			'/api/':{
-				target: "http://3.34.126.55:8081",
-				changeOrigin: true,
-				secure: false, // HTTPS일 경우에도 사용할 수 있음
-				followRedirects: true, // 리디렉션 따르기
-				rewrite: (path) => path.replace(/^\/api/, '/api'),
-			}
-
-		},
-	},
+        },
+    };
 });

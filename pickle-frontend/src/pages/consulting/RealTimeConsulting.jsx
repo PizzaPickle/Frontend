@@ -20,10 +20,9 @@ import {
     StyledTabContent,
 } from './RealtimeConsulting.style';
 
-
 const API_BASE_URL = 'http://pickle.my/consulting-room';
 
-const RealtimeConsultingRoom = () => {
+const RealTimeConsultingRoom = () => {
     const userId = useSelector((state) => state.user?.id) || 'soo';
     const userName = useSelector((state) => state.user?.name) || 'soo';
     const [waitingRooms, setWaitingRooms] = useState([]);
@@ -257,7 +256,6 @@ const RealtimeConsultingRoom = () => {
             </StyledConsultingMainContent>
         </StyledConsultingContainer>
     );
-
 };
 
-export default RealtimeConsultingRoom;
+export default RealTimeConsultingRoom;
