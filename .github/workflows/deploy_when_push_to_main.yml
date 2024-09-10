@@ -26,6 +26,8 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: 22
         script: |
+          sudo chown -R ubuntu:ubuntu /home/ubuntu/Frontend
+          sudo chmod -R 755 /home/ubuntu/Frontend
           cd /home/ubuntu/Frontend
           git pull origin main
           echo "${{ secrets.ENV_FILE }}" > /home/ubuntu/Frontend/pickle-frontend/.env
