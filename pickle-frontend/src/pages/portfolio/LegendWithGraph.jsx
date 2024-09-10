@@ -25,7 +25,7 @@ export default function LegendWithGraph({ data, width, height, top, left, fontSi
         let categoryTotal = 0;
         category.productDtos.forEach((product) => {
           categoryTotal += (stockPrices[product.code] || 1) * product.quantity;
-          console.log('jj',categoryTotal);
+        
         });
         total += categoryTotal;
       });
