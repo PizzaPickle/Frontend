@@ -19,7 +19,7 @@ export default function PortfolioEarning() {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const response = await fetch('api/pickle-customer/trade/portfolio', {
+        const response = await fetch('/api/pickle-customer/trade/portfolio', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

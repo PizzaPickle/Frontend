@@ -41,7 +41,7 @@ export default function Order() {
     const [error, setError] = useState(null);
     const [inputValue, setInputValue] = useState('10,000,000');
     // const { token } = useSelector((state) => state.user);
-    // const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('accessToken'); 
 
     const [triggerHeldQuantities, setTriggerHeldQuantities] = useState(0);
     const [stockIds, setStockIds] = useState({});
@@ -167,7 +167,7 @@ export default function Order() {
         );
         if (!data || data.length === 0) return;
         const payload = {
-          strategyId: 4,  
+          strategyId: Number(id),  
           totalAmount: parseFormattedNumber(inputValue),  
           productDTOList: data.flatMap(category => 
             category.productList.map(product => {
@@ -202,7 +202,7 @@ export default function Order() {
           const result = await response.json();
           console.log('체결 성공:', result);
           alert("주문이 완료되었습니다.")
-          window.location.href = '/portfolio';
+         
 
         } catch (error) {
           console.error('체결 요청 에러:', error.message);

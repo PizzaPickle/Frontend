@@ -38,7 +38,7 @@ export default function MyRequest() {
         const fetchData = async () => {
             setLoading(true); // 로딩중
             try {
-                const token = localStorage.getItem('token'); 
+                const token = localStorage.getItem('accessToken'); 
                 const response = await fetch(
                     `/api/pickle-common/consulting/customer/request-letters?status=${statusFilter}`,
                     {

@@ -105,8 +105,8 @@ export default function HomePage(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                
-                const token = localStorage.getItem('token'); 
+
+                const token = localStorage.getItem('accessToken'); 
                 const response = await fetch('/api/pickle-customer/my-asset', {
                     method: 'GET',
                     headers: {
@@ -135,7 +135,7 @@ export default function HomePage(){
         const fetchProductData = async () => {
             try {
 
-                const token = localStorage.getItem('token'); 
+                const token = localStorage.getItem('accessToken'); 
                 const response = await fetch('/api/pickle-customer/my-products', {
                     method: 'GET',
                     headers: {
@@ -163,7 +163,7 @@ export default function HomePage(){
 
         const fetchData = async () => {
           try {
-            const token = localStorage.getItem('token'); 
+            const token = localStorage.getItem('accessToken'); 
             const response = await fetch(`/api/pickle-common/consulting/customer/request-letters?status=1`, {
               method: "GET",
               headers: {

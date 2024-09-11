@@ -1,4 +1,4 @@
-/* Ensure full height and width */
+
 html,
 body {
   margin: 0;
@@ -11,15 +11,15 @@ body {
 .terms-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  justify-content: center; 
+  align-items: center; 
+  width: 100vw; 
+  height: 100vh; 
   background: linear-gradient(
     to bottom,
     #eafcf4,
     #ffffff
-  ); /* Light gradient background */
+  );
 }
 
 .logo {
@@ -85,36 +85,36 @@ body {
 }
 
 .terms-item label.checked {
-  color: #4caf50; /* Highlight checked text */
+  color: #4caf50; 
 }
 
-/* 모달의 배경 오버레이 */
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* 배경을 어둡게 */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-  z-index: 1000; /* 다른 요소 위에 나타나도록 */
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000; 
 }
 
-/* 모달 콘텐츠 */
+
 .modal-tent {
   background-color: white;
   padding: 50px;
   border-radius: 8px;
-  width: 90%; /* 넓이를 화면의 90%로 설정 */
-  max-width: 900px; /* 최대 넓이를 900px로 설정 */
+  width: 90%; 
+  max-width: 900px; 
   position: relative;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 모달에 그림자 추가 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
   line-height: 2;
 }
 
-/* 모달 닫기 버튼 */
+
 .modal-close-button {
   position: absolute;
   top: 10px;
@@ -129,7 +129,7 @@ body {
   color: red;
 }
 
-/* 화살표 버튼 */
+
 .arrow-button {
   background: none;
   border: none;

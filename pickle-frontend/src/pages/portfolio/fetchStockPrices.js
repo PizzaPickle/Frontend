@@ -16,23 +16,23 @@ export const fetchStockPrices = (productList) => async (dispatch) => {
 
       switch (product.categoryName) {
         case "국내":
-          apiUrl = "/api/currentprice/stock/current-price";
+          apiUrl = "/currentprice/stock/current-price";
           break;
         case "해외":
-          apiUrl = "/api/currentprice/overseas-stock/current-price";
+          apiUrl = "/currentprice/overseas-stock/current-price";
           // requestCode = `R${product.code}`;
           break;
         case "채권":
-          apiUrl = "/api/currentprice/bond/current-price";
+          apiUrl = "/currentprice/bond/current-price";
           break;
         case "ETF":
-          apiUrl = "/api/currentprice/ETF/current-price";
+          apiUrl = "/currentprice/ETF/current-price";
           break;
         case "원자재":
-          apiUrl = "/api/currentprice/ETF/current-price";
+          apiUrl = "/currentprice/ETF/current-price";
           break;
         default:
-          apiUrl = "/api/currentprice/stock/current-price";
+          apiUrl = "/currentprice/stock/current-price";
           break;
       }
 
