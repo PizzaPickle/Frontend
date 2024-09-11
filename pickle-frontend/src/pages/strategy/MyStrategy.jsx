@@ -205,13 +205,7 @@ export default function MyStrategy() {
             {/* section 1 */}
             <StyledHomeSection>
               <StyledHead2Text>나의 전략 목록</StyledHead2Text>
-              <Button
-              style={{"width":"200px",
-                position:"absolute",
-                right:"1200px"
-                
-              }} onClick={handleClick}
-              >이 전략으로 매매하기</Button>
+              
               <StyledContentBlock style={{ width: "920px"}}>
               
                 <div id="my-stategy"
@@ -242,8 +236,14 @@ export default function MyStrategy() {
                 {selectedStrategyData && (
                   // <LegendWithGraphDiv>
                   <div style={{display:"flex",flexDirection:"column",justifyContent:"flex-end",width:"100%",
-                    padding:"20px"
+                    padding:"20px", alignItems:"flex-start", gap:"20px",
                   }}>
+                    <Button
+              style={{"width":"200px",
+                right:"10px"
+                
+              }} onClick={handleClick}
+              >이 전략으로 매매하기</Button>
                      <section style={{
                       position:"relative",
                       width:"100%",display:"flex",justifyContent:"space-between"}}>
@@ -260,7 +260,7 @@ export default function MyStrategy() {
                       </LegendListDiv>
                     </LegendDiv>
                     </section>
-                    {curProductList.length > 0 && (
+                    {curProductList && (
                       <StockTable
                         width="100%"
                         productList={curProductList.map((product) => ({

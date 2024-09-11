@@ -1,11 +1,6 @@
-import React from 'react';
-import {
-    StyledSideContent,
-    StyledSideDiv,
-    StyledSideText,
-    StyledSideTextGroup,
-} from './Sidebar.style';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { StyledSideContent, StyledSideDiv, StyledSideText, StyledSideTextGroup } from "./Sidebar.style";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
     return (
@@ -59,5 +54,5 @@ export default function Sidebar() {
                 </StyledSideContent>
             </StyledSideDiv>
         </>
-    )
-};
+    );
+}
