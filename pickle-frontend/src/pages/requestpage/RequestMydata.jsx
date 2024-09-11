@@ -23,7 +23,8 @@ export default function RequestMydata() {
       };
 
     //Login User 정보
-    const { token } = useSelector((state) => state.user); 
+    // const { token } = useSelector((state) => state.user); 
+    const token = localStorage.getItem('accessToken'); 
     const userName = useSelector((state) => state.user.name);
 
     //마이데이터 요청

@@ -25,7 +25,7 @@ export const StyledConsultSide = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* font-size: smaller; */
+  font-size: 14px;
   div {
     margin-left: 0.7rem;
     margin-right: 0.7rem;

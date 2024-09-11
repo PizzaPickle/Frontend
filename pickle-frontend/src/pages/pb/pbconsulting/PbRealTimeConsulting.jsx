@@ -2,11 +2,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import Header from '../../components/common/header/Header';
-import Sidebar from '../../components/common/sidebar/Sidebar';
-import ConsultingRoom from '../../components/common/customer-consulting-room/ConsultingRoom';
-import ConsultingRoomHistory from '../../components/common/customer-consulting-room/ConsultingRoomHistory';
-import { fetchConsultingHistories } from '../../api/customerApi';
+import Header from '../../../components/common/header/Header';
+import PbSidebar from '../../../components/common/pbsidebar/PbSidebar';
+import ConsultingRoom from '../../../components/common/customer-consulting-room/ConsultingRoom';
+import ConsultingRoomHistory from '../../../components/common/customer-consulting-room/ConsultingRoomHistory';
+
+import { fetchConsultingHistories } from '../../../api/customerApi';
 import {
     StyledHeadText,
     StyledContentBlock,
@@ -18,12 +19,11 @@ import {
     StyledTabs,
     StyledTab,
     StyledTabContent,
-} from './RealtimeConsulting.style';
+} from './PbRealtimeConsulting.style';
 
+const API_BASE_URL = 'https://pickle.my/consulting-room';
 
-const API_BASE_URL = 'http://pickle.my/consulting-room';
-
-const RealtimeConsultingRoom = () => {
+const PbRealTimeConsultingRoom = () => {
     const userId = useSelector((state) => state.user?.id) || 'soo';
     const userName = useSelector((state) => state.user?.name) || 'soo';
     const [waitingRooms, setWaitingRooms] = useState([]);
@@ -99,7 +99,7 @@ const RealtimeConsultingRoom = () => {
     useEffect(() => {
         if (activeTab === 'waiting') {
             fetchWaitingRooms();
-            const intervalId = setInterval(fetchWaitingRooms, 30000); // 30초마다 업데이트
+            const intervalId = setInterval(fetchWaitingRooms, 30000);
             return () => clearInterval(intervalId);
         } else if (activeTab === 'history') {
             fetchConsultingHistory();
@@ -107,28 +107,33 @@ const RealtimeConsultingRoom = () => {
     }, [activeTab, fetchWaitingRooms]);
 
     const joinConsultingRoom = (roomId, userName, userId) => {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `${API_BASE_URL}/${roomId}`;
-        form.target = `consultingRoom_${roomId}`;
+        window.open(
+            `https://pickle.my/consulting-room/${roomId}?userId=${userId}&userName=${userName}`
+        );
+        // const newWindow = window.open('', `consultingRoom_${roomId}`);
 
-        const fields = [
-            { name: 'roomId', value: roomId },
-            { name: 'userName', value: userName },
-            { name: 'userId', value: userId },
-        ];
+        // const form = document.createElement('form');
+        // form.method = 'POST';
+        // form.action = `${API_BASE_URL}/${roomId}`;
+        // form.target = `consultingRoom_${roomId}`;
 
-        fields.forEach((field) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = field.name;
-            input.value = field.value;
-            form.appendChild(input);
-        });
+        // const fields = [
+        //     { name: 'roomId', value: roomId },
+        //     { name: 'userName', value: userName },
+        //     { name: 'userId', value: userId },
+        // ];
 
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
+        // fields.forEach((field) => {
+        //     const input = document.createElement('input');
+        //     input.type = 'hidden';
+        //     input.name = field.name;
+        //     input.value = field.value;
+        //     form.appendChild(input);
+        // });
+
+        // newWindow.document.body.appendChild(form);
+
+        // form.submit();
     };
 
     const formatDate = (dateString) => {
@@ -206,7 +211,7 @@ const RealtimeConsultingRoom = () => {
         <StyledConsultingContainer>
             <Header />
             <StyledConsultingMainContent>
-                <Sidebar />
+                <PbSidebar />
                 <StyledConsultingContent>
                     <StyledHeadText>
                         {userName.slice(1)}님의 실시간 상담
@@ -257,7 +262,6 @@ const RealtimeConsultingRoom = () => {
             </StyledConsultingMainContent>
         </StyledConsultingContainer>
     );
-
 };
 
-export default RealtimeConsultingRoom;
+export default PbRealTimeConsultingRoom;

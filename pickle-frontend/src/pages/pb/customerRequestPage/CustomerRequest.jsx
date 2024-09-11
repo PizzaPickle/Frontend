@@ -5,6 +5,7 @@ import Header from "../../../components/common/header/Header";
 import { StyledRequestButton, StyledRequestListItem, StyledRequestList } from "./CustomerRequest.style";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PbSidebar from "../../../components/common/pbsidebar/PbSidebar";
 
 export default function CustomerRequest() {
     const { token } = useSelector((state) => state.pbuser); 
@@ -115,7 +116,7 @@ export default function CustomerRequest() {
         <StyledHomeContainer>
             <Header/>
             <StyledHomeMainContent>                
-                <Sidebar/>
+                <PbSidebar/>
                 <StyledHomeContent style={{ margin: "20px" }}>
                     <StyledHead2Text style={{ display: "flex", alignItems: "center", gap: "13px" }}>
                         예약을 신청한 고객 목록 <img width="25px" src="/assets/list-icon.svg" alt="list icon" />

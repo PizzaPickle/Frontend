@@ -8,6 +8,7 @@ import strategyReducer from "./reducers/strategy";
 import mydataURLReducer from './reducers/mydataurl';
 import stockPricesSlice from './reducers/currentprice';
 import pbuserReducer from "./reducers/pbuser"
+import presetReducer from './reducers/preset';
 
 export const rootReducer = combineReducers({
     user: userReducer,
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
     stockPrices: stockPricesSlice,
     strategy: strategyReducer,
     pbuser: pbuserReducer,
+    preset: presetReducer
 });
 
 const store = configureStore({

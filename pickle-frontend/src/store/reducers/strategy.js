@@ -3,35 +3,37 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: [
     {
-      id: "국내주식",
+      id: "국내",
       label: 1,
       value: 20,
       color: "#FF6767",
       productList: [
-        {
-          code: "000660",
-          ratio: 50,
-          themeName: "반도체",
-          name: "하이닉스",
-        },
-        {
-          code: "005930",
-          ratio: 50,
-          themeName: "반도체",
-          name: "삼성전자",
-        },
+        // {
+        //   code: "000660",
+        //   ratio: 50,
+        //   themeName: "반도체",
+        //   name: "하이닉스",
+        // },
+        // {
+        //   code: "005930",
+        //   ratio: 50,
+        //   themeName: "반도체",
+        //   name: "삼성전자",
+        // },
       ],
-      isValidProductRatio: true,
+      isValidProductRatio: false,
       selected: true,
+      themeList: [],
     },
     {
-      id: "해외주식",
+      id: "해외",
       label: 2,
       value: 20,
       color: "#FFC27B",
       productList: [],
       isValidProductRatio: false,
       selected: false,
+      themeList: [],
     },
     {
       id: "채권",
@@ -41,6 +43,7 @@ const initialState = {
       productList: [],
       isValidProductRatio: false,
       selected: false,
+      themeList: [],
     },
     {
       id: "ETF",
@@ -50,6 +53,7 @@ const initialState = {
       productList: [],
       isValidProductRatio: false,
       selected: false,
+      themeList: [],
     },
     {
       id: "원자재",
@@ -59,6 +63,7 @@ const initialState = {
       productList: [],
       isValidProductRatio: false,
       selected: false,
+      themeList: [],
     },
   ],
   isValidCategoryRatio: true,
@@ -73,7 +78,7 @@ const strategySlice = createSlice({
     },
     updateCategoryValueById: (state, action) => {
       const { categoryId, newValue } = action.payload;
-      console.log("카테고리 비율 변경!", action.payload);
+      // console.log("카테고리 비율 변경!", action.payload);
 
       const selectedCategory = state.data.find(
         (category) => category.id === categoryId
@@ -103,7 +108,12 @@ const strategySlice = createSlice({
         (category) => category.id === categoryId
       );
       if (selectedCategory) {
-        selectedCategory.productList.push(product);
+        const productExists = selectedCategory.productList.some(
+          (existingProduct) => existingProduct.code === product.code
+        );
+        if (!productExists) {
+          selectedCategory.productList.push(product);
+        }
       }
 
       const totalProductRatio = selectedCategory.productList.reduce(
@@ -132,7 +142,7 @@ const strategySlice = createSlice({
     },
     //선택된 상품 비율 업데이트
     updateProductRatio: (state, action) => {
-    //   console.log(action.payload);
+      //   console.log(action.payload);
       const { categoryId, productCode, ratio } = action.payload;
 
       const selectedCategory = state.data.find(
@@ -170,6 +180,24 @@ const strategySlice = createSlice({
     clearData: (state) => {
       state.data = initialState;
     },
+    setThemeList: (state, action) => {
+      const { categories } = action.payload;
+
+      state.data = state.data.map((categoryData) => {
+        const matchedCategory = categories.find(
+          (cat) => cat.category === categoryData.id
+        );
+        // console.log(matchedCategory);
+
+        if (matchedCategory) {
+          return {
+            ...categoryData,
+            themeList: matchedCategory.themeList,
+          };
+        }
+        return categoryData;
+      });
+    },
   },
 });
 
@@ -181,6 +209,7 @@ export const {
   selectCategory,
   clearData,
   updateProductRatio,
+  setThemeList,
 } = strategySlice.actions;
 
 export default strategySlice.reducer;

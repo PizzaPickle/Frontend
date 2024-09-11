@@ -12,10 +12,16 @@ import {
 } from "../../consult/search-modal/search-modal.style";
 import { useSelector } from "react-redux";
 import { backtest, integratedBacktest } from "../../../api/PBApi";
+import {
+  StyledButton,
+  StyledFormControl,
+  StyledInputGroup,
+} from "../../../pages/pb/createPresetPage/create-preset.style";
 
 const BacktestChart = (props) => {
   const categoryList = useSelector((state) => state.strategy.data);
   const [activeCategoryFitler, setActiveCategoryFitler] = useState(false);
+
 
   const handleCategoryChange = (e) => {
     setActiveCategoryFitler(false);
@@ -43,14 +49,12 @@ const BacktestChart = (props) => {
   };
 
   const handleIntegratedBacktest = async () => {
-    // const url = "/backtest/integrated";
-  
     const validCategoryList = categoryList.filter(
       (category) => category.isValidProductRatio
     );
-  
+
     const assetGroups = [];
-  
+
     // 비동기 처리를 모두 모아서 기다리도록 Promise.all 사용
     const fetchPromises = validCategoryList.map(async (curCategory) => {
       const request_stock_list = curCategory.productList.map((product) => [
@@ -59,18 +63,18 @@ const BacktestChart = (props) => {
         Number(product.ratio) / 100,
         curCategory.id === "해외주식" ? "true" : "false", // 문자열 비교로 수정
       ]);
-  
+
       const portData = {
         start_from_latest_stock: "false",
         portfolio: {
           stock_list: request_stock_list,
-          balance: 1000000,
+          balance: parseFormattedNumber(inputValue) || 1000000,
           interval_month: 1,
           start_date: "20100101",
           end_date: "20221231",
         },
       };
-  
+
       // 백테스트 결과를 기다린 후 assetGroups에 추가
       const response = await backtest(portData).then((res) => {
         return {
@@ -82,27 +86,27 @@ const BacktestChart = (props) => {
           mdd: res.mdd,
         };
       });
-  
+
       assetGroups.push({
         name: curCategory.id,
         ratio: Number(curCategory.value) / 100,
         portfolio_result: response,
       });
     });
-  
+
     // 모든 백테스트가 완료될 때까지 기다림
     await Promise.all(fetchPromises);
-  
+
     // 모든 백테스트 완료 후 integratedBacktest 실행
     const integratedData = {
       asset_groups: assetGroups,
     };
-  
+
     const response = await integratedBacktest(integratedData);
     setIntegratedResult(response);
-  
+
     // console.log(response);f
-  };  
+  };
 
   //불러온 백테스팅 JSON 데이터를 정제
   const transformData = (data) => {
@@ -137,7 +141,7 @@ const BacktestChart = (props) => {
           //   ["005930", "삼성전자", 0.5, "false"],
           // ]
           request_stock_list,
-        balance: 1000000,
+        balance: parseFormattedNumber(inputValue) || 1000000,
         interval_month: 1,
         start_date: "20100101",
         end_date: "20221231",
@@ -337,7 +341,9 @@ const BacktestChart = (props) => {
         lineColor: colors[2],
       });
 
-      const transformedData = transformData(integratedBacktestResult.integrated_portfolio);
+      const transformedData = transformData(
+        integratedBacktestResult.integrated_portfolio
+      );
 
       lineSeriesOne.setData(transformedData[0].series);
       lineSeriesTwo.setData(transformedData[1].series);
@@ -411,13 +417,52 @@ const BacktestChart = (props) => {
     }
   }, [integratedBacktestResult]);
 
+  const [inputValue, setInputValue] = useState(null);
+
+  const handleChange = (e) => {
+    const rawValue = e.target.value.replace(/,/g, "");
+    setInputValue(formatNumber(rawValue));
+  };
+
+  function formatNumber(number) {
+    const numStr = number.toString();
+    const [integerPart, decimalPart] = numStr.split(".");
+    const formattedIntegerPart = integerPart.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+    return decimalPart
+      ? `${formattedIntegerPart}.${decimalPart}`
+      : formattedIntegerPart;
+  }
+
+  const parseFormattedNumber = (value) => {
+    // 쉼표를 제거하고 숫자로 변환
+    return parseInt(value.replace(/,/g, ""), 10);
+  };
+
   return (
     <>
-      <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <RunBacktestButton
           onClickIntegrated={handleIntegratedBacktest}
           onClick={() => setActiveCategoryFitler((prev) => !prev)}
         ></RunBacktestButton>
+        <StyledInputGroup>
+          <StyledFormControl
+            value={inputValue}
+            onChange={(e) => handleChange(e)}
+          />
+          <StyledButton variant="outline-secondary" id="button-addon2">
+            Apply
+          </StyledButton>
+        </StyledInputGroup>
         {activeCategoryFitler && (
           <DropDownContainer>
             <SearchContainer padding="10px">
@@ -454,11 +499,12 @@ const BacktestChart = (props) => {
         </StyledColorLegend>
         ))} */}
           <section>
-            <p>샤프 비율</p> {backtestResult.sharpe_ratio}
-            <p> 수익률 표준편차</p> {backtestResult.standard_deviation}
-            <p> 연간 수익률</p> {backtestResult.annual_return}
-            <p> 총 잔고</p> {backtestResult.total_balance}
-            <p> 최대 낙폭</p> {backtestResult.mdd}
+            <p>샤프 비율</p> {backtestResult.sharpe_ratio.toFixed(3)}
+            <p> 수익률 표준편차</p>{" "}
+            {backtestResult.standard_deviation.toFixed(3)}
+            <p> 연간 수익률</p> {backtestResult.annual_return.toFixed(3)}
+            <p> 총 잔고</p> {backtestResult.total_balance.toFixed(3)}
+            <p> 최대 낙폭</p> {backtestResult.mdd.toFixed(3)}
           </section>
         </StyledGraphDiv>
       )}
@@ -470,12 +516,21 @@ const BacktestChart = (props) => {
             style={{ width: "100%", height: "300px" }} // div 스타일 설정
           ></div>
           <section>
-            <p>샤프 비율</p> {integratedBacktestResult.integrated_portfolio.sharpe_ratio.toFixed(3)}
+            <p>샤프 비율</p>{" "}
+            {integratedBacktestResult.integrated_portfolio.sharpe_ratio.toFixed(
+              3
+            )}
             <p> 수익률 표준편차</p>
-            {integratedBacktestResult.integrated_portfolio.standard_deviation.toFixed(3)}
-            <p> 연간 수익률</p> {integratedBacktestResult.integrated_portfolio.annual_return.toFixed(3)}
+            {integratedBacktestResult.integrated_portfolio.standard_deviation.toFixed(
+              3
+            )}
+            <p> 연간 수익률</p>{" "}
+            {integratedBacktestResult.integrated_portfolio.annual_return.toFixed(
+              3
+            )}
             {/* <p> 총 잔고</p> {integratedBacktestResult.integrated_portfolio.total_balance} */}
-            <p> 최대 낙폭</p> {integratedBacktestResult.integrated_portfolio.mdd.toFixed(3)}
+            <p> 최대 낙폭</p>{" "}
+            {integratedBacktestResult.integrated_portfolio.mdd.toFixed(3)}
           </section>
         </StyledGraphDiv>
       )}

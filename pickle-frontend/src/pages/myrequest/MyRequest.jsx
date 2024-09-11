@@ -13,7 +13,9 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function MyRequest() {
-    const { token } = useSelector((state) => state.user);
+    // const { token } = useSelector((state) => state.user);
+    // const token = localStorage.getItem('token'); 
+
 
     const [statusFilter, setStatusFilter] = useState(1);
     const [data, setData] = useState([]);
@@ -36,6 +38,7 @@ export default function MyRequest() {
         const fetchData = async () => {
             setLoading(true); // 로딩중
             try {
+                const token = localStorage.getItem('token'); 
                 const response = await fetch(
                     `/api/pickle-common/consulting/customer/request-letters?status=${statusFilter}`,
                     {
@@ -66,7 +69,7 @@ export default function MyRequest() {
         };
 
         fetchData(statusFilter);
-    }, [token, statusFilter]);
+    }, [statusFilter]);
 
     const handleRequestedButton = (buttonIndex) => {
         setActiveButton(buttonIndex);
