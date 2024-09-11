@@ -127,6 +127,7 @@ export default function Pblist() {
 useEffect(() => {
   const fetchData = async () => {
     try {
+       
       // localStorage에서 token 가져오기
       const token = localStorage.getItem("accessToken");
 
@@ -278,10 +279,16 @@ useEffect(() => {
                     상담을 원하는 날짜를 선택해주세요.
                   </StyledHeadText>
                   <section style={{"gap":"50px","width":"100%"}}>
-                    <StyledPbCard>
+                    <StyledPbCard
+                    >
                       {selectedPb.img && (
-                        <img src={selectedPb.img} alt={`${selectedPb.username} 이미지`} />
-                      )}
+                        <img src={selectedPb.img} alt={`${selectedPb.username} 이미지`}
+                        style={{width:"320px",height:"340px",padding:"10px",
+                          borderRadius:"30px 30px 10px 10px"}}
+                        />
+                     
+                     )}
+                     <div>
                       <section className="self-introduce">
                         <div id="name">{selectedPb.username}PB</div>
                         <div id="location">
@@ -310,6 +317,7 @@ useEffect(() => {
                         <div id="price">{selectedPb.minConsultingAmount}만원 이상</div>
                       </article>
                     </section>
+                    </div>
                     </StyledPbCard>
 
                     <StyledReserveContainer>
@@ -370,8 +378,15 @@ useEffect(() => {
                     backgroundColor: '#fff',
                   }}
                 >
-                  <StyledPbCard className="pb-card" key={i}>
-                    {pb.img && <img src={pb.img} alt={`${pb.username} 이미지`} />}
+                  <StyledPbCard className="pb-card" key={i}
+                  style={{
+                    height:"670px"}}>
+                    {pb.img && 
+                    <img src={pb.img} alt={`${pb.username} 이미지`} 
+                    style={{width:"320px",height:"340px",padding:"10px",
+                    borderRadius:"30px 30px 10px 10px"}}/>}
+                    <div
+                    style={{padding:"40px"}}>
                     <section className="self-introduce">
                       <div id="name">{pb.username}PB</div>
                       <div id="location">
@@ -403,11 +418,13 @@ useEffect(() => {
 
                     <section className="reserve">
                       <div
+                      style={{marginTop:"20px"}}
                         id="reserve-btn"
                         onClick={() => handlePbClick(pb)}
                       >
                         
-                        <img src="/assets/pb-reserve.svg" alt="reserve" />
+                        <img src="/assets/pb-reserve.svg" alt="reserve"
+                         />
                         PB 예약하기
                       </div>
 
@@ -440,6 +457,7 @@ useEffect(() => {
                       </Modal.Footer>
                     </Modal>
                     </section>
+                    </div>
                   </StyledPbCard>
                   </motion.div>
                 ))              

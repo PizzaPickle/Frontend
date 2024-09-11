@@ -6,12 +6,13 @@ import StrategyList from "../../components/common/strategy/list/StrategyList";
 import { LegendDiv } from "../backtestPage/BacktestPage.style";
 import { LegendWithGraphDiv } from "../../components/common/strategy/box/StrategyBox.style";
 import Legend from "../../components/common/legend/Legend";
-import { LegendListDiv } from "./Mystrategy.style";
+import { LegendListDiv } from "./MyStrategy.style";
 import StockTable from "../../components/common/stock-table/StockTable";
 import { CircularDiv } from "../../components/common/graph-width-legend/LegendWithGraph.style";
 import Circular from "../../components/common/circular-graph/Circular";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function MyStrategy() {
   // 초기 categoryData
@@ -128,7 +129,7 @@ export default function MyStrategy() {
   const getStrategyCustomerData = async () => {
     try {
       // localStorage에서 토큰 가져오기
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accessToken');
   
       // axios GET 요청 보내기
       const response = await axios.get('/api/pickle-common/strategy', {
@@ -137,17 +138,21 @@ export default function MyStrategy() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+      console.log(response)
       // 성공적으로 데이터를 받았을 경우
       if (response !== null) {
-        setData(response.data.strategyList);
+        setData(response.data.data);
       }
-      return response.data.strategyList;
+      return response.data;
     } catch (error) {
       console.error('Error fetching strategy customer data:', error);
       throw error;
     }
   };
+
+  useEffect(()=>{
+    getStrategyCustomerData();
+  },[])
 
   // 선택된 전략 데이터를 관리하는 상태
   const [selectedStrategyData, setSelectedStrategyData] = useState(null);
@@ -192,7 +197,7 @@ export default function MyStrategy() {
   }
   const handleClick = () => {
     const strategyName = selectedStrategyData.name;
-    navigate(`/order?strategyName=${encodeURIComponent(strategyName)}&id=${selectedStrategyData.id}`);
+    navigate(`/order?strategyName=${encodeURIComponent(strategyName)}&id=2`);
   };
 
   return (

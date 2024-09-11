@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../components/common/header/Header';
 import Sidebar from '../../components/common/sidebar/Sidebar';
-import { StyledHomeContainer, StyledHomeContent } from '../Homepage/HomePage.style';
+import { StyledHomeContainer, StyledHomeContent } from '../homePage/HomePage.style';
 import { StyledHomeMainContent, SecondHeader, PageTitle, StartegyTitle } from './PortfolioEarning.style';
 import LegendWithGraph from './LegendWithGraph';
 import Circular from '../../components/common/circular-graph/Circular';
