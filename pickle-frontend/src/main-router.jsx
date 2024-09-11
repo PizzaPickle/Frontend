@@ -28,6 +28,10 @@ import PbRealTimeConsultingRoom from './pages/pb/pbconsulting/PbRealTimeConsulti
 
 export const routers = [
     {
+        path: '/',
+        element: <HomePage />,
+    },
+    {
         path: '/progress',
         element: <ProgressPage />,
     },
@@ -99,7 +103,6 @@ export const routers = [
         ],
     },
 
-
     {
         path: '/consult/backtest',
         children: [
@@ -118,14 +121,13 @@ export const routers = [
         ],
     },
     {
-        path: '/consulting',
+        path: '/myconsulting',
         element: <RealTimeConsulting />,
     },
 
     {
         path: '/pb',
         children: [
-            
             {
                 path: 'customer-request',
                 children: [
@@ -137,13 +139,11 @@ export const routers = [
                         path: ':id', // 동적 경로 세그먼트 추가
                         element: <DetailRequest />,
                     },
-                    
                 ],
             },
             {
                 path: 'consulting',
                 element: <PbRealTimeConsultingRoom />,
-                
             },
             {
                 path: 'create',
@@ -151,7 +151,6 @@ export const routers = [
             },
         ],
     },
-    
 ];
 
 const router = createBrowserRouter(routers);
