@@ -6,7 +6,7 @@ export default function Mydatajoin() {
   const navigate = useNavigate();
 
   const goToMyDataTerms = () => {
-    navigate("/mydataterms");
+    navigate("/customer/mydataterms");
   };
 
   return (

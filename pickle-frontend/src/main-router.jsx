@@ -32,11 +32,11 @@ export const routers = [
         element: <ProgressPage />,
     },
     {
-        path: '/mydataterms',
+        path: '/customer/mydataterms',
         element: <TermsPage />,
     },
     {
-        path: '/mydatajoin',
+        path: '/customer/mydatajoin',
         element: <Mydatajoin />,
     },
     {
@@ -52,7 +52,7 @@ export const routers = [
         element: <Join />,
     },
     {
-        path: '/mydata',
+        path: '/customer/mydatapage',
         element: <Mydata />,
     },
     {
