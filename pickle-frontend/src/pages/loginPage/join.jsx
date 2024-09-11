@@ -143,7 +143,7 @@ export default function JoinPage() {
 
   // 마이데이터 가입하기 페이지로 이동하는 함수 (고객 회원가입 시)
   const goToMyDataPage = () => {
-    navigate("/mydatajoin"); // 마이데이터 가입하기 페이지로 이동
+    navigate("/customer/mydatajoin"); // 마이데이터 가입하기 페이지로 이동
   };
 
   // 모달 창을 띄우는 함수
