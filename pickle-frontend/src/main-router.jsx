@@ -147,8 +147,8 @@ export const routers = [
             },
             {
                 path: 'create',
-                element: <CreatePresetPage />
-            }
+                element: <CreatePresetPage />,
+            },
         ],
     },
     

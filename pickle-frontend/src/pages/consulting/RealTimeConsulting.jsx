@@ -20,7 +20,7 @@ import {
     StyledTabContent,
 } from './RealtimeConsulting.style';
 
-const API_BASE_URL = 'https://pickle.my/consulting-room';
+const API_BASE_URL = 'https://pickle.my/consulting/';
 
 const RealTimeConsultingRoom = () => {
     const userId = useSelector((state) => state.user?.id) || 'soo';
@@ -107,7 +107,7 @@ const RealTimeConsultingRoom = () => {
 
     const joinConsultingRoom = (roomId, userName, userId) => {
         window.open(
-            `https://pickle.my/consulting-room/${roomId}?userId=${userId}&userName=${userName}`
+            `https://pickle.my/consulting/${roomId}?userId=${userId}&userName=${userName}`
         );
         // const newWindow = window.open('', `consultingRoom_${roomId}`);
 
