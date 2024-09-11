@@ -13,7 +13,7 @@ export default function Sidebar() {
                             <span>홈</span>
                         </StyledSideText>
                     </Link>
-                    <Link to="/mydata" style={{ textDecoration: 'none' }}>
+                    <Link to="/customer/mydatapage" style={{ textDecoration: 'none' }}>
                         <StyledSideText>
                             <img src="/assets/side-mydata.svg" className="icon" alt="마이 자산데이터 아이콘" />
                             <span>마이 자산데이터</span>
