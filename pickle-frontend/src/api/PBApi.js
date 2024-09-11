@@ -25,7 +25,7 @@ export const backtest = async (data) => {
 };
 import { defaultInstance } from "./axiosInstance";
 import { useDispatch } from "react-redux"; // Redux 훅 import
-import { setPbToken, setPbUser } from "../store/reducers/pbuser"; // 액션 import
+import pbuser, { setPbToken, setPbUser } from "../store/reducers/pbuser"; // 액션 import
 
 export const pbJoin = async (formData) => {
   try {
@@ -41,16 +41,23 @@ export const pbToken = async (formData, dispatch) => {
   try {
     const response = await axios.post(`/api/pickle-pb/token`, formData);
     if (response.data && response.data.data) {
-      const token = response.data.data;
-      console.log(token);
+      const pbuserData = response.data.data;
 
-      localStorage.setItem("accessToken", token);
+      localStorage.setItem("accessToken", pbuserData);
       console.log(localStorage);
 
       // Redux 스토어에 토큰 저장
-      dispatch(setPbToken({ token })); // 또는 setUser로 유저 정보와 함께 저장 가능
-
-      return { success: true, token };
+      dispatch(setPbToken(pbuserData.token)); // 또는 setUser로 유저 정보와 함께 저장 가능
+      dispatch(
+        setPbUser({
+          user: {
+            id: pbuserData.userId,
+            name: pbuserData.name,
+          },
+          token: pbuserData.token,
+        })
+      );
+      return { success: true, token: pbuserData.token };
     } else {
       throw new Error("로그인 응답 데이터가 유효하지 않음");
     }

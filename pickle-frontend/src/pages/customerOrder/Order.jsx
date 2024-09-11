@@ -4,6 +4,7 @@ import Header from '../../components/common/header/Header';
 import { Modal, Button } from 'react-bootstrap';
 import Sidebar from '../../components/common/sidebar/Sidebar';
 import { fetchStockPrices } from '../portfolio/fetchStockPrices';
+import { useLocation } from 'react-router-dom';
 import {StyledHomeMainContent,
         StyledInputGroup,
         StyledButton,
@@ -26,6 +27,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Order() {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const strategyName = searchParams.get('strategyName');
+    const id = searchParams.get('id');
     const dispatch = useDispatch();
     const { prices: stockPrices } = useSelector((state) => state.stockPrices);
     const [show, setShow] = useState(false);
@@ -35,7 +40,9 @@ export default function Order() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [inputValue, setInputValue] = useState('10,000,000');
-    const { token } = useSelector((state) => state.user);
+    // const { token } = useSelector((state) => state.user);
+    // const token = localStorage.getItem('token'); 
+
     const [triggerHeldQuantities, setTriggerHeldQuantities] = useState(0);
     const [stockIds, setStockIds] = useState({});
     const [orderResult, setOrderResult] = useState(0);
@@ -70,8 +77,9 @@ export default function Order() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                
-                const response = await fetch(`/api/pickle-customer/trade/products/4`, {
+
+                const token = localStorage.getItem('accessToken'); 
+                const response = await fetch(`/api/pickle-customer/trade/products/${id}`, {
                     method: 'GET', 
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -214,7 +222,7 @@ export default function Order() {
                 <SecondHeader>
                     <Previous onClick={() => navigate(-1)}>
                     <ArrowIcon />
-                    <StrategyName>중위험 전략</StrategyName>
+                    <StrategyName>{strategyName}</StrategyName>
                     </Previous>
                     <StyledInputGroup>
                         <StyledFormControl

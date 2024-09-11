@@ -23,6 +23,8 @@ import Order from './pages/customerOrder/Order';
 import PortfolioEarning from './pages/portfolio/PortfolioEarning';
 import CheckMyData from './pages/backtestPage/Portfolio';
 import CreatePresetPage from './pages/pb/createPresetPage/CreatePresetPage';
+import MyStrategy from './pages/strategy/MyStrategy';
+import PbRealTimeConsultingRoom from './pages/pb/pbconsulting/PbRealTimeConsulting';
 
 export const routers = [
     {
@@ -87,6 +89,16 @@ export const routers = [
             },
         ],
     },
+    {
+        path: '/mystrategy',
+        children: [
+            {
+                index: true,
+                element: <MyStrategy />,
+            },
+        ],
+    },
+
 
     {
         path: '/consult/backtest',
@@ -106,17 +118,14 @@ export const routers = [
         ],
     },
     {
-        path: '/consulting/realtime-consulting',
+        path: '/consulting',
         element: <RealTimeConsulting />,
     },
 
     {
         path: '/pb',
         children: [
-            {
-                index: true,
-                element: <Preset />,
-            },
+            
             {
                 path: 'customer-request',
                 children: [
@@ -128,7 +137,13 @@ export const routers = [
                         path: ':id', // 동적 경로 세그먼트 추가
                         element: <DetailRequest />,
                     },
+                    
                 ],
+            },
+            {
+                path: 'consulting',
+                element: <PbRealTimeConsultingRoom />,
+                
             },
             {
                 path: 'create',

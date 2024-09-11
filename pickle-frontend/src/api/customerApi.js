@@ -23,6 +23,7 @@ export const customerToken = async (formData, dispatch) => {
 
       // 로컬 스토리지에 토큰 저장
       localStorage.setItem("accessToken", userData.token);
+      localStorage.setItem("username", userData.name);
 
       // Redux 스토어에 토큰 저장
       // Redux 스토어에 유저 정보와 토큰 저장
@@ -60,8 +61,8 @@ export const customerToken = async (formData, dispatch) => {
  */
 export const fetchConsultingHistories = async () => {
   try {
-    const response = await defaultInstance.get(
-      `/pickle-common/consulting/customer/histories`
+    const response = await axios.get(
+      `api/pickle-common/consulting/customer/histories`
     );
     return response.data;
   } catch (error) {
@@ -77,7 +78,7 @@ export const fetchConsultingHistories = async () => {
  */
 export const fetchStrategyResult = async (strategyId) => {
   try {
-    const response = await defaultInstance.get(
+    const response = await axios.get(
       `/pickle-common/strategy/result/${strategyId}`
     );
     return response.data;

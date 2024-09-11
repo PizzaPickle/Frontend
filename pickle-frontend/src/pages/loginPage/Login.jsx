@@ -32,7 +32,7 @@ export default function Login() {
     };
 
     const handlePbPageRedirect = () => {
-        navigate('/pb');
+        navigate('/pb/customer-request');
     };
 
     // 회원가입 타입에 따라 formData 초기화

@@ -34,7 +34,8 @@ export default function Pblist() {
   const [error, setError] = useState(null);
   const selectedPb = useSelector((state) => state.pb.selectedPb);
   const [showSelectedPb, setShowSelectedPb] = useState(false);
-  const { token } = useSelector((state) => state.user); 
+  // const { token } = useSelector((state) => state.user); 
+  // const token = localStorage.getItem('token'); 
   const [tmpDate, setTmpDate] = useState(null);
 
   const [selectedMainFields, setSelectedMainFields] = useState([]);
@@ -122,34 +123,47 @@ export default function Pblist() {
     );
   };
 
-  //pb list 요청
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/pickle-pb/pblist", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  // PB 리스트 요청
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // localStorage에서 token 가져오기
+      const token = localStorage.getItem("accessToken");
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.log(`네트워크 응답이 올바르지 않습니다: ${errorText}`);
-          setError("서버 응답 오류");
-          return;
-        }
-
-        const result = await response.json();
-        setPbData(result.data);
-      } catch (error) {
-        console.log("데이터 요청 실패:", error.message);
-        setError(error.message);
+      if (!token) {
+        throw new Error("토큰이 없습니다. 다시 로그인 해주세요.");
       }
-    };
 
-    fetchData();
-  }, [token]);
+      // GET 요청 보내기
+      const response = await fetch("/api/pickle-pb/pblist", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      // 응답이 성공적인지 확인
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log(`네트워크 응답이 올바르지 않습니다: ${errorText}`);
+        setError("서버 응답 오류");
+        return;
+      }
+
+      // 응답 데이터를 JSON으로 변환
+      const result = await response.json();
+      const { data } = result; // 구조분해할당을 통해 data에 접근
+
+      setPbData(data); // data를 상태에 저장
+    } catch (error) {
+      console.log("데이터 요청 실패:", error.message);
+      setError(error.message);
+    }
+  };
+
+  fetchData(); // 비동기 함수 호출
+}, []);
 
   //ISO 날짜 문자열 파싱
   function formatDate(isoString) {

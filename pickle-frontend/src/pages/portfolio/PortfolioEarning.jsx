@@ -10,7 +10,9 @@ import { fetchStockPrices } from './fetchStockPrices';
 
 export default function PortfolioEarning() {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.user);
+  // const { token } = useSelector((state) => state.user);
+  
+  const token = localStorage.getItem('accessToken'); 
   const { prices: stockPrices, loading, error } = useSelector((state) => state.stockPrices);
   const [data, setData] = useState({ categoryDTOs: [] });
 

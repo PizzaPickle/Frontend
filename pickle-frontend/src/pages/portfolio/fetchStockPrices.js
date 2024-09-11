@@ -1,47 +1,50 @@
-import { setPrices, setLoading, setError } from '../../store/reducers/currentprice'; // Adjust the import path as needed
+import {
+  setPrices,
+  setLoading,
+  setError,
+} from "../../store/reducers/currentprice"; // Adjust the import path as needed
 
 export const fetchStockPrices = (productList) => async (dispatch) => {
-
   dispatch(setLoading(true));
   dispatch(setError(null));
 
   try {
     console.log(productList);
-    const requests = productList.map(product => {
+    const requests = productList.map((product) => {
       let apiUrl;
       let requestCode = product.code;
 
       switch (product.categoryName) {
-        case '국내':
-          apiUrl = '/api/stock/current-price';
+        case "국내":
+          apiUrl = "/api/currentprice/stock/current-price";
           break;
-        case '해외':
-          apiUrl = '/api/overseas-stock/current-price';
+        case "해외":
+          apiUrl = "/api/currentprice/overseas-stock/current-price";
           // requestCode = `R${product.code}`;
           break;
-        case '채권':
-          apiUrl = '/api/bond/current-price';
+        case "채권":
+          apiUrl = "/api/currentprice/bond/current-price";
           break;
-        case 'ETF':
-          apiUrl = '/api/ETF/current-price';
+        case "ETF":
+          apiUrl = "/api/currentprice/ETF/current-price";
           break;
-        case '원자재':
-            apiUrl = '/api/ETF/current-price';
-        break;
+        case "원자재":
+          apiUrl = "/api/currentprice/ETF/current-price";
+          break;
         default:
-          apiUrl = '/api/stock/current-price';
+          apiUrl = "/api/currentprice/stock/current-price";
           break;
       }
 
       return fetch(apiUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ stockId: requestCode }),
       })
-        .then(response => response.json())
-        .then(data => ({ code: product.code, price: data }));
+        .then((response) => response.json())
+        .then((data) => ({ code: product.code, price: data }));
     });
 
     const prices = await Promise.all(requests);

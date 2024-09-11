@@ -6,7 +6,8 @@ export default function StrategyBox(props) {
   const { productList, stockIds, inputValue, categoryRatio, categoryName, triggerHeldQuantities, onPriceChange, onAmountChange, applyClicked } = props;
   const [formattedProducts, setFormattedProducts] = useState([]); 
   const [productPrices, setProductPrices] = useState({});
-  const { token } = useSelector((state) => state.user);
+  // const { token } = useSelector((state) => state.user);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const wsConnections = useRef({}); 
@@ -24,19 +25,22 @@ export default function StrategyBox(props) {
         // 카테고리별 API URL 설정
         switch (categoryName) {
           case '국내':
-            apiUrl = '/api/stock/current-price';
+            apiUrl = '/api/currentprice/stock/current-price';
             break;
           case '해외':
-            apiUrl = '/api/overseas-stock/current-price';
+            apiUrl = '/api/currentprice/overseas-stock/current-price';
             break;
           case '채권':
-            apiUrl = '/api/bond/current-price';
+            apiUrl = '/api/currentprice/bond/current-price';
             break;
           case 'ETF':
-            apiUrl = '/api/ETF/current-price';
+            apiUrl = '/api/currentprice/ETF/current-price';
+            break;
+          case "원자재":
+            apiUrl = "/api/currentprice/ETF/current-price";
             break;
           default:
-            apiUrl = '/api/stock/current-price';
+            apiUrl = '/api/currentprice/stock/current-price';
             break;
         }
 
@@ -166,6 +170,7 @@ export default function StrategyBox(props) {
 
   // API 호출
   const sendHeldQuantities = async () => {
+    
     if (!formattedProducts || formattedProducts.length === 0) return;
 
     const heldQuantities = formattedProducts.map(product => ({
@@ -174,7 +179,9 @@ export default function StrategyBox(props) {
     }));
 
     try {
+      const token = localStorage.getItem('token'); 
       const response = await fetch('/api/pickle-customer/trade/quantity', {
+       
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

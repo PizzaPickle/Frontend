@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   id: null,
-  name: "홍길동", // TODO 변경
-  token: localStorage.getItem('accessToken') || null, // localStorage에서 토큰을 불러옴
+  name: localStorage.getItem("username") || "", // TODO 변경
+  token: localStorage.getItem("accessToken") || null, // localStorage에서 토큰을 불러옴
 };
 
 const userSlice = createSlice({

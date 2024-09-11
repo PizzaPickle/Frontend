@@ -39,6 +39,7 @@ import {
   StyledFormControl,
   StyledInputGroup,
 } from "./create-preset.style";
+import PbSidebar from "../../../components/common/pbsidebar/PbSidebar";
 
 export default function CreatePresetPage() {
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ export default function CreatePresetPage() {
     <StyledHomeContainer>
       <Header />
       <StyledHomeMainContent>
-        <Sidebar />
+        <PbSidebar/>
         <StyledHomeContent style={{ padding: "40px" }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ display: "flex", gap: "20px" }}>
