@@ -76,13 +76,13 @@ export default defineConfig({
         followRedirects: true, // 리디렉션 따르기
       },
 
-      //   "/api/": {
-      //     target: "http://3.34.126.55:8081",
-      //     changeOrigin: true,
-      //     secure: false, // HTTPS일 경우에도 사용할 수 있음
-      //     followRedirects: true, // 리디렉션 따르기
-      //     rewrite: (path) => path.replace(/^\/api/, "/api"),
-      //   },
+      "/api/currentprice": {
+        target: "http://3.34.126.55:8081",
+        changeOrigin: true,
+        secure: false, // HTTPS일 경우에도 사용할 수 있음
+        followRedirects: true, // 리디렉션 따르기
+        rewrite: (path) => path.replace(/^\/api/, "/api"),
+      },
     },
   },
 });

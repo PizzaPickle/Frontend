@@ -14,7 +14,8 @@ export default function Request() {
 
   const navigate = useNavigate();
   const [showNavModal, setShowNavModal] = useState(false);
-  const { token } = useSelector((state) => state.user); 
+  // const { token } = useSelector((state) => state.user);
+  const token = localStorage.getItem('accessToken');  
 
   const handleNavigate = () => {
     setShowNavModal(true);

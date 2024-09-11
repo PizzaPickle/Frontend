@@ -60,7 +60,8 @@ export default function HomePage(){
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
     const userName = useSelector((state) => state.user.name);
-    const { token } = useSelector((state) => state.user); 
+    // const { token } = useSelector((state) => state.user); 
+    // const token = localStorage.getItem('token'); 
 
     const now = new Date();
     const consultDate = new Date(); //!! 상담일자로 변경해야 함
@@ -104,6 +105,8 @@ export default function HomePage(){
     useEffect(() => {
         const fetchData = async () => {
             try {
+                
+                const token = localStorage.getItem('token'); 
                 const response = await fetch('/api/pickle-customer/my-asset', {
                     method: 'GET',
                     headers: {
@@ -126,11 +129,13 @@ export default function HomePage(){
         };
 
         fetchData();
-    }, [token]);
+    }, []);
 
     useEffect(() => {
         const fetchProductData = async () => {
             try {
+
+                const token = localStorage.getItem('token'); 
                 const response = await fetch('/api/pickle-customer/my-products', {
                     method: 'GET',
                     headers: {
@@ -152,12 +157,13 @@ export default function HomePage(){
         };
     
         fetchProductData();
-    }, [token]);
+    }, []);
 
     useEffect(() => {
 
         const fetchData = async () => {
           try {
+            const token = localStorage.getItem('token'); 
             const response = await fetch(`/api/pickle-common/consulting/customer/request-letters?status=1`, {
               method: "GET",
               headers: {
@@ -186,7 +192,7 @@ export default function HomePage(){
     
         fetchData();
     
-      }, [token]);
+      }, []);
 
     // 애니메이션 효과 적용
     const pageAnimation = {

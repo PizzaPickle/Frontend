@@ -14,6 +14,7 @@ import {
 } from '../../consulting/RealtimeConsulting.style';
 import { StyledRequestButton } from './CustomerRequest.style';
 import { StyledRequestBox } from './DetailRequest.style';
+import PbSidebar from '../../../components/common/pbsidebar/PbSidebar';
 
 export default function DetailRequest() {
     const { token } = useSelector((state) => state.pbuser);
@@ -87,7 +88,7 @@ export default function DetailRequest() {
             <StyledHomeContainer>
                 <Header />
                 <StyledHomeMainContent>
-                    <Sidebar />
+                    <PbSidebar/>
                     <StyledHomeContent style={{ margin: '20px' }}>
                         <StyledHeadText>
                             {data.customerName} 고객님의 예약 요청건

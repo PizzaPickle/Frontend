@@ -18,7 +18,8 @@ export default function Mydata(){
     //Login User 정보
     const userId = useSelector((state) => state.user.id);
     const userName = useSelector((state) => state.user.name);
-    const { token } = useSelector((state) => state.user); 
+    // const { token } = useSelector((state) => state.user); 
+    // const token = localStorage.getItem('token'); 
 
     //Badge-info 텍스트
     const locking_info = ["은행 잔액 대비 인출가능금액 30% 이하", "은행 적금 5000만원 이상"]
@@ -80,10 +81,12 @@ export default function Mydata(){
     useEffect(() => {
       const fetchData = async () => {
           try {
+            const token = localStorage.getItem('accessToken'); 
               const response = await fetch("/mydata", {
                   method: "GET",
                   headers: {
-                      Authorization: `Bearer ${token}`,
+                      'Authorization': `Bearer ${token}`,
+                      'Content-Type': 'application/json'
                   },
               });
   
@@ -203,7 +206,7 @@ export default function Mydata(){
       };
   
       fetchData();
-  }, [token]);
+  }, []);
   
 
   
