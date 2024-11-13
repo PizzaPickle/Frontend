@@ -20,11 +20,6 @@ export const customerToken = async (formData, dispatch) => {
     if (response.data && response.data.data) {
       const userData = response.data.data;
       console.log(response);
-
-      // 로컬 스토리지에 토큰 저장
-      localStorage.setItem("accessToken", userData.token);
-      localStorage.setItem("username", userData.name);
-
       // Redux 스토어에 토큰 저장
       // Redux 스토어에 유저 정보와 토큰 저장
       dispatch(

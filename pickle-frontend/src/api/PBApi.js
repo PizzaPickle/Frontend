@@ -3,6 +3,8 @@
  */
 import { backtestInstance } from "./axiosInstance";
 import axios from "axios";
+import { setPbToken, setPbUser } from "../store/reducers/pbuser"; // 액션 import
+
 export const integratedBacktest = async (asset_groups) => {
   try {
     const response = await backtestInstance.post(
@@ -23,9 +25,6 @@ export const backtest = async (data) => {
     console.log("백테스트 실패", error);
   }
 };
-import { defaultInstance } from "./axiosInstance";
-import { useDispatch } from "react-redux"; // Redux 훅 import
-import pbuser, { setPbToken, setPbUser } from "../store/reducers/pbuser"; // 액션 import
 
 export const pbJoin = async (formData) => {
   try {
@@ -42,9 +41,6 @@ export const pbToken = async (formData, dispatch) => {
     const response = await axios.post(`/api/pickle-pb/token`, formData);
     if (response.data && response.data.data) {
       const pbuserData = response.data.data;
-
-      localStorage.setItem("accessToken", pbuserData);
-      console.log(localStorage);
 
       // Redux 스토어에 토큰 저장
       dispatch(setPbToken(pbuserData.token)); // 또는 setUser로 유저 정보와 함께 저장 가능

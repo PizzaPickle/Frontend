@@ -11,13 +11,24 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     setUser: (state, action) => {
-      // 로그인 했을 때 로직 예시
-      state.id = action.payload.user.id;
-      state.name = action.payload.user.name;
-      state.token = action.payload.token; // 토큰 설정
+      // action.payload에서 데이터 추출
+      const { user, token } = action.payload;
+
+      // localStorage에 저장
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("username", user.name);
+
+      // Redux 상태 업데이트
+      state.id = user.id;
+      state.name = user.name;
+      state.token = token;
     },
     logoutUser: (state) => {
-      // 로그아웃
+      // localStorage에서 데이터 삭제
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("username");
+
+      // Redux 상태 초기화
       state.id = null;
       state.name = "";
       state.token = null; // 토큰 삭제

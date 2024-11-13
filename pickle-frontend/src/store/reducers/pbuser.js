@@ -11,12 +11,18 @@ const pbuserSlice = createSlice({
   initialState: initialState,
   reducers: {
     setPbUser: (state, action) => {
+      const { user, token } = action.payload;
+      localStorage.setItem("accessToken", token);
       // 로그인 했을 때 로직 예시
-      state.id = action.payload.user.id;
-      state.name = action.payload.user.name;
-      state.token = action.payload.token; // 토큰 설정
+      state.id = user.id;
+      state.name = user.name;
+      state.token = token; // 토큰 설정
     },
     logoutPbUser: (state) => {
+      // localStorage에서 데이터 삭제
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("username");
+
       // 로그아웃
       state.id = null;
       state.name = "";
